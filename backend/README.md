@@ -2,13 +2,11 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+<img alt="screenshot of schema" src="/backend/images/schemaNoHighlight.png">
+<img alt="screenshot of schema relationships" src="/backend/images/schemaHighlight.png">
+
 
 ## API Documentation
-
-## USER AUTHENTICATION/AUTHORIZATION
-
-### All endpoints that require authentication
 
 All endpoints that require a current user to be logged in.
 
@@ -1452,3 +1450,6 @@ Return spots filtered by query parameters.
     }
     ```
 
+## USER AUTHENTICATION/AUTHORIZATION
+
+### All endpoints that require authentication
