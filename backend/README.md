@@ -2,8 +2,8 @@
 
 ## Database Schema Design
 
-<img alt="screenshot of schema" src="/backend/images/schemaNoHighlight.png">
-<img alt="screenshot of schema relationships" src="/backend/images/schemaHighlight.png">
+<!-- <img alt="screenshot of schema" src="/backend/images/schemaNoHighlight.png"> -->
+<img alt="screenshot of schema relationships" src="https://console.firebase.google.com/project/airbandb-backend-mod4-pj/storage/airbandb-backend-mod4-pj.appspot.com/files#:~:text=updated%20schema-,highlight,-.png">
 
 
 ## API Documentation
