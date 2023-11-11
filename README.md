@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-<img alt="screenshot of schema relationships" src="https://firebasestorage.googleapis.com/v0/b/airbandb-backend-mod4-pj.appspot.com/o/updated%20schema%20highlight.png?alt=media&token=1c24df0c-0b63-4d32-be69-0f4542d25877">
+<img alt="screenshot of schema relationships" src="https://firebasestorage.googleapis.com/v0/b/airbandb-backend-mod4-pj.appspot.com/o/mostCurrentSchema.png?alt=media&token=e449391a-2c4a-48dc-82e9-bfa5de03f047">
 
 ## API Documentation
 
