@@ -1,4 +1,4 @@
-# `Back End Beds`
+# `API B&B`
 
 ## Database Schema Design
 

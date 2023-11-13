@@ -8,24 +8,21 @@ const cookieParser = require('cookie-parser');
 const { enviroment } = require('./config');
 const routes = require ('./routes')
 const { ValidationError } = require('sequelize');
+const bcrypt = require ('bcryptjs')
 const isProduction = enviroment === 'production';
 const app = express();
 
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
-
-
 if (!isProduction) {
     app.use(cors());
 }
-
 app.use(
     helmet.crossOriginResourcePolicy({
         policy: "cross-origin"
     })
 );
-
 app.use(
     csurf({
         cookie: {
@@ -44,9 +41,7 @@ app.use((req, res, next) => {
     err.status = 404
     next(err)
 });
-
 //* Process sequelize errors
-
 app.use((err, req, res, next) => {
     if (err instanceof ValidationError) {
         let errors = {};
@@ -58,7 +53,6 @@ app.use((err, req, res, next) => {
     }
     next(err)
 })
-
 //* error formatter
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
@@ -70,6 +64,5 @@ app.use((err, req, res, next) => {
         stack: isProduction ? null : err.stack
     });
 });
-
 
 module.exports = app;
