@@ -17,9 +17,6 @@ module.exports = (sequelize, DataTypes) => {
           imageableType: 'Spot'
         }
       });
-      Spot.hasMany(models.Review, {
-        foreignKey: 'spotId'
-      }),
         Spot.belongsTo(models.User, {
           foreignKey: 'ownerId'
         }),
