@@ -29,6 +29,14 @@ router.post(
             return res.json({
                 message: 'Invalid credentials'
             })
+        } else if (!password || !credential) {
+            return res.json({
+                message: "Bad Request",
+                errors: {
+                    credential: "Email or username is required",
+                    password: "Password is required"
+                }
+            })
         }
 
         const safeUser = {
