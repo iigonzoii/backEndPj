@@ -22,9 +22,15 @@ module.exports = {
       email: 'realemail@email.com',
       username: 'realUser',
       hashedPassword: bcrypt.hashSync('password2')
+    },
+    {
+      firstName:'emaaanaaa',
+      lastName: 'emantslaaa',
+      email: 'realemailll@email.com',
+      username: 'realUser2',
+      hashedPassword: bcrypt.hashSync('password2')
     }
     ], { validate: true });
-
   },
 
   async down(queryInterface, Sequelize) {
