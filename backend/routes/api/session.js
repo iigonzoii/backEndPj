@@ -12,7 +12,7 @@ const validateLogin = [
     check('credential')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Please provide a valid email or username.'),
+        .withMessage('Email or username is required'),
     check('password')
         .exists({ checkFalsy: true })
         .withMessage('Please provide a password.'),
@@ -24,16 +24,6 @@ router.post(
     validateLogin,
     async (req, res, next) => {
         const { credential, password } = req.body;
-        if (!password || !credential) {
-            return res.json({
-                message: "Bad Request",
-                errors: {
-                    credential: "Email or username is required",
-                    password: "Password is required"
-                }
-            })
-        }
-
             const user = await User.unscoped().findOne({
                 where: {
                     [Op.or]: {
@@ -44,7 +34,7 @@ router.post(
             });
 
         if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-            return res.json({
+            return res.status(401).json({
                 message: 'Invalid credentials'
             })
         }

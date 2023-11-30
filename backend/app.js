@@ -57,11 +57,12 @@ app.use((err, req, res, next) => {
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
     console.error(err);
+    let stackerr = {}
+    isProduction ? null :(stackErr = {stack: err.stack || null})
     res.json({
-        title: err.title || 'Server Error',
         message: err.message,
         errors: err.errors,
-        stack: isProduction ? null : err.stack
+        ...stackerr
     });
 });
 
