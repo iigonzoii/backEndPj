@@ -9,7 +9,9 @@ const router = express.Router();
 
 // !start your spot route for get all right away, do nothing else, just start a router.get for all spots
 
+router.get('/', async (req, res, next) => {
 
+})
 
 
 module.exports = router
