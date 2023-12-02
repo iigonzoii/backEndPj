@@ -19,7 +19,6 @@ module.exports = {
         name: "fake name",
         descripton: 'fake description',
         price: 5,
-        avgRating: 4.5,
         previewImage: "image url"
       },
       {
@@ -33,7 +32,6 @@ module.exports = {
         name: "fake name",
         descripton: 'fake description',
         price: 6,
-        avgRating: 4.5,
         previewImage: "image url"
       },
       {
@@ -47,7 +45,6 @@ module.exports = {
         name: "fake name",
         descripton: 'fake description',
         price: 7,
-        avgRating: 4.5,
         previewImage: "image url"
       }
     ])

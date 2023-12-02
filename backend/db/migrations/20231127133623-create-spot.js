@@ -13,9 +13,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id: {
-        type: Sequelize.INTEGER
-      },
       ownerId: {
         type: Sequelize.INTEGER
       },
@@ -44,9 +41,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       price: {
-        type: Sequelize.FLOAT
-      },
-      avgRating: {
         type: Sequelize.FLOAT
       },
       createdAt: {

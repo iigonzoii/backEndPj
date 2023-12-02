@@ -3,18 +3,41 @@ const { Op } = require('sequelize');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const { Spot } = require('../../db/models');
+const { Spot, Image, User } = require('../../db/models');
 const router = express.Router();
 
-
-// !start your spot route for get all right away, do nothing else, just start a router.get for all spots
-
+// !this shit just dont work.
 router.get('/', async (req, res, next) => {
-    const spots = await Spot.findAll({
-        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'createdAt', 'updatedAt', 'avgRating', 'previewImage']
+    const Spots = await Spot.findAll({
+        // include: [
+        //     {
+        //         // model:modelname
+        //     },
+        //     {
+        //         // model:modelName
+        //     }
+        // ]
     })
-    return res.json(spots)
+    return res.json({Spots})
 })
 
+// router.post('/', async (req, res, next) => {
+//     const { address, city, state, country, lat, lng, name, description, price } = req.body
+//     // ! getting id as null, and am not getting ownerId at all
+//     const spot = await Spot.create({
+//         include: {model: User, attributes: ['ownerId']},
+//         // id: id,
+//         address:address,
+//         city: city,
+//         state: state,
+//         country: country,
+//         lat: lat,
+//         lng: lng,
+//         name: name,
+//         description: description,
+//         price: price
+//     })
+//     res.status(201).json(spot)
+// })
 
 module.exports = router
