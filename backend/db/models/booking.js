@@ -13,7 +13,9 @@ many to many between users and spots through bookings
   Booking.init({
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true
     },
     spotId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
