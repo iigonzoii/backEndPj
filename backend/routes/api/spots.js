@@ -3,22 +3,45 @@ const { Op } = require('sequelize');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const { Spot, Image, User } = require('../../db/models');
+const { Spot, Image, User, Review } = require('../../db/models');
 const router = express.Router();
 
-// !this shit just dont work.
 router.get('/', async (req, res, next) => {
-    const Spots = await Spot.findAll({
-        // include: [
-        //     {
-        //         // model:modelname
-        //     },
-        //     {
-        //         // model:modelName
-        //     }
-        // ]
+    // empty data obj to house all spots
+    let data = {}
+    const spots = await Spot.findAll({
+        // all spots and what models to include... image and review are both needed to access avgrating and previewImage
+        include: [
+            {
+                model: Image,
+                // where:{imageableType: "Spot"}
+            },
+            {
+                model: Review
+            }
+        ]
     })
-    return res.json({Spots})
+    // making query objects modifiable
+    data = spots.map(spot => spot.toJSON())
+
+    data.forEach(data => {
+        let allStars = 0
+        // going into every data objet, looking for reviewkey(array), running a foreach to add all the stars together so we can get avg later
+        data.Reviews.forEach(review => {
+            allStars += review.stars
+        });
+        // creating keyvalue pair to show avg rating in our return obj
+        data.avgRating = allStars / data.Reviews.length
+
+        data.Images.forEach(image => {
+            if (image.preview) data.previewImage = image.url
+        });
+            // after manipulating data above we are deleting the visual arrays that were houseing that data to match res body in docs
+        delete data.Reviews
+        delete data.Images
+    });
+
+    return res.json({Spots: data})
 })
 
 // router.post('/', async (req, res, next) => {
