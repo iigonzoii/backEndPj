@@ -13,9 +13,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id: {
-        type: Sequelize.INTEGER
-      },
       userId: {
         type: Sequelize.INTEGER
       },

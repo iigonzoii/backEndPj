@@ -251,7 +251,7 @@ Returns all the spots.
   * Body: none
 
 * Successful Response
-  * Status Code: 
+  * Status Code:
   * Headers:
     * Content-Type: application/json
   * Body:
