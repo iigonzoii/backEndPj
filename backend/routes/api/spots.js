@@ -194,8 +194,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 router.get('/current', requireAuth, async (req, res, next) => {
     // empty data obj to house all spots
     let data = {}
-    let { currUser } = req.user.id
-    console.log("this currrrr", currUser)
+    let currUser = req.user.id
     const spots = await Spot.findAll({
         // all spots and what models to include... image and review are both needed to access avgrating and previewImage
         where: {
@@ -204,7 +203,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
         include: [
             {
                 model: Image
-                // where:{imageableType: "Spot"}
             },
             {
                 model: Review
