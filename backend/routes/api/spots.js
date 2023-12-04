@@ -233,7 +233,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 });
 
 router.get('/:spotId', async (req, res, next) => {
-    let {spotId} = req.params
+    let { spotId } = req.params
     if (!(await Spot.findByPk(spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
@@ -244,16 +244,16 @@ router.get('/:spotId', async (req, res, next) => {
             {
                 model: Image,
                 as: 'SpotImages',
-                where: {imageableType: 'Spot'},
+                // where: {imageableType: 'Spot'},
                 attributes: ['id', 'url', 'preview']
             },
             {
                 model: Review
             },
             {
-            model: User,
-            as: 'Owner',
-            attributes: ['id', 'firstName', 'lastName']
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
             }
         ]
     });
@@ -264,6 +264,11 @@ router.get('/:spotId', async (req, res, next) => {
         allStars += review.stars
     });
 
+    if (data.SpotImages.length === 0) {
+        data.SpotImages = {
+            message: 'no images to display'
+        }
+    }
     data.numReviews = data.Reviews.length;
     data.avgStarRating = allStars / data.Reviews.length;
 
