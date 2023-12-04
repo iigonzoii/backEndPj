@@ -189,7 +189,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     return res.json({
         message: "Successfully deleted"
     })
-})
+});
 
 router.get('/current', requireAuth, async (req, res, next) => {
     // empty data obj to house all spots
@@ -198,7 +198,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const spots = await Spot.findAll({
         // all spots and what models to include... image and review are both needed to access avgrating and previewImage
         where: {
-            ownerId: req.user.id
+            ownerId: currUser
         },
         include: [
             {
@@ -230,5 +230,46 @@ router.get('/current', requireAuth, async (req, res, next) => {
     });
 
     return res.json({ Spots: data })
+});
+
+router.get('/:spotId', async (req, res, next) => {
+    let {spotId} = req.params
+    if (!(await Spot.findByPk(spotId))) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    };
+    let thisSpot = await Spot.findByPk(spotId, {
+        include: [
+            {
+                model: Image,
+                as: 'SpotImages',
+                where: {imageableType: 'Spot'},
+                attributes: ['id', 'url', 'preview']
+            },
+            {
+                model: Review
+            },
+            {
+            model: User,
+            as: 'Owner',
+            attributes: ['id', 'firstName', 'lastName']
+            }
+        ]
+    });
+    let data = thisSpot.toJSON();
+
+    let allStars = 0
+    data.Reviews.forEach(review => {
+        allStars += review.stars
+    });
+
+    data.numReviews = data.Reviews.length;
+    data.avgStarRating = allStars / data.Reviews.length;
+
+    delete data.Reviews
+    res.json(data)
+
 })
+
 module.exports = router

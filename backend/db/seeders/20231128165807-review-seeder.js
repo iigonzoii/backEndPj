@@ -28,19 +28,19 @@ module.exports = {
       },
       {
         userId: 1,
-        spotId: 4,
+        spotId: 1,
         review: "heres a review",
         stars: 1
       },
       {
         userId: 1,
-        spotId: 5,
+        spotId: 1,
         review: "heres another review",
         stars: 2
       },
       {
         userId: 1,
-        spotId: 6,
+        spotId: 1,
         review: "heres anotherrrrr review",
         stars: 3
       }
