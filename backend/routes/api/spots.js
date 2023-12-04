@@ -52,7 +52,7 @@ router.get('/', async (req, res, next) => {
         // all spots and what models to include... image and review are both needed to access avgrating and previewImage
         include: [
             {
-                model: Image,
+                model: Image
                 // where:{imageableType: "Spot"}
             },
             {
@@ -60,7 +60,7 @@ router.get('/', async (req, res, next) => {
             }
         ]
     })
-    // making query objects modifiable
+    // take spots findAll array, map through them, and convert to json
     data = spots.map(spot => spot.toJSON())
 
     data.forEach(data => {
@@ -104,6 +104,8 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const { url, preview } = req.body
     const { spotId } = req.params
+    const { userId } = req.user.id
+    let isOwner = await Spot.findByPk(spotId);
 
     // just running !spotId wont work because numbers are valid even if the spot isnt, checking by pk will double down on validation making sure we dont run into errors
     if (!(await Spot.findByPk(spotId))) {
@@ -111,6 +113,15 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
             message: "Spot couldn't be found"
         })
     }
+
+    // ? i think this may be over engineered and lines 109 through 121 can be dried up
+    if (isOwner.ownerId !== userId) {
+        res.status(403).json({
+            message: "Forbidden"
+        })
+    };
+
+    // ? I think i need to add an if imageableType somewhere around here
 
     let image = await Image.create({
         spotId,
@@ -129,16 +140,17 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const userId = req.user.id
     let isOwner = await Spot.findByPk(spotId);
-    // api docs dont specify ownership, but according to the need for auth not only for a user, but an actual owner of a property, we will assume test specs somewhere will be checking this. so to cover ass check if Owner is true
+    // api docs dont specify ownership, but according to the need for auth not only for a user, but an actual owner of a property, we will assume test specs somewhere will be checking this. so to cover a** check if Owner is true
     if (!(await Spot.findByPk(spotId))) return res.status(404).json({
         message: "Spot couldn't be found"
     })
+    // if the ownerId key of the spot we found doesnt have the current authorized userId as its value, then we shut it down.
     if (isOwner.ownerId !== userId) {
         res.status(403).json({
             message: "Forbidden"
         })
     };
-
+    // update spot with the deconstructed req body variables where the id matches our passedin spotId
     await Spot.update({
         address,
         city,
@@ -154,6 +166,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
             id: spotId
         }
     })
+    // return updated spot
     let updated = await Spot.findByPk(spotId)
     res.json(updated)
 });
@@ -176,6 +189,92 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     return res.json({
         message: "Successfully deleted"
     })
+});
+
+router.get('/current', requireAuth, async (req, res, next) => {
+    // empty data obj to house all spots
+    let data = {}
+    let currUser = req.user.id
+    const spots = await Spot.findAll({
+        // all spots and what models to include... image and review are both needed to access avgrating and previewImage
+        where: {
+            ownerId: currUser
+        },
+        include: [
+            {
+                model: Image
+            },
+            {
+                model: Review
+            }
+        ],
+    })
+    // take spots findAll array, map through them, and convert to json
+    data = spots.map(spot => spot.toJSON())
+
+    data.forEach(data => {
+        let allStars = 0
+        // going into every data objet, looking for reviewkey(array), running a foreach to add all the stars together so we can get avg later
+        data.Reviews.forEach(review => {
+            allStars += review.stars
+        });
+        // creating keyvalue pair to show avg rating in our return obj
+        data.avgRating = allStars / data.Reviews.length
+
+        data.Images.forEach(image => {
+            if (image.preview) data.previewImage = image.url
+        });
+        // after manipulating data above we are deleting the visual arrays that were houseing that data to match res body in docs
+        delete data.Reviews
+        delete data.Images
+    });
+
+    return res.json({ Spots: data })
+});
+
+router.get('/:spotId', async (req, res, next) => {
+    let { spotId } = req.params
+    if (!(await Spot.findByPk(spotId))) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    };
+    let thisSpot = await Spot.findByPk(spotId, {
+        include: [
+            {
+                model: Image,
+                as: 'SpotImages',
+                // where: {imageableType: 'Spot'},
+                attributes: ['id', 'url', 'preview']
+            },
+            {
+                model: Review
+            },
+            {
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        ]
+    });
+    let data = thisSpot.toJSON();
+
+    let allStars = 0
+    data.Reviews.forEach(review => {
+        allStars += review.stars
+    });
+
+    if (data.SpotImages.length === 0) {
+        data.SpotImages = {
+            message: 'no images to display'
+        }
+    }
+    data.numReviews = data.Reviews.length;
+    data.avgStarRating = allStars / data.Reviews.length;
+
+    delete data.Reviews
+    res.json(data)
+
 })
 
 module.exports = router
