@@ -6,7 +6,7 @@ const { requireAuth } = require('../../utils/auth')
 
 const { Spot, Image, User, Review } = require('../../db/models');
 const router = express.Router();
-
+// !how do i test this
 router.get('/current', requireAuth, async (req, res, next) => {
     let data = {}
     let currUser = req.user.id
@@ -29,13 +29,12 @@ router.get('/current', requireAuth, async (req, res, next) => {
             }
         ],
     })
-    // console.log("reviewwwwwws", reviews)
-
     data = reviews.map(review => review.toJSON())
 
-    console.log("dataaaaaa",data)
-    // console.log(review)
-
+    // data.forEach(image => {
+    //     if (image.preview) data.previewImage = image.url
+    //     // console.log(image)
+    // });
     data.forEach(review => {
             if (review.ReviewImages.length === 0) {
                 review.ReviewImages = {
@@ -44,7 +43,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             }
     })
     res.json({ Reviews: data })
-})
+});
 
 
 
