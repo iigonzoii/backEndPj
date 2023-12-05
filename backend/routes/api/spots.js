@@ -53,6 +53,8 @@ router.get('/', async (req, res, next) => {
         include: [
             {
                 model: Image,
+                as: 'SpotImages',
+                attributes: ['id', 'url', 'preview']
                 // where:{imageableType: "Spot"}
             },
             {
@@ -72,13 +74,18 @@ router.get('/', async (req, res, next) => {
         // creating keyvalue pair to show avg rating in our return obj
         data.avgRating = allStars / data.Reviews.length
 
-        data.Images.forEach(image => {
+        data.SpotImages.forEach(image => {
             if (image.preview) data.previewImage = image.url
+            // console.log(image)
         });
+        if (!data.previewImage) {
+            data.previewImage = 'no image url'
+        }
         // after manipulating data above we are deleting the visual arrays that were houseing that data to match res body in docs
-        delete data.Reviews
-        delete data.Images
+            delete data.Reviews
+            delete data.SpotImages
     });
+
 
     return res.json({ Spots: data })
 });
