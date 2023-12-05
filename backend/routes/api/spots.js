@@ -134,10 +134,12 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     let image = await Image.create({
         spotId,
         url,
-        preview
+        preview,
+        imageableType:'Spot',
+        imageableId: spotId
     })
 
-    let rez = await Image.findByPk(image.spotId, {
+    let rez = await Image.findByPk(spotId, {
         attributes: ['id', 'url', 'preview']
     })
     return res.json(rez)
