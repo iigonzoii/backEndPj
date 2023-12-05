@@ -93,6 +93,12 @@ router.get('/', async (req, res, next) => {
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const ownerId = req.user.id
+
+    if (!ownerId) {
+        return res.status(403).json({
+            message: "Forbidden"
+        })
+    };
     const spot = await Spot.create({
         ownerId,
         address: address,
@@ -113,31 +119,26 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const { spotId } = req.params
     const  userId  = req.user.id
     let isOwner = await Spot.findByPk(spotId);
-// console.log("isowner",isOwner)
-// console.log("userId",userId)
     // just running !spotId wont work because numbers are valid even if the spot isnt, checking by pk will double down on validation making sure we dont run into errors
     if (!(await Spot.findByPk(spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
         })
-    }
+    };
 
-    // ? i think this may be over engineered and lines 109 through 121 can be dried up
     if (isOwner.ownerId !== userId) {
         return res.status(403).json({
             message: "Forbidden"
         })
     };
 
-    // ? I think i need to add an if imageableType somewhere around here
-
-    let image = await Image.create({
+    await Image.create({
         spotId,
         url,
         preview,
         imageableType:'Spot',
         imageableId: spotId
-    })
+    });
 
     let rez = await Image.findByPk(spotId, {
         attributes: ['id', 'url', 'preview']
