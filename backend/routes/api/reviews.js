@@ -7,11 +7,11 @@ const { requireAuth } = require('../../utils/auth')
 const { Spot, Image, User, Review } = require('../../db/models');
 const router = express.Router();
 
-router.get('/current', requireAuth, async (req, res, next) =>{
-    // let data = {}
+router.get('/current', requireAuth, async (req, res, next) => {
+    let data = {}
     let currUser = req.user.id
     let reviews = await Review.findAll({
-        where:{
+        where: {
             userId: currUser
         },
         include: [
@@ -29,13 +29,21 @@ router.get('/current', requireAuth, async (req, res, next) =>{
             }
         ],
     })
-    // if (reviews.ReviewImages.length === 0) {
-    //     reviews.ReviewImages = {
-    //         message: 'no images to display'
-    //     }
-    // }
-    // res.json({}Reviews:reviews)
-    res.json({Reviews:reviews})
+    // console.log("reviewwwwwws", reviews)
+
+    data = reviews.map(review => review.toJSON())
+
+    console.log("dataaaaaa",data)
+    // console.log(review)
+
+    data.forEach(review => {
+            if (review.ReviewImages.length === 0) {
+                review.ReviewImages = {
+                    message: 'no images to display'
+                }
+            }
+    })
+    res.json({ Reviews: data })
 })
 
 

@@ -52,7 +52,7 @@ router.get('/', async (req, res, next) => {
         // all spots and what models to include... image and review are both needed to access avgrating and previewImage
         include: [
             {
-                model: Image
+                model: Image,
                 // where:{imageableType: "Spot"}
             },
             {
