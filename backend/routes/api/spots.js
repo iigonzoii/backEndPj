@@ -347,6 +347,13 @@ router.post('/:spotId/reviews',validateReview, requireAuth, async (req,res,next)
             message: "Spot couldn't be found"
         })
     }
+    if (await Review.findOne({
+        where: {userId: userId}
+    })){
+        return res.status(500).json({
+            message: "User already has a review for this spot"
+        })
+    }
 
     let createdReview = await Review.create({
         review,
@@ -356,6 +363,8 @@ router.post('/:spotId/reviews',validateReview, requireAuth, async (req,res,next)
     })
 
     return res.json(createdReview)
-})
+});
+
+
 
 module.exports = router

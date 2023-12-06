@@ -49,6 +49,39 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json({ Reviews: data })
 });
 
+router.post('/:reviewId/images', requireAuth, async(req, res) => {
+    const { url } = req.body
+    const { reviewId } = req.params
+    const  userId  = req.user.id
+    let isOwner = await Review.findByPk(reviewId);
+
+    if (!(await Review.findByPk(reviewId))) {
+        return res.status(404).json({
+            message: "Review couldn't be found"
+        })
+    }
+console.log(isOwner)
+    // ? i think this may be over engineered and lines 109 through 121 can be dried up
+    if (isOwner.userId !== userId) {
+        return res.status(403).json({
+            message: "Forbidden"
+        })
+    };
+
+
+    let image = await Image.create({
+        url,
+        imageableType: 'Review',
+        imageableId: reviewId
+        // exclude:['createdAt', 'updatedAt']
+    })
+
+    let rez = await Image.findByPk(reviewId, {
+        attributes: ['id', 'url',]
+    })
+    return res.json(rez)
+})
+
 
 
 
