@@ -17,7 +17,7 @@ module.exports = {
         lat: 37.7645358,
         lng: -122.4730327,
         name: "fake name",
-        descripton: 'fake description',
+        description: 'fake description',
         price: 5,
         previewImage: "image url"
       },
@@ -30,7 +30,7 @@ module.exports = {
         lat: 37.7645359,
         lng: -122.4730328,
         name: "fake name",
-        descripton: 'fake description',
+        description: 'fake description',
         price: 6,
         previewImage: "image url"
       },
@@ -43,7 +43,7 @@ module.exports = {
         lat: 37.7645360,
         lng: -122.4730329,
         name: "fake name",
-        descripton: 'fake description',
+        description: 'fake description',
         price: 7,
         previewImage: "image url"
       }
