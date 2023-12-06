@@ -298,15 +298,17 @@ router.get('/:spotId', async (req, res, next) => {
 
 router.get('/:spotId/reviews', async (req, res, next) => {
     let data = {}
-    let currUser = req.user.id
+    let { spotId } = req.params
+    if (!(await Spot.findByPk(spotId))) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    };
     let reviews = await Review.findAll({
         where: {
-            userId: currUser
+            id: spotId
         },
         include: [
-            {
-                model: Spot
-            },
             {
                 model: User,
                 attributes: ['id', 'firstName', 'lastName']
@@ -320,22 +322,9 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     })
     data = reviews.map(review => review.toJSON())
 
-    data.ReviewImages.forEach(image => {
-        if (image.preview) data.previewImage = image.url
-        // console.log(image)
-    });
 
-    data.forEach(review => {
-            if (review.ReviewImages.length === 0) {
-                review.ReviewImages = {
-                    message: 'no images to display'
-                }
-            }
-    })
     res.json({ Reviews: data })
-    // inlude user
-    // include images
-    // alias images
+
 })
 
 module.exports = router

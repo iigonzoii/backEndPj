@@ -16,7 +16,13 @@ router.get('/current', requireAuth, async (req, res, next) => {
         },
         include: [
             {
-                model: Spot
+                model: Spot,
+                include: [
+                    {
+                        model: Image,
+                        as: 'SpotImages'
+                    }
+                ]
             },
             {
                 model: User,
@@ -30,17 +36,16 @@ router.get('/current', requireAuth, async (req, res, next) => {
         ],
     })
     data = reviews.map(review => review.toJSON())
-
-    // data.forEach(image => {
-    //     if (image.preview) data.previewImage = image.url
-    //     // console.log(image)
-    // });
     data.forEach(review => {
-            if (review.ReviewImages.length === 0) {
-                review.ReviewImages = {
-                    message: 'no images to display'
-                }
+        if (review.ReviewImages.length === 0) {
+            review.ReviewImages = {
+                message: 'no images to display'
             }
+            review.Spot.SpotImages.forEach(image => {
+                if (image.preview) review.Spot.previewImage = image.url
+            });
+        }
+        delete review.Spot.SpotImages
     })
     res.json({ Reviews: data })
 });
