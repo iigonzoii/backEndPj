@@ -6,7 +6,6 @@ const { requireAuth } = require('../../utils/auth')
 
 const { Spot, Image, User, Review } = require('../../db/models');
 const router = express.Router();
-// !how do i test this
 router.get('/current', requireAuth, async (req, res, next) => {
     let data = {}
     let currUser = req.user.id

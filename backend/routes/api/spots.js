@@ -325,6 +325,39 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
     res.json({ Reviews: data })
 
+});
+
+router.post('/:spotId/reviews', requireAuth, async (req,res,next) =>{
+    const { review, stars } = req.body
+    const { spotId } = req.params
+    let userId = req.user.id
+    if (!(await Spot.findByPk(spotId))) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    // let CreateReview = 
+    await Review.create({
+        spotId,
+        userId,
+        review,
+        stars,
+        createdAt,
+        updatedAt
+    })
+    // let image = await Image.create({
+    //     spotId,
+    //     url,
+    //     preview,
+    //     imageableType:'Spot',
+    //     imageableId: spotId
+    // })
+
+    let rez = await Review.findByPk(spotId, {
+        attributes: ['id', 'userId', 'spotId', 'review', 'stars', 'createdAt', 'updatedAt']
+    })
+    return res.json(rez)
 })
 
 module.exports = router
