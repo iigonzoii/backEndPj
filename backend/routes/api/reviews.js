@@ -3,8 +3,20 @@ const { Op } = require('sequelize');
 const { check } = require('express-validator');
 const { handleValidationErrors, } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth')
-
 const { Spot, Image, User, Review } = require('../../db/models');
+const validateReview = [
+    check('review')
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Review text is required'),
+check('stars')
+    .exists({ checkFalsy: true })
+    .isFloat({min:1})
+    .withMessage('must be an integer from 1 to 5'),
+    handleValidationErrors
+]
+
+// ! create validaion error handler
 const router = express.Router();
 router.get('/current', requireAuth, async (req, res, next) => {
     let data = {}
@@ -59,15 +71,14 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
         return res.status(404).json({
             message: "Review couldn't be found"
         })
-    }
-console.log(isOwner)
-    // ? i think this may be over engineered and lines 109 through 121 can be dried up
+    };
     if (isOwner.userId !== userId) {
         return res.status(403).json({
             message: "Forbidden"
         })
     };
 
+    // ! 10 picture error handler. if review.images.length>=10
 
     let image = await Image.create({
         url,
@@ -80,6 +91,33 @@ console.log(isOwner)
         attributes: ['id', 'url',]
     })
     return res.json(rez)
+});
+
+router.put('/:reviewId', requireAuth, validateReview, async(req, res, next) => {
+    const { reviewId } = req.params
+    const { review, stars } = req.body
+    const userId = req.user.id
+
+    let isOwner = await Review.findByPk(reviewId);
+    if (!(await Review.findByPk(reviewId))) return res.status(404).json({
+        message: "Review couldn't be found"
+    });
+    if (isOwner.userId !== userId) {
+        return res.status(403).json({
+            message: "Forbidden"
+        })
+    };
+
+    await Review.update({
+        review,
+        stars,
+    }, {
+        where: {
+            id: reviewId
+        }
+    })
+    let updated = await Review.findByPk(reviewId)
+    res.json(updated)
 })
 
 
