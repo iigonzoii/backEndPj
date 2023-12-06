@@ -44,6 +44,17 @@ const validateSpot = [
         .withMessage('Price per day must be a positive number'),
     handleValidationErrors
 ];
+const validateReview = [
+    check('review')
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Review text is required'),
+check('stars')
+    .exists({ checkFalsy: true })
+    .isFloat({min:1})
+    .withMessage('must be an integer from 1 to 5'),
+    handleValidationErrors
+]
 
 router.get('/', async (req, res, next) => {
     // empty data obj to house all spots
@@ -325,6 +336,35 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
     res.json({ Reviews: data })
 
-})
+});
+
+router.post('/:spotId/reviews',validateReview, requireAuth, async (req,res,next) =>{
+    const { review, stars } = req.body
+    const { spotId } = req.params
+    let userId = req.user.id
+    if (!(await Spot.findByPk(spotId))) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+    if (await Review.findOne({
+        where: {userId: userId}
+    })){
+        return res.status(500).json({
+            message: "User already has a review for this spot"
+        })
+    }
+
+    let createdReview = await Review.create({
+        review,
+        stars,
+        userId,
+        spotId: + spotId
+    })
+
+    return res.json(createdReview)
+});
+
+
 
 module.exports = router
