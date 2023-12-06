@@ -8,56 +8,43 @@ const router = express.Router();
 
 
 
-router.get('/current', requireAuth, async(req, res, next) => {
+router.get('/current', requireAuth, async (req, res, next) => {
     let data = {}
     let currUser = req.user.id
     const usersBookings = await Booking.findAll({
         where: {
             userId: currUser
         },
-        // include: [
-        //     // {
-        //     //     model: Image,
-        //     //     as:'SpotImages'
-        //     // },
-        //     {
-        //         model: Spot
-        //     }
-        // ],
+        include: [
+            {
+                model: Spot,
+                include: [{
+                    model: Image,
+                    as: 'SpotImages'
+                }]
+            }
+        ],
     })
 
     data = usersBookings.map(booking => booking.toJSON());
 
-    // * for each data object, do a spot.findbypk passing in data.spotId
-    // let bookedSpot = data.forEach(async booking => {
-    //     await Spot.findByPk(booking.spotId)
-    // });
-
-    //     data.forEach(data => {
-    //     data.SpotImages.forEach(image => {
-    //         if (image.preview) data.previewImage = image.url
-    //         // console.log(image)
-    //     });
-    //     if (!data.previewImage) {
-    //         data.previewImage = 'no image url'
-    //     };
-    //     delete data.SpotImages
-
-    // });
-    console.log(data)
-
-
-    return res.json( data )
-})
+    data.forEach(booking => {
+        booking.Spot.SpotImages.forEach(image =>{
+            if(image.preview) {
+                booking.Spot.previewImage = image.url
+            }
+            else {
+                booking.Spot.previewImage = 'no image url'
+            }
+        })
+        delete booking.Spot.SpotImages
+        delete booking.Spot.createdAt
+        delete booking.Spot.updatedAt
+    })
+        return res.json({ Bookings: data })
+    })
 
 
 
 
-
-
-
-
-
-
-
-module.exports = router
+    module.exports = router
