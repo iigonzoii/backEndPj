@@ -294,6 +294,37 @@ router.get('/:spotId', async (req, res, next) => {
     delete data.Reviews
     res.json(data)
 
+});
+
+router.get('/:spotId/reviews', async (req, res, next) => {
+    let data = {}
+    let { spotId } = req.params
+    if (!(await Spot.findByPk(spotId))) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    };
+    let reviews = await Review.findAll({
+        where: {
+            id: spotId
+        },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: Image,
+                as: 'ReviewImages',
+                attributes: ['id', 'url']
+            }
+        ],
+    })
+    data = reviews.map(review => review.toJSON())
+
+
+    res.json({ Reviews: data })
+
 })
 
 module.exports = router
