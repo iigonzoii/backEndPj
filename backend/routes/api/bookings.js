@@ -26,21 +26,28 @@ router.get('/current', requireAuth, async(req, res, next) => {
         // ],
     })
 
-    data = usersBookings.map(booking => booking.toJSON())
+    data = usersBookings.map(booking => booking.toJSON());
 
-        // data.forEach(data => {
-        // data.SpotImages.forEach(image => {
-        //     if (image.preview) data.previewImage = image.url
-        //     // console.log(image)
-        // });
-        // if (!data.previewImage) {
-        //     data.previewImage = 'no image url'
-        // }
-        // delete data.SpotImages
-        
+    // * for each data object, do a spot.findbypk passing in data.spotId
+    // let bookedSpot = data.forEach(async booking => {
+    //     await Spot.findByPk(booking.spotId)
+    // });
+
+    //     data.forEach(data => {
+    //     data.SpotImages.forEach(image => {
+    //         if (image.preview) data.previewImage = image.url
+    //         // console.log(image)
+    //     });
+    //     if (!data.previewImage) {
+    //         data.previewImage = 'no image url'
+    //     };
+    //     delete data.SpotImages
+
     // });
     console.log(data)
-    return res.json({ data })
+
+
+    return res.json( data )
 })
 
 

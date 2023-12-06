@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors, } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth')
 
-const { Spot, Image, User, Review } = require('../../db/models');
+const { Spot, Image, User, Review, Booking } = require('../../db/models');
 const router = express.Router();
 
 const validateSpot = [
@@ -46,13 +46,13 @@ const validateSpot = [
 ];
 const validateReview = [
     check('review')
-    .exists({ checkFalsy: true })
-    .notEmpty()
-    .withMessage('Review text is required'),
-check('stars')
-    .exists({ checkFalsy: true })
-    .isFloat({min:1})
-    .withMessage('must be an integer from 1 to 5'),
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isFloat({ min: 1 })
+        .withMessage('must be an integer from 1 to 5'),
     handleValidationErrors
 ]
 
@@ -93,8 +93,8 @@ router.get('/', async (req, res, next) => {
             data.previewImage = 'no image url'
         }
         // after manipulating data above we are deleting the visual arrays that were houseing that data to match res body in docs
-            delete data.Reviews
-            delete data.SpotImages
+        delete data.Reviews
+        delete data.SpotImages
     });
 
 
@@ -128,7 +128,7 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const { url, preview } = req.body
     const { spotId } = req.params
-    const  userId  = req.user.id
+    const userId = req.user.id
     let isOwner = await Spot.findByPk(spotId);
     // just running !spotId wont work because numbers are valid even if the spot isnt, checking by pk will double down on validation making sure we dont run into errors
     if (!(await Spot.findByPk(spotId))) {
@@ -147,7 +147,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         spotId,
         url,
         preview,
-        imageableType:'Spot',
+        imageableType: 'Spot',
         imageableId: spotId
     });
 
@@ -225,7 +225,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         include: [
             {
                 model: Image,
-                as:'SpotImages'
+                as: 'SpotImages'
             },
             {
                 model: Review
@@ -253,7 +253,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         if (!data.previewImage) {
             data.previewImage = 'no image url'
         }
-        // !match this with the way i have it on the other one
+
         // after manipulating data above we are deleting the visual arrays that were houseing that data to match res body in docs
         delete data.Reviews
         delete data.SpotImages
@@ -339,7 +339,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
 });
 
-router.post('/:spotId/reviews',validateReview, requireAuth, async (req,res,next) =>{
+router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res, next) => {
     const { review, stars } = req.body
     const { spotId } = req.params
     let userId = req.user.id
@@ -349,8 +349,8 @@ router.post('/:spotId/reviews',validateReview, requireAuth, async (req,res,next)
         })
     }
     if (await Review.findOne({
-        where: {userId: userId}
-    })){
+        where: { userId: userId }
+    })) {
         return res.status(500).json({
             message: "User already has a review for this spot"
         })
@@ -366,6 +366,56 @@ router.post('/:spotId/reviews',validateReview, requireAuth, async (req,res,next)
     return res.json(createdReview)
 });
 
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    // ? should i just add user to my booking model
+    // have to be owner of spot
+    let data = {}
+    let { spotId } = req.params
+    let userId = req.user.id
+    let isOwner = await Spot.findByPk(spotId);
+
+    if (!(await Spot.findByPk(spotId))) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    };
+
+    let bookings = await Booking.findAll({
+        where: {
+            id: spotId
+        },
+        // include: [
+        //     {
+        //         model: User,
+        //         attributes: ['id', 'firstName', 'lastName']
+        //     },
+            // {
+            //     model: Image,
+            //     as: 'ReviewImages',
+            //     attributes: ['id', 'url']
+            // }
+        // ],
+    })
+    data = bookings.map(booking => booking.toJSON())
+
+    if (isOwner.ownerId !== userId) {
+        return res.status(200).json({
+            Bookings: [
+                {
+                    spotId: bookings.spotId,
+                    startDate: bookings.startDate,
+                    endDate: bookings.endDate
+                }
+            ]
+        })
+    };
+    // if (isOwner.ownerId === userId) {
+    //     return res.status(200).json()
+    // }
+
+    res.json({ Bookings: data })
+
+})
 
 
 module.exports = router
