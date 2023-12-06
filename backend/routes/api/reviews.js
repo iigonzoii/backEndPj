@@ -65,31 +65,38 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
     const { url } = req.body
     const { reviewId } = req.params
     const  userId  = req.user.id
-    let isOwner = await Review.findByPk(reviewId);
+    let currReview = await Review.findByPk(reviewId, {
+        include:[{
+            model:Image,
+            as:'ReviewImages'
+        }]
+    });
 
     if (!(await Review.findByPk(reviewId))) {
         return res.status(404).json({
             message: "Review couldn't be found"
         })
     };
-    if (isOwner.userId !== userId) {
+    if (currReview.userId !== userId) {
         return res.status(403).json({
             message: "Forbidden"
         })
     };
-
-    // ! 10 picture error handler. if review.images.length>=10
+    if (currReview.ReviewImages.length > 9) {
+        return res.status(403).json({
+            message: "Maximum number of images for this resource was reached"
+        })
+    };
 
     let image = await Image.create({
         url,
         imageableType: 'Review',
         imageableId: reviewId
-        // exclude:['createdAt', 'updatedAt']
-    })
-
-    let rez = await Image.findByPk(reviewId, {
-        attributes: ['id', 'url',]
-    })
+    });
+    let rez = {
+        id: image.id,
+        url: image.url
+    };
     return res.json(rez)
 });
 
@@ -118,7 +125,27 @@ router.put('/:reviewId', requireAuth, validateReview, async(req, res, next) => {
     })
     let updated = await Review.findByPk(reviewId)
     res.json(updated)
-})
+});
+
+router.delete('/:reviewId', requireAuth, async(req,res) => {
+    const { reviewId } = req.params
+    const userId = req.user.id
+    let validreview = await Review.findByPk(reviewId)
+    if (!validreview) return res.status(404).json({
+        message: "Review couldn't be found"
+    })
+    if (validreview.userId !== userId) {
+        res.status(403).json({
+            message: "Forbidden"
+        })
+    };
+    await Review.destroy({
+        where: { id: reviewId }
+    })
+    return res.json({
+        message: "Successfully deleted"
+    })
+});
 
 
 
