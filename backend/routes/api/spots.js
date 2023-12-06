@@ -337,22 +337,15 @@ router.post('/:spotId/reviews', requireAuth, async (req,res,next) =>{
         })
     }
 
-    // let CreateReview = 
+    // let CreateReview =
     await Review.create({
-        spotId,
-        userId,
+        // spotId,
+        // userId,
         review,
         stars,
-        createdAt,
-        updatedAt
+        // createdAt,
+        // updatedAt
     })
-    // let image = await Image.create({
-    //     spotId,
-    //     url,
-    //     preview,
-    //     imageableType:'Spot',
-    //     imageableId: spotId
-    // })
 
     let rez = await Review.findByPk(spotId, {
         attributes: ['id', 'userId', 'spotId', 'review', 'stars', 'createdAt', 'updatedAt']
