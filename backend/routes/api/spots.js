@@ -367,8 +367,6 @@ router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res, ne
 });
 
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
-    // ? should i just add user to my booking model
-    // have to be owner of spot
     let data = {}
     let { spotId } = req.params
     let userId = req.user.id
@@ -379,42 +377,33 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             message: "Spot couldn't be found"
         })
     };
-
     let bookings = await Booking.findAll({
         where: {
             id: spotId
         },
-        // include: [
-        //     {
-        //         model: User,
-        //         attributes: ['id', 'firstName', 'lastName']
-        //     },
-            // {
-            //     model: Image,
-            //     as: 'ReviewImages',
-            //     attributes: ['id', 'url']
-            // }
-        // ],
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        ]
     })
     data = bookings.map(booking => booking.toJSON())
 
     if (isOwner.ownerId !== userId) {
-        return res.status(200).json({
-            Bookings: [
-                {
-                    spotId: bookings.spotId,
-                    startDate: bookings.startDate,
-                    endDate: bookings.endDate
-                }
-            ]
+        data = bookings.map(booking => {
+            booking = {
+                spotId: booking.spotId,
+                startDate: booking.startDate,
+                endDate: booking.endDate
+            }
+            return booking
         })
+        return res.status(200).json(
+            { Bookings: data }
+        )
     };
-    // if (isOwner.ownerId === userId) {
-    //     return res.status(200).json()
-    // }
-
     res.json({ Bookings: data })
-
 })
 
 
