@@ -419,6 +419,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         error.errors = {
             startDate: "startDate cannot be in the past"
         }
+        error.status = 400
         next(error)
     }
     if (validStartDate > validEndDate) {
@@ -426,6 +427,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         error.errors = {
             endDate: "endDate cannot be on or before startDate"
         }
+        error.status = 400
         next(error)
     }
     if (!(await Spot.findByPk(spotId))) {
@@ -457,6 +459,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 startDate: "Start date conflicts with an existing booking",
                 endDate: "End date conflicts with an existing booking"
             }
+            error.status = 403
             return next(error)
         } else if (validStartDate >= currStartDate && validEndDate <= currEndDate) {
             const error = new Error("Sorry, this spot is already booked for the specified dates")
@@ -464,18 +467,21 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 startDate: "Start date conflicts with an existing booking",
                 endDate: "End date conflicts with an existing booking"
             }
+            error.status = 403
             return next(error)
         } else if (validEndDate >= currStartDate && validEndDate <= currEndDate) {
             const error = new Error("Sorry, this spot is already booked for the specified dates")
             error.errors = {
                 endDate: "End date conflicts with an existing booking"
             }
+            error.status = 403
             return next(error)
         } else if (validStartDate >= currStartDate && validStartDate <= currEndDate) {
             const error = new Error("Sorry, this spot is already booked for the specified dates")
             error.errors = {
                 startDate: "Start date conflicts with an existing booking"
             }
+            error.status = 403
             return next(error)
         }
     }

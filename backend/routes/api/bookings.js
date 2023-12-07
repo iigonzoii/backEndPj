@@ -77,7 +77,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         res.status(400).json({
             message: 'Bad Request',
             errors: {
-                startDate: 'sttartDate cannot be in the past'
+                startDate: 'startDate cannot be in the past'
             }
         })
     };
@@ -131,8 +131,38 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     })
     let updated = await Booking.findByPk(bookingId)
     res.json(updated)
-})
+});
 
+router.delete('/:bookingId', requireAuth, async(req, res, next) => {
+    const { bookingId } = req.params
+    const currUser = req.user.id
+    today = new Date()
+
+    // ! something is wrong here. postman is being a little bitch
+    let validBooking = await Booking.findByPk(bookingId)
+    // validBooking = validBooking.toJSON()
+    // console.log('VALIDBOOKING',validBooking)
+    let spot = await Spot.findByPk(validBooking.spotId)
+    if (validBooking.id !== bookingId) return res.status(404).json({
+        message: "Booking couldn't be found"
+    });
+    if (validBooking.userId !== currUser || spot.ownerId !== currUser) {
+        return res.status(403).json({
+            message: "Forbidden"
+        })
+    };
+    if(validBooking.startDate < today && validBooking.endDate > today){
+        return res.status(403).json({
+            message:'Bookings that have been started can\'t be deleted'
+        })
+    }
+    await Booking.destroy({
+        where: { id: bookingId }
+    });
+    return res.json({
+        message: "Successfully deleted"
+    })
+})
 
 
 module.exports = router
