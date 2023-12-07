@@ -404,6 +404,97 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
         )
     };
     res.json({ Bookings: data })
+});
+
+// * const startDate = new Date(booking.startDate)
+// * same thing for end date
+// * const today = new Date()
+// * make a query get all bookings, loop over them, check each booking against startdate and endate
+router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
+    const { startDate, endDate } = req.body
+    const currUser = req.user.id
+    const { spotId } = req.params
+    const today = new Date();
+    const validStartDate = new Date(startDate)
+    const validEndDate = new Date(endDate)
+
+    if(today > validStartDate) {
+        const error = new Error('Bad Request')
+        error.errors = {
+            startDate: "startDate cannot be in the past"
+        }
+        next(error)
+    }
+    if(validStartDate > validEndDate) {
+        const error = new Error('Bad Request')
+        error.errors = {
+            startDate: "endDate cannot be in the past"
+        }
+        next(error)
+    }
+    if (!(await Spot.findByPk(spotId))) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+    let isOwner = await Spot.findByPk(spotId)
+    if (isOwner.ownerId === currUser){
+        return res.status(403).json({
+            message: 'Forbidden'
+        })
+    }
+
+let bookings = await Booking.findAll({
+    where: {
+        spotId
+    }
+})
+bookings = bookings.map(booking => booking.toJSON())
+for (let i = 0; i < bookings.length; i++) {
+    const booking = bookings[i]
+    // console.log('BOOOOKING',booking)
+    const currStartDate = new Date(booking.startDate)
+    const currEndDate = new Date(booking.endDate)
+    if (validEndDate > currStartDate && validEndDate < currEndDate) {
+        const error = new Error("Sorry, this spot is already booked for the specified dates")
+        error.errors = {
+            endDate: "End date conflicts with an existing booking"
+        }
+        return next(error)
+    } else if (validStartDate > currStartDate && validStartDate < currEndDate){
+        const error = new Error("Sorry, this spot is already booked for the specified dates")
+        error.errors = {
+            startDate: "Start date conflicts with an existing booking"
+        }
+        return next(error)
+    } else if ((validStartDate > currStartDate && validEndDate < currEndDate)){
+        const error = new Error("Sorry, this spot is already booked for the specified dates")
+        error.errors = {
+            startDate: "Start date conflicts with an existing booking",
+            endDate: "End date conflicts with an existing booking"
+        }
+        return next(error)
+    }
+}
+/*
+findallbookings where spotId:spotId
+then loop over to find all bookings---- const currBookingStart = new Date(booking.startDate)
+check if valendDate is between currbookingstart and endate-- send endate error
+check if valstartDate is inbetween currbooking start and end-- send startdate error
+check if valstartDate and valendDate is between currbookingstart and end-- start and endate error
+*/
+
+    let bookingCreated = await Booking.create({
+        startDate,
+        endDate,
+        spotId,
+        userId: currUser,
+    })
+    bookingCreated = bookingCreated.toJSON()
+    // delete bookingCreated.createdAt
+    // delete bookingCreated.updatedAt
+
+    res.json(bookingCreated)
 })
 
 
