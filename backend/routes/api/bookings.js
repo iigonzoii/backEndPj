@@ -62,6 +62,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     };
     if (today > validEndDate) {
         const error = new Error('Past bookings can\'t be modified')
+        error.status = 403
         next(error)
     }
 
@@ -77,6 +78,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             startDate: "Start date conflicts with an existing booking",
             endDate: "End date conflicts with an existing booking"
         }
+        error.status = 403
         return next(error)
     } else if (validStartDate >= currBooking.StartDate && validEndDate <= currBooking.EndDate) {
         const error = new Error("Sorry, this spot is already booked for the specified dates")
@@ -84,6 +86,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             startDate: "Start date conflicts with an existing booking",
             endDate: "End date conflicts with an existing booking"
         }
+        // error.status(403)
         return next(error)
     } else if (validEndDate >= currBooking.StartDate && validEndDate <= currBooking.EndDate) {
         const error = new Error("Sorry, this spot is already booked for the specified dates")
