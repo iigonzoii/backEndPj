@@ -406,10 +406,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     res.json({ Bookings: data })
 });
 
-// * const startDate = new Date(booking.startDate)
-// * same thing for end date
-// * const today = new Date()
-// * make a query get all bookings, loop over them, check each booking against startdate and endate
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { startDate, endDate } = req.body
     const currUser = req.user.id
