@@ -71,7 +71,24 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             id: bookingId
         }
     })
-    console.log(currBooking.toJSON())
+    // console.log(currBooking.toJSON())
+
+    if (validStartDate < today) {
+        res.status(400).json({
+            message: 'Bad Request',
+            errors: {
+                startDate: 'sttartDate cannot be in the past'
+            }
+        })
+    };
+    if (validEndDate <= validStartDate) {
+        res.status(400).json({
+            message: 'Bad Request',
+            errors: {
+                endDate: 'endDate cannot be on or before startDate'
+            }
+        })
+    }
     if (validStartDate <= currBooking.startDate && validEndDate >= currBooking.endDate) {
         const error = new Error("Sorry, this spot is already booked for the specified dates")
         error.errors = {
@@ -86,19 +103,21 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             startDate: "Start date conflicts with an existing booking",
             endDate: "End date conflicts with an existing booking"
         }
-        // error.status(403)
+        error.status(403)
         return next(error)
     } else if (validEndDate >= currBooking.StartDate && validEndDate <= currBooking.EndDate) {
         const error = new Error("Sorry, this spot is already booked for the specified dates")
         error.errors = {
             endDate: "End date conflicts with an existing booking"
         }
+        error.status = 403
         return next(error)
     } else if (validStartDate >= currBooking.StartDate && validStartDate <= currBooking.EndDate) {
         const error = new Error("Sorry, this spot is already booked for the specified dates")
         error.errors = {
             startDate: "Start date conflicts with an existing booking"
         }
+        error.status = 403
         return next(error)
     }
 
