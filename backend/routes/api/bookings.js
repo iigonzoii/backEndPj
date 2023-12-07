@@ -148,8 +148,9 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     if (!validBooking) return res.status(404).json({
         message: "Booking couldn't be found"
     });
+    validBooking = validBooking.toJSON()
     let spot = await Spot.findByPk(validBooking.spotId);
-    if (validBooking.userId !== currUser || spot.ownerId !== currUser) {
+    if (validBooking.userId !== currUser  || spot.ownerId !== currUser) {
         return res.status(403).json({
             message: "Forbidden"
         })
@@ -159,7 +160,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
             message: 'Bookings that have been started can\'t be deleted'
         })
     };
-    await validBooking.destroy({
+    await Booking.destroy({
         where: { id: bookingId }
     });
     return res.json({
