@@ -420,7 +420,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             startDate: "startDate cannot be in the past"
         }
         error.status = 400
-        next(error)
+        return next(error)
     }
     if (validStartDate > validEndDate) {
         const error = new Error('Bad Request')
@@ -428,7 +428,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             endDate: "endDate cannot be on or before startDate"
         }
         error.status = 400
-        next(error)
+        return next(error)
     }
     if (!(await Spot.findByPk(spotId))) {
         return res.status(404).json({

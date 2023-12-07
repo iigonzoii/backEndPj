@@ -137,15 +137,12 @@ router.delete('/:bookingId', requireAuth, async(req, res, next) => {
     const { bookingId } = req.params
     const currUser = req.user.id
     today = new Date()
-
-    // ! something is wrong here. postman is being a little bitch
     let validBooking = await Booking.findByPk(bookingId)
-    // validBooking = validBooking.toJSON()
-    // console.log('VALIDBOOKING',validBooking)
-    let spot = await Spot.findByPk(validBooking.spotId)
-    if (validBooking.id !== bookingId) return res.status(404).json({
+
+    if (!validBooking) return res.status(404).json({
         message: "Booking couldn't be found"
     });
+    let spot = await Spot.findByPk(validBooking.spotId);
     if (validBooking.userId !== currUser || spot.ownerId !== currUser) {
         return res.status(403).json({
             message: "Forbidden"
@@ -155,8 +152,8 @@ router.delete('/:bookingId', requireAuth, async(req, res, next) => {
         return res.status(403).json({
             message:'Bookings that have been started can\'t be deleted'
         })
-    }
-    await Booking.destroy({
+    };
+    await validBooking.destroy({
         where: { id: bookingId }
     });
     return res.json({
