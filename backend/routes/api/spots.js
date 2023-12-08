@@ -54,25 +54,113 @@ const validateReview = [
         .isFloat({ min: 1 })
         .withMessage('must be an integer from 1 to 5'),
     handleValidationErrors
-]
+];
+
+const validateQueryFilters = [
+    check('page')
+        .optional()
+        .isInt({ min: 0, max: 10 })
+        .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+        .optional()
+        .isInt({ min: 1, max: 20 })
+        .withMessage('Size must be greater than or equal to 1'),
+    check('minLat')
+        .optional()
+        .isInt({ min: -90 })
+        .withMessage('Minimum latitude is invalid'),
+    check('maxLat')
+        .optional()
+        .isInt({ max: 90 })
+        .withMessage('Maximum latitude is invalid'),
+    check('minLng')
+        .optional()
+        .isInt({ min: -180 })
+        .withMessage('Minimum longitude is invalid'),
+    check('maxLng')
+        .optional()
+        .isInt({ max: 180 })
+        .withMessage('Maximum longitude is invalid'),
+    check('minPrice')
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage('Minimum price must be greater than or equal to 0'),
+    check('maxPrice')
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage('Maximum price must be greater than or equal to 0'),
+    handleValidationErrors
+];
 
 router.get('/', async (req, res, next) => {
-    // empty data obj to house all spots
+    let spots
+    let where = {}
     let data = {}
-    const spots = await Spot.findAll({
-        // all spots and what models to include... image and review are both needed to access avgrating and previewImage
-        include: [
-            {
-                model: Image,
-                as: 'SpotImages',
-                attributes: ['id', 'url', 'preview']
-                // where:{imageableType: "Spot"}
-            },
-            {
-                model: Review
-            }
-        ]
-    })
+    let { page, size } = req.query
+    page = !page ? 1 : parseInt(page)
+    size = !size ? 20 : parseInt(size)
+    let pagination = {}
+
+    if (page >= 1 && size >= 1) {
+        if (page > 10) {
+            pagination.limit = 10
+        } else {
+            pagination.limit = size
+        };
+        if (size > 20) {
+            pagination.offset = 20 * (page - 1)
+        } else {
+            pagination.offset = size * (page - 1)
+        }
+    }
+
+    if (req.query) {
+        if (req.query.minLat) {
+            where.lat = { [Op.gte]: req.query.minLat }
+        }
+        if (req.query.maxLat) {
+            where.lat = {}
+        }
+        if (req.query.minLng) {
+            where.lng = {}
+        }
+        if (req.query.maxLng) {
+            where.lng = {}
+        }
+        if (req.query.minPrice) {
+            where.price = {}
+        }
+        if (req.query.maxPrice) {
+            where.price = {}
+        }
+        spots = await Spot.findAll({
+            include: [
+                { model: Review },
+                {
+                    model: Image,
+                    as: 'SpotImages'
+                }
+            ],
+            ...pagination,
+            where
+        })
+    } else {
+        //! if gabe broke my code, take this spots out of the else and git rid of the else
+        spots = await Spot.findAll({
+            // all spots and what models to include... image and review are both needed to access avgrating and previewImage
+            include: [
+                {
+                    model: Image,
+                    as: 'SpotImages',
+                    attributes: ['id', 'url', 'preview']
+                },
+                {
+                    model: Review
+                }
+            ],
+        })
+    }
+
     // take spots findAll array, map through them, and convert to json
     data = spots.map(spot => spot.toJSON())
 
@@ -96,14 +184,12 @@ router.get('/', async (req, res, next) => {
         delete data.Reviews
         delete data.SpotImages
     });
-
-
-    return res.json({ Spots: data })
+    return res.json({ Spots: data, page, size })
 });
 // check error response when not logged in for create
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
-    const ownerId = req.user.id
+    const ownerId = +req.user.id
 
     if (!ownerId) {
         return res.status(403).json({
@@ -127,8 +213,8 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const { url, preview } = req.body
-    const { spotId } = req.params
-    const userId = req.user.id
+    const { spotId } = ++req.params
+    const userId = +req.user.id
     let isOwner = await Spot.findByPk(spotId);
     // just running !spotId wont work because numbers are valid even if the spot isnt, checking by pk will double down on validation making sure we dont run into errors
     if (!(await Spot.findByPk(spotId))) {
@@ -158,9 +244,9 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 });
 
 router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
-    const { spotId } = req.params
+    const { spotId } = +req.params
     const { address, city, state, country, lat, lng, name, description, price } = req.body
-    const userId = req.user.id
+    const userId = +req.user.id
     let isOwner = await Spot.findByPk(spotId);
     // api docs dont specify ownership, but according to the need for auth not only for a user, but an actual owner of a property, we will assume test specs somewhere will be checking this. so to cover a** check if Owner is true
     if (!(await Spot.findByPk(spotId))) return res.status(404).json({
@@ -194,8 +280,8 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
 });
 
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
-    const { spotId } = req.params
-    const userId = req.user.id
+    const { spotId } = +req.params
+    const userId = +req.user.id
     let validSpot = await Spot.findByPk(spotId)
     if (!validSpot) return res.status(404).json({
         message: "Spot couldn't be found"
@@ -216,7 +302,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 router.get('/current', requireAuth, async (req, res, next) => {
     // empty data obj to house all spots
     let data = {}
-    let currUser = req.user.id
+    let currUser = +req.user.id
     const spots = await Spot.findAll({
         // all spots and what models to include... image and review are both needed to access avgrating and previewImage
         where: {
@@ -263,7 +349,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 });
 
 router.get('/:spotId', async (req, res, next) => {
-    let { spotId } = req.params
+    let { spotId } = +req.params
     if (!(await Spot.findByPk(spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
@@ -310,7 +396,7 @@ router.get('/:spotId', async (req, res, next) => {
 
 router.get('/:spotId/reviews', async (req, res, next) => {
     let data = {}
-    let { spotId } = req.params
+    let { spotId } = +req.params
     if (!(await Spot.findByPk(spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
@@ -341,8 +427,8 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
 router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res, next) => {
     const { review, stars } = req.body
-    const { spotId } = req.params
-    let userId = req.user.id
+    const { spotId } = +req.params
+    let userId = +req.user.id
     if (!(await Spot.findByPk(spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
@@ -368,8 +454,8 @@ router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res, ne
 
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     let data = {}
-    let { spotId } = req.params
-    let userId = req.user.id
+    let { spotId } = +req.params
+    let userId = +req.user.id
     let isOwner = await Spot.findByPk(spotId);
 
     if (!(await Spot.findByPk(spotId))) {
@@ -408,8 +494,8 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { startDate, endDate } = req.body
-    const currUser = req.user.id
-    const { spotId } = req.params
+    const currUser = +req.user.id
+    const { spotId } = +req.params
     const today = new Date();
     const validStartDate = new Date(startDate)
     const validEndDate = new Date(endDate)
