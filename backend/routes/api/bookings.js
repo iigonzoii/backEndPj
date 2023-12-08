@@ -72,13 +72,13 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         error.status = 400
         return next(error)
     }
-    if (!(await Spot.findByPk(spotId))) {
+    if (!(await Booking.findByPk(bookingId))) {
         return res.status(404).json({
-            message: "Spot couldn't be found"
+            message: "Booking couldn't be found"
         })
     }
-    let isOwner = await Spot.findByPk(spotId)
-    if (isOwner.ownerId === currUser) {
+    let isOwner = await Booking.findByPk(bookingId)
+    if (isOwner.userId !== currUser) {
         return res.status(403).json({
             message: 'Forbidden'
         })
