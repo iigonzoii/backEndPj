@@ -3,14 +3,14 @@ const { Op } = require('sequelize');
 const { check } = require('express-validator');
 const { handleValidationErrors, } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth')
-const { Spot, Image, User, Booking } = require('../../db/models');
+const { Spot, Image, Booking } = require('../../db/models');
 const router = express.Router();
 
 
 
 router.get('/current', requireAuth, async (req, res, next) => {
     let data = {}
-    let currUser = req.user.id
+    let currUser = +req.user.id
     const usersBookings = await Booking.findAll({
         where: {
             userId: currUser
@@ -46,8 +46,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const { startDate, endDate } = req.body
-    const currUser = req.user.id
-    const { bookingId } = req.params
+    const currUser = +req.user.id
+    const { bookingId } = +req.params
     const today = new Date();
     const validStartDate = new Date(startDate)
     const validEndDate = new Date(endDate)
@@ -72,13 +72,13 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         error.status = 400
         return next(error)
     }
-    if (!(await Spot.findByPk(spotId))) {
+    if (!(await Booking.findByPk(bookingId))) {
         return res.status(404).json({
-            message: "Spot couldn't be found"
+            message: "Booking couldn't be found"
         })
     }
-    let isOwner = await Spot.findByPk(spotId)
-    if (isOwner.ownerId === currUser) {
+    let isOwner = await Booking.findByPk(bookingId)
+    if (isOwner.userId !== currUser) {
         return res.status(403).json({
             message: 'Forbidden'
         })
@@ -140,8 +140,8 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 });
 
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
-    const { bookingId } = req.params
-    const currUser = req.user.id
+    const { bookingId } = +req.params
+    const currUser = +req.user.id
     today = new Date()
     let validBooking = await Booking.findByPk(bookingId)
 

@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.get('/current', requireAuth, async (req, res, next) => {
     let data = {}
-    let currUser = req.user.id
+    let currUser = +req.user.id
     let reviews = await Review.findAll({
         where: {
             userId: currUser
@@ -64,8 +64,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 router.post('/:reviewId/images', requireAuth, async(req, res) => {
     const { url } = req.body
-    const { reviewId } = req.params
-    const  userId  = req.user.id
+    const { reviewId } = +req.params
+    const  userId  = +req.user.id
     let currReview = await Review.findByPk(reviewId, {
         include:[{
             model:Image,
@@ -102,9 +102,9 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
 });
 
 router.put('/:reviewId', requireAuth, validateReview, async(req, res, next) => {
-    const { reviewId } = req.params
+    const { reviewId } = +req.params
     const { review, stars } = req.body
-    const userId = req.user.id
+    const userId = +req.user.id
 
     let isOwner = await Review.findByPk(reviewId);
     if (!(await Review.findByPk(reviewId))) return res.status(404).json({
@@ -129,8 +129,8 @@ router.put('/:reviewId', requireAuth, validateReview, async(req, res, next) => {
 });
 
 router.delete('/:reviewId', requireAuth, async(req,res) => {
-    const { reviewId } = req.params
-    const userId = req.user.id
+    const { reviewId } = +req.params
+    const userId = +req.user.id
     let validreview = await Review.findByPk(reviewId)
     if (!validreview) return res.status(404).json({
         message: "Review couldn't be found"

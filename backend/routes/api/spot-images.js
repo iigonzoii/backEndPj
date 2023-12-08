@@ -5,8 +5,8 @@ const router = express.Router();
 
 
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
-    const { imageId } = req.params
-    let currUser = req.user.id
+    const { imageId } = +req.params
+    let currUser = +req.user.id
     const image = await Image.findByPk(imageId)
     let spot
 
