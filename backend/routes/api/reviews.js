@@ -16,8 +16,9 @@ check('stars')
     handleValidationErrors
 ]
 
-// ! create validaion error handler
 const router = express.Router();
+
+
 router.get('/current', requireAuth, async (req, res, next) => {
     let data = {}
     let currUser = req.user.id
