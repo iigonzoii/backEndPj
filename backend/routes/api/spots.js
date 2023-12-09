@@ -240,7 +240,7 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const { url, preview } = req.body
-    const { spotId } = ++req.params
+    const { spotId } = req.params
     const userId = +req.user.id
     let isOwner = await Spot.findByPk(spotId);
     // just running !spotId wont work because numbers are valid even if the spot isnt, checking by pk will double down on validation making sure we dont run into errors
@@ -271,7 +271,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 });
 
 router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
-    const { spotId } = +req.params
+    const { spotId } = req.params
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const userId = +req.user.id
     let isOwner = await Spot.findByPk(spotId);
@@ -307,7 +307,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
 });
 
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
-    const { spotId } = +req.params
+    const { spotId } = req.params
     const userId = +req.user.id
     let validSpot = await Spot.findByPk(spotId)
     if (!validSpot) return res.status(404).json({
@@ -376,13 +376,13 @@ router.get('/current', requireAuth, async (req, res, next) => {
 });
 
 router.get('/:spotId', async (req, res, next) => {
-    let { spotId } = +req.params
-    if (!(await Spot.findByPk(spotId))) {
+    let { spotId } = req.params
+    if (!(await Spot.findByPk(+spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
         })
     };
-    let thisSpot = await Spot.findByPk(spotId, {
+    let thisSpot = await Spot.findByPk(+spotId, {
         include: [
             {
                 model: Image,
@@ -423,15 +423,15 @@ router.get('/:spotId', async (req, res, next) => {
 
 router.get('/:spotId/reviews', async (req, res, next) => {
     let data = {}
-    let { spotId } = +req.params
-    if (!(await Spot.findByPk(spotId))) {
+    let { spotId } = req.params
+    if (!(await Spot.findByPk(+spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
         })
     };
     let reviews = await Review.findAll({
         where: {
-            id: spotId
+            id: +spotId
         },
         include: [
             {
@@ -452,11 +452,11 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
 });
 
-router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res, next) => {
+router.post('/:spotId/reviews', requireAuth, validateReview,  async (req, res, next) => {
     const { review, stars } = req.body
-    const { spotId } = +req.params
+    const { spotId } = req.params
     let userId = +req.user.id
-    if (!(await Spot.findByPk(spotId))) {
+    if (!(await Spot.findByPk(+spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
         })
@@ -481,18 +481,18 @@ router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res, ne
 
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     let data = {}
-    let { spotId } = +req.params
+    let { spotId } = req.params
     let userId = +req.user.id
-    let isOwner = await Spot.findByPk(spotId);
+    let isOwner = await Spot.findByPk(+spotId);
 
-    if (!(await Spot.findByPk(spotId))) {
+    if (!(await Spot.findByPk(+spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
         })
     };
     let bookings = await Booking.findAll({
         where: {
-            id: spotId
+            id: +spotId
         },
         include: [
             {
@@ -522,7 +522,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { startDate, endDate } = req.body
     const currUser = +req.user.id
-    const { spotId } = +req.params
+    const { spotId } = req.params
     const today = new Date();
     const validStartDate = new Date(startDate)
     const validEndDate = new Date(endDate)
@@ -543,12 +543,12 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         error.status = 400
         return next(error)
     }
-    if (!(await Spot.findByPk(spotId))) {
+    if (!(await Spot.findByPk(+spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
         })
     }
-    let isOwner = await Spot.findByPk(spotId)
+    let isOwner = await Spot.findByPk(+spotId)
     if (isOwner.ownerId === currUser) {
         return res.status(403).json({
             message: 'Forbidden'
@@ -557,7 +557,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     let bookings = await Booking.findAll({
         where: {
-            spotId
+            spotId: +spotId
         }
     })
     bookings = bookings.map(booking => booking.toJSON())
@@ -602,7 +602,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     let bookingCreated = await Booking.create({
         startDate,
         endDate,
-        spotId,
+        spotId:+spotId,
         userId: currUser,
     })
     bookingCreated = bookingCreated.toJSON()
@@ -612,5 +612,3 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 
 module.exports = router
-
-

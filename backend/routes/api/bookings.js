@@ -47,11 +47,11 @@ router.get('/current', requireAuth, async (req, res, next) => {
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const { startDate, endDate } = req.body
     const currUser = +req.user.id
-    const { bookingId } = +req.params
+    const { bookingId } = req.params
     const today = new Date();
     const validStartDate = new Date(startDate)
     const validEndDate = new Date(endDate)
-    let booking = await Booking.findByPk(bookingId)
+    let booking = await Booking.findByPk(+bookingId)
     booking = booking.toJSON()
     let spot = await Spot.findByPk(booking.spotId)
     spot = spot.toJSON()
@@ -72,12 +72,12 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         error.status = 400
         return next(error)
     }
-    if (!(await Booking.findByPk(bookingId))) {
+    if (!(await Booking.findByPk(+bookingId))) {
         return res.status(404).json({
             message: "Booking couldn't be found"
         })
     }
-    let isOwner = await Booking.findByPk(bookingId)
+    let isOwner = await Booking.findByPk(+bookingId)
     if (isOwner.userId !== currUser) {
         return res.status(403).json({
             message: 'Forbidden'
@@ -133,17 +133,17 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         endDate
     }, {
         where: {
-            id: bookingId
+            id: +bookingId
         }
     })
     res.json(updated)
 });
 
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
-    const { bookingId } = +req.params
+    const { bookingId } = req.params
     const currUser = +req.user.id
     today = new Date()
-    let validBooking = await Booking.findByPk(bookingId)
+    let validBooking = await Booking.findByPk(+bookingId)
 
     if (!validBooking) return res.status(404).json({
         message: "Booking couldn't be found"
@@ -161,7 +161,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
         })
     };
     await Booking.destroy({
-        where: { id: bookingId }
+        where: { id: +bookingId }
     });
     return res.json({
         message: "Successfully deleted"

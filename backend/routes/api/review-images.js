@@ -8,9 +8,9 @@ const { Spot, Image, User, Review, Booking } = require('../../db/models');
 const router = express.Router();
 
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
-    const { imageId } = +req.params
+    const { imageId } = req.params
     let currUser = +req.user.id
-    const image = await Image.findByPk(imageId)
+    const image = await Image.findByPk(+imageId)
     let review
 
     if (image) {
