@@ -9,27 +9,32 @@ const router = express.Router();
 
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const { imageId } = req.params
+    console.log("IMAGEID", imageId)
     let currUser = +req.user.id
-    const image = await Image.findByPk(+imageId)
+    let image = await Image.findByPk(+imageId)
+    if (!image) {
+        return res.status(404).json({
+            message: 'Review Image couldn\'t be found'
+        })
+    }
     let review
-
-    if (image) {
+    console.log("IMAGEB4JSON", image)
+    let jsonImage = image.toJSON()
+    console.log("IMMMMAGEAFTERRR", image)
+    if (jsonImage) {
         review = await Review.findOne({
             where: {
                 id: image.imageableId
             }
         });
+        console.log("REVIEW", review)
         if (review.userId !== currUser) {
             return res.status(403).json({
                 message: "Forbidden"
             })
         }
     };
-    if (!image) {
-        return res.status(404).json({
-            message: 'Review Image couldn\'t be found'
-        })
-    }
+
     await image.destroy(image)
     return res.json({
         message: "Succesfully deleted"

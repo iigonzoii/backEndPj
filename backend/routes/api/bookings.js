@@ -6,8 +6,6 @@ const { requireAuth } = require('../../utils/auth')
 const { Spot, Image, Booking } = require('../../db/models');
 const router = express.Router();
 
-
-
 router.get('/current', requireAuth, async (req, res, next) => {
     let data = {}
     let currUser = +req.user.id
@@ -152,13 +150,12 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const currUser = +req.user.id
     today = new Date()
     let validBooking = await Booking.findByPk(+bookingId)
-
     if (!validBooking) return res.status(404).json({
         message: "Booking couldn't be found"
     });
     validBooking = validBooking.toJSON()
     let spot = await Spot.findByPk(validBooking.spotId);
-    if (validBooking.userId !== currUser || spot.ownerId !== currUser) {
+    if (validBooking.userId !== currUser && spot.ownerId !== currUser) {
         return res.status(403).json({
             message: "Forbidden"
         })
@@ -175,6 +172,5 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
         message: "Successfully deleted"
     })
 })
-
 
 module.exports = router
