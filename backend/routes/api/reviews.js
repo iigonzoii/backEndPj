@@ -6,13 +6,13 @@ const { requireAuth } = require('../../utils/auth')
 const { Spot, Image, User, Review } = require('../../db/models');
 const validateReview = [
     check('review')
-    .exists({ checkFalsy: true })
-    .notEmpty()
-    .withMessage('Review text is required'),
-check('stars')
-    .exists({ checkFalsy: true })
-    .isFloat({min:1})
-    .withMessage('must be an integer from 1 to 5'),
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isFloat({ min: 1 })
+        .withMessage('must be an integer from 1 to 5'),
     handleValidationErrors
 ]
 
@@ -48,21 +48,21 @@ router.get('/current', requireAuth, async (req, res, next) => {
         ],
     })
     data = reviews.map(review => review.toJSON());
-    console.log("THATDATATHOUGH",data)
+    console.log("THATDATATHOUGH", data)
 
     data.forEach(review => {
-        console.log("REREEEEEE", review)
-        console.log("REVIEWSPOTIMAGES", review.Spot.SpotImages)
+        // console.log("REREEEEEE", review)
         if (review.ReviewImages.length === 0) {
             review.ReviewImages = {
                 message: 'no images to display'
             }
-            if (review.Spot.SpotImages.length === 0){
-                review.Spot.SpotImages = {message:'no images to display'}
+            if (review.Spot.SpotImages.length === 0) {
+                review.Spot.previewImage = 'no images url'
+            } else {
+                review.Spot.SpotImages.forEach(image => {
+                    review.Spot.previewImage = image.url
+                })
             }
-            review.Spot.SpotImages.forEach(image => {
-                if (image.preview) review.Spot.previewImage = image.url
-            })
         }
         delete review.Spot.SpotImages
         delete review.Spot.createdAt
@@ -71,14 +71,14 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json({ Reviews: data })
 });
 
-router.post('/:reviewId/images', requireAuth, async(req, res) => {
+router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const { url } = req.body
     const { reviewId } = req.params
-    const  userId  = +req.user.id
+    const userId = +req.user.id
     let currReview = await Review.findByPk(+reviewId, {
-        include:[{
-            model:Image,
-            as:'ReviewImages'
+        include: [{
+            model: Image,
+            as: 'ReviewImages'
         }]
     });
 
@@ -110,7 +110,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
     return res.json(rez)
 });
 
-router.put('/:reviewId', requireAuth, validateReview, async(req, res, next) => {
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
     const { reviewId } = req.params
     const { review, stars } = req.body
     const userId = +req.user.id
@@ -137,7 +137,7 @@ router.put('/:reviewId', requireAuth, validateReview, async(req, res, next) => {
     res.json(updated)
 });
 
-router.delete('/:reviewId', requireAuth, async(req,res) => {
+router.delete('/:reviewId', requireAuth, async (req, res) => {
     const { reviewId } = req.params
     const userId = +req.user.id
     let validreview = await Review.findByPk(+reviewId)

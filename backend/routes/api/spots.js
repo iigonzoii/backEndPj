@@ -451,12 +451,12 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     res.json({ Reviews: data })
 
 });
-// ! getting spot coulnt be found for create a review
+
 router.post('/:spotId/reviews', requireAuth, validateReview,  async (req, res, next) => {
     const { review, stars } = req.body
     const { spotId } = req.params
     let userId = +req.user.id
-    if (!(await Spot.findByPk(spotId))) {
+    if (!(await Spot.findByPk(+spotId))) {
         return res.status(404).json({
             message: "Spot couldn't be found"
         })
@@ -473,7 +473,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview,  async (req, res, n
         review,
         stars,
         userId,
-        spotId,
+        spotId: +spotId
     })
 
     return res.json(createdReview)
