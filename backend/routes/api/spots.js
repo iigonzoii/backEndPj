@@ -113,7 +113,7 @@ router.get('/', queryValidatorOptional, async (req, res, next) => {
             pagination.offset = size * (page - 1)
         }
     }
-
+//! should i change this to if page && size && req.query exist
     if (req.query) {
         if (req.query.minLat) {
             where.lat = {

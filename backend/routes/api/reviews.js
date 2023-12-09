@@ -48,21 +48,19 @@ router.get('/current', requireAuth, async (req, res, next) => {
         ],
     })
     data = reviews.map(review => review.toJSON());
-    console.log("THATDATATHOUGH", data)
 
     data.forEach(review => {
-        // console.log("REREEEEEE", review)
         if (review.ReviewImages.length === 0) {
             review.ReviewImages = {
                 message: 'no images to display'
             }
-            if (review.Spot.SpotImages.length === 0) {
-                review.Spot.previewImage = 'no images url'
-            } else {
-                review.Spot.SpotImages.forEach(image => {
-                    review.Spot.previewImage = image.url
-                })
-            }
+        }
+        if (review.Spot.SpotImages.length === 0) {
+            review.Spot.previewImage = 'no images url'
+        } else {
+            review.Spot.SpotImages.forEach(image => {
+                review.Spot.previewImage = image.url
+            })
         }
         delete review.Spot.SpotImages
         delete review.Spot.createdAt
