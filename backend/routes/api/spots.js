@@ -431,7 +431,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     };
     let reviews = await Review.findAll({
         where: {
-            id: +spotId
+            spotId: +spotId
         },
         include: [
             {
@@ -476,7 +476,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview,  async (req, res, n
         spotId: +spotId
     })
 
-    return res.json(createdReview)
+    return res.status(201).json(createdReview)
 });
 
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
