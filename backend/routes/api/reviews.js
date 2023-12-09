@@ -12,7 +12,7 @@ const validateReview = [
     check('stars')
         .exists({ checkFalsy: true })
         .isFloat({ min: 1 })
-        .withMessage('must be an integer from 1 to 5'),
+        .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
 ]
 

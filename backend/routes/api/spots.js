@@ -281,7 +281,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     })
     // if the ownerId key of the spot we found doesnt have the current authorized userId as its value, then we shut it down.
     if (isOwner.ownerId !== userId) {
-        res.status(403).json({
+        return res.status(403).json({
             message: "Forbidden"
         })
     };
@@ -303,7 +303,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     })
     // return updated spot
     let updated = await Spot.findByPk(spotId)
-    res.json(updated)
+    return res.json(updated)
 });
 
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
@@ -314,7 +314,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
         message: "Spot couldn't be found"
     })
     if (validSpot.ownerId !== userId) {
-        res.status(403).json({
+       return res.status(403).json({
             message: "Forbidden"
         })
     };
@@ -535,7 +535,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         error.status = 400
         return next(error)
     }
-    if (validStartDate > validEndDate) {
+    if (validStartDate >= validEndDate) {
         const error = new Error('Bad Request')
         error.errors = {
             endDate: "endDate cannot be on or before startDate"
@@ -566,7 +566,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         // console.log('BOOOOKING',booking)
         const currStartDate = new Date(booking.startDate)
         const currEndDate = new Date(booking.endDate)
-        if (validStartDate <= currStartDate && validEndDate >= currEndDate) {
+        // if(validStartDate === currStartDate && validEndDate === currEndDate) {}
+        if (validStartDate <= currStartDate && validEndDate >= currStartDate) {
             const error = new Error("Sorry, this spot is already booked for the specified dates")
             error.errors = {
                 startDate: "Start date conflicts with an existing booking",

@@ -19,15 +19,15 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
                 id: image.imageableId
             }
         });
-    }
+        if (review.userId !== currUser) {
+            return res.status(403).json({
+                message: "Forbidden"
+            })
+        }
+    };
     if (!image) {
         return res.status(404).json({
             message: 'Review Image couldn\'t be found'
-        })
-    }
-    if (review.userId !== currUser) {
-        return res.status(403).json({
-            message: "Forbidden"
         })
     }
     await image.destroy(image)

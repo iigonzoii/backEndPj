@@ -52,6 +52,12 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const validStartDate = new Date(startDate)
     const validEndDate = new Date(endDate)
     let booking = await Booking.findByPk(+bookingId)
+    if (!(await Booking.findByPk(+bookingId))) {
+        return res.status(404).json({
+            message: "Booking couldn't be found"
+        })
+    }
+
     booking = booking.toJSON()
     let spot = await Spot.findByPk(booking.spotId)
     spot = spot.toJSON()
@@ -64,7 +70,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         error.status = 400
         return next(error)
     }
-    if (validStartDate > validEndDate) {
+    if (validStartDate >= validEndDate) {
         const error = new Error('Bad Request')
         error.errors = {
             endDate: "endDate cannot be on or before startDate"
@@ -72,11 +78,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         error.status = 400
         return next(error)
     }
-    if (!(await Booking.findByPk(+bookingId))) {
-        return res.status(404).json({
-            message: "Booking couldn't be found"
-        })
-    }
+
     let isOwner = await Booking.findByPk(+bookingId)
     if (isOwner.userId !== currUser) {
         return res.status(403).json({
@@ -86,7 +88,11 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
     let bookings = await Booking.findAll({
         where: {
-            spotId
+            spotId,
+            id: {
+                // excluding current booking
+                [Op.ne]: bookingId
+            }
         }
     })
     bookings = bookings.map(booking => booking.toJSON())
@@ -95,7 +101,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         // console.log('BOOOOKING',booking)
         const currStartDate = new Date(booking.startDate)
         const currEndDate = new Date(booking.endDate)
-        if (validStartDate <= currStartDate && validEndDate >= currEndDate) {
+        if (validStartDate <= currStartDate && validEndDate >= currStartDate) {
             const error = new Error("Sorry, this spot is already booked for the specified dates")
             error.errors = {
                 startDate: "Start date conflicts with an existing booking",
@@ -128,15 +134,17 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         }
     }
 
-    let updated = await Booking.update({
+    await Booking.update({
         startDate,
         endDate
     }, {
         where: {
             id: +bookingId
         }
-    })
-    res.json(updated)
+    });
+    // i passed in booking because
+    let rez = await Booking.findByPk(bookingId)
+    res.json(rez)
 });
 
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
@@ -150,7 +158,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     });
     validBooking = validBooking.toJSON()
     let spot = await Spot.findByPk(validBooking.spotId);
-    if (validBooking.userId !== currUser  || spot.ownerId !== currUser) {
+    if (validBooking.userId !== currUser || spot.ownerId !== currUser) {
         return res.status(403).json({
             message: "Forbidden"
         })
