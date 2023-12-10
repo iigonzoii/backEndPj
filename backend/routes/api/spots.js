@@ -491,8 +491,9 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
         })
     };
     let bookings = await Booking.findAll({
+        // *commit this change from id:spotId to spotId: spotId on line 496
         where: {
-            id: +spotId
+            spotId: +spotId
         },
         include: [
             {
