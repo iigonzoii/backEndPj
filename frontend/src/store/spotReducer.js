@@ -1,4 +1,4 @@
-// import { createSelector } from "reselect"
+import { createSelector } from "reselect"
 
 //* action types
 
@@ -22,13 +22,15 @@ export const fetchSpots = () => async (dispatch) => {
 };
 
 //* reducers
+const selectedSpots = state =>  state.spotState.entries
 
-const initialState = { entries: {}, isLoading: true };
+export const selectSpotsArr = createSelector(selectedSpots, spots => Object.values(spots))
+const initialState = { entries: {} };
 
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS: {
-            let newState = { ...state, entries: { ...state.entries } }
+            let newState = { ...state, entries: { ...state.entries} }
             action.spots.forEach(spot => {
                 newState.entries[spot.id] = spot
             })
