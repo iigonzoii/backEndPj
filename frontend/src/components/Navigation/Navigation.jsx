@@ -9,7 +9,7 @@ function Navigation({ isLoaded }) {
   return (
     <nav>
 
-      <div className = "title"><i className="fa-solid fa-water"></i>Water B&B</div>
+      <div className = "title pointer"><i className="fa-solid fa-water"></i>Water B&B</div>
       <div>
         <NavLink to="/">Home</NavLink>
       </div>

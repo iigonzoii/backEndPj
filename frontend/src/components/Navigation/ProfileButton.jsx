@@ -39,7 +39,7 @@ function ProfileButton({ user }) {
 
   return (
     <div>
-      <button onClick={toggleMenu}>
+      <button className='pointer' onClick={toggleMenu}>
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>

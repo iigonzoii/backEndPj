@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { fetchSpots } from "../../store/spotReducer"
 import { useDispatch, useSelector } from 'react-redux';
 
-// * crud action is get
+
 
 
 function LandingPage() {
@@ -15,11 +15,12 @@ function LandingPage() {
         dispatch(fetchSpots());
     }, [dispatch]);
 
+
     return (
         <div className="container">
             {spots && spots.map((spot, index) => (
                 <div key={index}>
-                    <img src={spot.previewImage} />
+<img className="pointer" src={spot.previewImage} />
                     <div className="spotDataGrid">
                         <p className="cityState">{`${spot.city},${spot.state}`}</p>
                         <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot.avgRating}`}</p>

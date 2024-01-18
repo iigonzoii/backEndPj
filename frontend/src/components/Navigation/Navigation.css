@@ -2,6 +2,11 @@
     display: none;
 }
 
-.title{
-    font-size: xxx-large;
+nav{
+    display: grid;
+    border-bottom: solid grey;
+}
+
+.pointer{
+    cursor:pointer;
 }
