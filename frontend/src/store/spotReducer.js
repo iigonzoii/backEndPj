@@ -18,21 +18,23 @@ export const loadSpots = (spots) => {
 export const fetchSpots = () => async (dispatch) => {
     const response = await fetch('/api/spots');
     const spots = await response.json();
+    // console.log("spotsssss", spots)
     dispatch(loadSpots(spots));
 };
 
 //* reducers
-const selectedSpots = state =>  state.spotState.entries
+const selectedSpots = state =>  state.spots
 
-export const selectSpotsArr = createSelector(selectedSpots, spots => Object.values(spots))
-const initialState = { entries: {} };
+export const selectSpotsArr = createSelector(selectedSpots, spots => spots)
+const initialState = {};
 
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS: {
-            let newState = { ...state, entries: { ...state.entries} }
-            action.spots.forEach(spot => {
-                newState.entries[spot.id] = spot
+            let newState = {}
+            // console.log("action.spots",action.spots)
+            action.spots.data.forEach(spot => {
+                newState[spot.id] = spot
             })
             return newState
         }

@@ -1,32 +1,32 @@
 import "./LandingPage.css"
 import { useEffect } from 'react';
-import { selectSpotsArr, fetchSpots } from "../../store/spotReducer"
+import { fetchSpots } from "../../store/spotReducer"
 import { useDispatch, useSelector } from 'react-redux';
 
 // * crud action is get
-// *
-
-// * fetching data happens in thunks always
-
 
 
 function LandingPage() {
     const dispatch = useDispatch();
-    const spots = useSelector(selectSpotsArr);
-
+    let spots = useSelector(state => state.spot);
+    spots = Object.values(spots)
+    console.log(spots)
     useEffect(() => {
-      dispatch(fetchSpots());
+        dispatch(fetchSpots());
     }, [dispatch]);
-    console.log("SPOTS",spots)
 
     return (
         <div className="container">
-            <img src="https://firebasestorage.googleapis.com/v0/b/react-portfolio-7e81b.appspot.com/o/juniperPass.jpg?alt=media&token=0791aeeb-c0d2-497d-9874-75fd7b25718e" />
-            <div>
-                <p>city and state</p>
-                <p>star and avg rating</p>
-                <p>$123.00 a night</p>
-            </div>
+            {spots && spots.map((spot, index) => (
+                <div key={index}>
+                    <img src={spot.previewImage} />
+                    <div className="spotDataGrid">
+                        <p className="cityState">{`${spot.city},${spot.state}`}</p>
+                        <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot.avgRating}`}</p>
+                        <p className="price">{`$${spot.price} a night`}</p>
+                    </div>
+                </div>
+            ))}
         </div>
     )
 }
