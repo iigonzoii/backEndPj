@@ -27,21 +27,21 @@ function SpotDetailsPage() {
                     ))}
             </div>
             <div>
-                {<p>{`Hosted by ${spot.Owner.firstName} ${spot.Owner.lastName}`}</p>}
-                {<p>{spot.description}</p>}
+                {<p>{`Hosted by ${spot && spot.Owner.firstName} ${spot.Owner.lastName}`}</p>}
+                {<p>{spot && spot.description}</p>}
             </div>
             <aside>
-                <p className="">{`$${spot.price} a night`}</p>
-                <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot.avgStarRating}`}</p>
-                <p className="">{`${spot.numReviews} reviews`}</p>
+                <p className="">{`$${spot && spot.price} a night`}</p>
+                <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot && spot.avgStarRating}`}</p>
+                <p className="">{`${spot && spot.numReviews} reviews`}</p>
                 <button className="pointer">Reserve</button>
             </aside>
             <div>
-            <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot.avgStarRating}`}</p>
-            <p className="">{`${spot.numReviews} reviews`}</p>
+            <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot && spot.avgStarRating}`}</p>
+            <p className="">{`${spot && spot.numReviews} reviews`}</p>
             </div>
             <div>
-                
+
             </div>
         </div>
     )
