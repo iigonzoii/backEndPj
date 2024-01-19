@@ -1,8 +1,9 @@
-import { createSelector } from "reselect"
+import { csrfFetch } from "./csrf"
 
 //* action types
 
 const LOAD_SPOTS = "spot/loadSpots"
+const LOAD_SPOT = "spot/loadSpot"
 
 //* action creators
 
@@ -12,34 +13,42 @@ export const loadSpots = (spots) => {
         spots
     }
 }
+export const loadSpot = (spot) => {
+    return {
+        type: LOAD_SPOT,
+        spot
+    }
+}
 
 //* thunks
 
 export const fetchSpots = () => async (dispatch) => {
-    const response = await fetch('/api/spots');
+    const response = await csrfFetch('/api/spots');
     const spots = await response.json();
-    // console.log("spotsssss", spots)
     dispatch(loadSpots(spots));
 };
 
-//* reducers
-const selectedSpots = state =>  state.spots
+export const fetchSpot = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`)
+    const spot = await response.json()
+    dispatch(loadSpot(spot))
+}
 
-export const selectSpotsArr = createSelector(selectedSpots, spots => spots)
+//* reducers
+
 const initialState = {};
 
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS: {
             let newState = {}
-            // console.log("action.spots",action.spots)
             action.spots.data.forEach(spot => {
                 newState[spot.id] = spot
             })
             return newState
         }
-        // case ADD_ARTICLE:
-        //     return { ...state, entries: [...state.entries, action.spot] };
+        case LOAD_SPOT:
+            return { ...state, spotDetail: action.spot};
         default:
             return state;
     }
