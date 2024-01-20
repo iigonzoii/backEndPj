@@ -2,22 +2,29 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { fetchSpot } from "../../store/spotReducer"
+import { fetchReview } from "../../store/reviewReducer"
 
 
 function SpotDetailsPage() {
     const { spotId } = useParams()
     const dispatch = useDispatch();
     let spot = useSelector(state => state.spot.spotDetail);
-    console.log("dalsijfldsiajkf", spotId)
+
+    let review = useSelector(state => state.review)
+    review = Object.values(review)
+    console.log("review", review)
     useEffect(() => {
+        dispatch(fetchReview(+spotId))
         dispatch(fetchSpot(+spotId));
-    }, [dispatch, spotId]);
+    }, [dispatch, spotId ]);
+
+    // let month = review.createdAt.split("-")
 
     return (
         <div>
             <div>
                 {<p>{spot && spot.name}</p>}
-                {<p>{`${spot && spot.city},${spot && spot.state}, ${spot && spot.country}`}</p>}
+                {<p>{`${spot && spot.city}, ${spot && spot.state}, ${spot && spot.country}`}</p>}
             </div>
             <div>
                 {spot && spot.SpotImages.map((img, index) => (
@@ -27,7 +34,7 @@ function SpotDetailsPage() {
                     ))}
             </div>
             <div>
-                {<p>{`Hosted by ${spot && spot.Owner.firstName} ${spot.Owner.lastName}`}</p>}
+                {<p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>}
                 {<p>{spot && spot.description}</p>}
             </div>
             <aside>
@@ -41,7 +48,13 @@ function SpotDetailsPage() {
             <p className="">{`${spot && spot.numReviews} reviews`}</p>
             </div>
             <div>
-
+                    {review && review.map((review, index) => (
+                        <div key ={index}>
+                            <p>{review.User.firstName}</p>
+                            <p>{review.createdAt.split("-")[1]} {review.createdAt.split("-")[0]}</p>
+                            <p>{review.review}</p>
+                        </div>
+                    ))}
             </div>
         </div>
     )
