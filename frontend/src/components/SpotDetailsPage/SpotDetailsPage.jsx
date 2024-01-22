@@ -18,8 +18,6 @@ function SpotDetailsPage() {
         dispatch(fetchSpot(+spotId));
     }, [dispatch, spotId ]);
 
-    // let month = review.createdAt.split("-")
-
     return (
         <div>
             <div>
