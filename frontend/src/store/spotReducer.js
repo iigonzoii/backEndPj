@@ -1,12 +1,13 @@
 import { csrfFetch } from "./csrf"
 
 //* action types
+//* step 2
 
 const LOAD_SPOTS = "spot/loadSpots"
 const LOAD_SPOT = "spot/loadSpot"
 
 //* action creators
-
+//* step 3
 export const loadSpots = (spots) => {
     return {
         type: LOAD_SPOTS,
@@ -20,7 +21,8 @@ export const loadSpot = (spot) => {
     }
 }
 
-//* thunks
+//* thunks function that communicates with the backend. this manipulates all the information from front to back, back to front
+//* step one
 
 export const fetchSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots');
@@ -35,7 +37,7 @@ export const fetchSpot = (spotId) => async (dispatch) => {
 }
 
 //* reducers
-
+//* step four 
 const initialState = {};
 
 const spotReducer = (state = initialState, action) => {
