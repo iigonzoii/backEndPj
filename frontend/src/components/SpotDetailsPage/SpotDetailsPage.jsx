@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { fetchSpot } from "../../store/spotReducer"
-import { fetchReview } from "../../store/reviewReducer"
+import { fetchReviews } from "../../store/reviewReducer"
 
 
 function SpotDetailsPage() {
@@ -14,7 +14,7 @@ function SpotDetailsPage() {
     review = Object.values(review)
     console.log("review", review)
     useEffect(() => {
-        dispatch(fetchReview(+spotId))
+        dispatch(fetchReviews(+spotId))
         dispatch(fetchSpot(+spotId));
     }, [dispatch, spotId ]);
 

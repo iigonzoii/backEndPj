@@ -10,8 +10,8 @@ function Navigation({ isLoaded }) {
   // let navigate = useNavigate()
 
   return (
+    
     <nav>
-
       <div>
       <div className = "title"><NavLink to="/"><i className="fa-solid fa-water pointer"></i></NavLink>Water B&B</div>
       </div>
@@ -20,7 +20,6 @@ function Navigation({ isLoaded }) {
           <ProfileButton user={sessionUser} />
         </div>
       )}
-
     </nav>
   );
 }

@@ -3,10 +3,13 @@
 }
 
 nav{
-    display: grid;
+    display: flex;
     border-bottom: solid grey;
+    justify-content: space-between;
 }
 
 .pointer{
     cursor:pointer;
 }
+
+/* *layout should be in a container, because everything is nested within it, but should i also put my navbar into a container */
