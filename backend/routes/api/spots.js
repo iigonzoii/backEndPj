@@ -211,7 +211,7 @@ router.get('/', queryValidatorOptional, async (req, res, next) => {
         delete data.Reviews
         delete data.SpotImages
     });
-    return res.json({ Spots: data, page, size })
+    return res.json({  data, page, size })
 });
 // check error response when not logged in for create
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {

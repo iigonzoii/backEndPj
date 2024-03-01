@@ -1,0 +1,46 @@
+body {
+    background-color: darkgrey;
+}
+
+img {
+    height: 350px;
+    width: 350px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    column-gap: 20px;
+}
+.spot-card-container{
+    display: flex;
+    flex-direction: column ;
+}
+
+.spot-data-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.city-review-data{
+    display: flex;
+    justify-content: space-between;
+}
+
+.pointer {
+    cursor: pointer
+}
+
+.tooltip{
+    display: none;
+    position: absolute;
+    top:100%;
+    left:0;
+    padding: 3px;
+    border: 1px solid black;
+}
+
+.element:hover .tooltip{
+    display:block
+}
