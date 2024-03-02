@@ -5,7 +5,6 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import "./Navigation.css"
-import { useModal } from '../../context/Modal';
 
 
 
@@ -14,12 +13,8 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-  const { closeModal } = useModal();
-  
-  let handleClick = () => {
-    return dispatch(sessionActions.login({ credential: `demo@user.io`, password: 'password' }))
-      .then(closeModal)
-  };
+
+
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
     setShowMenu(!showMenu);
@@ -74,11 +69,6 @@ function ProfileButton({ user }) {
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
-            </li>
-            <li>
-              <button onClick={() => handleClick()}>
-                DEMO
-              </button>
             </li>
           </>
         )}

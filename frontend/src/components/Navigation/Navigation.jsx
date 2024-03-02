@@ -7,7 +7,7 @@ import './Navigation.css';
 {/* (*check user login status in nav with ternary) */}
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
-  // let navigate = useNavigate()
+
 
   return (
 

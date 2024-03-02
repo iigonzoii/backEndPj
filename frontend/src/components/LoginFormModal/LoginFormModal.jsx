@@ -11,6 +11,11 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  let handleClick = () => {
+    return dispatch(sessionActions.login({ credential: `demo@user.io`, password: 'password' }))
+      .then(closeModal)
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // * setErrors to an empty obj
@@ -31,32 +36,32 @@ function LoginFormModal() {
 
   return (
     <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-
-        <label>
-          Username or Email
+      <h1 >Log In</h1>
+      <form className='login-signup-form' onSubmit={handleSubmit}>
           <input
+          placeholder='Username or Email'
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Password
           <input
+          placeholder='Password'
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
+
 
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
         <button disabled={credential.length < 4 || password.length < 6} type="submit">Log In</button>
+        <button onClick={() => handleClick()}>
+                Demo User
+              </button>
+
       </form>
     </>
   );
