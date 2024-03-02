@@ -12,4 +12,6 @@ nav{
     cursor:pointer;
 }
 
-/* *layout should be in a container, because everything is nested within it, but should i also put my navbar into a container */
+.profile-dropdown > li{
+    list-style-type: none;
+}
