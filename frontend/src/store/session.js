@@ -1,4 +1,5 @@
 import { csrfFetch } from './csrf';
+// import {  useNavigate } from "react-router-dom"
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
@@ -17,10 +18,12 @@ const removeUser = () => {
 };
 
 export const logout = () => async (dispatch) => {
+  // const navigate = useNavigate()
   const response = await csrfFetch('/api/session', {
     method: 'DELETE'
   });
   dispatch(removeUser());
+  // navigate(`/`)
   return response;
 };
 
