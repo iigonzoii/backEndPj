@@ -13,13 +13,18 @@ function LoginFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // * setErrors to an empty obj
     setErrors({});
+    // * dispatch our sessionActions store/ use the login thunk, pass in credential and password in as the parameters that will serve as the payload to our thunk
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
+      // * this res on line 23 represents the response returned on line 63 of session.js?
       .catch(async (res) => {
+
         const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
+        console.log(data)
+        if (data && data.message) {
+          setErrors({credential: data.message});
         }
       });
   };
@@ -28,6 +33,7 @@ function LoginFormModal() {
     <>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
+
         <label>
           Username or Email
           <input
@@ -46,6 +52,7 @@ function LoginFormModal() {
             required
           />
         </label>
+
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
