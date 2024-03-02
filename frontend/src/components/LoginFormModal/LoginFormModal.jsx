@@ -58,9 +58,9 @@ function LoginFormModal() {
           <p>{errors.credential}</p>
         )}
         <button disabled={credential.length < 4 || password.length < 6} type="submit">Log In</button>
-        <button onClick={() => handleClick()}>
+        <a href="#" className="demo-link"onClick={() => handleClick()}>
                 Demo User
-              </button>
+              </a>
 
       </form>
     </>
