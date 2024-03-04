@@ -1,10 +1,10 @@
 body {
-    background-color: darkgrey;
+    background-color: #FFFFFF;
 }
 
 img {
-    height: 350px;
-    width: 350px;
+    height: 225px;
+    width: 225px;
 }
 
 .container {
