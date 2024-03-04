@@ -37,7 +37,7 @@ function LoginFormModal() {
   return (
     <>
       <h1 >Log In</h1>
-      <form className='login-signup-form' onSubmit={handleSubmit}>
+      <form className='login-form' onSubmit={handleSubmit}>
           <input
           placeholder='Username or Email'
             type="text"
@@ -52,8 +52,6 @@ function LoginFormModal() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
-
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
@@ -61,7 +59,6 @@ function LoginFormModal() {
         <a href="#" className="demo-link"onClick={() => handleClick()}>
                 Demo User
               </a>
-
       </form>
     </>
   );
