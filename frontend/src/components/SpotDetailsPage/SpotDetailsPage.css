@@ -1,3 +1,15 @@
 .pointer{
     cursor: pointer;
 }
+.spot-detail-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.img-container{}
+.host-description{}
+.reservation-box{
+    width: fit-content;
+    border: 3px solid black;
+}

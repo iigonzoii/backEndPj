@@ -48,7 +48,8 @@ export const restoreUser = () => async (dispatch) => {
   dispatch(setUser(data.user));
   return response;
 };
-
+// * some type of logic to to check credentials
+// * something along the lines of--- if credential and password from database dont equal credential and password from the user input
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch("/api/session", {

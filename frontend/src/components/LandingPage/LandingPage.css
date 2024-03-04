@@ -1,10 +1,10 @@
 body {
-    background-color: darkgrey;
+    background-color: #FFFFFF;
 }
 
 img {
-    height: 350px;
-    width: 350px;
+    height: 225px;
+    width: 225px;
 }
 
 .container {
@@ -32,7 +32,7 @@ img {
     cursor: pointer
 }
 
-.tooltip{
+/* .tooltip{
     display: none;
     position: absolute;
     top:100%;
@@ -43,4 +43,4 @@ img {
 
 .element:hover .tooltip{
     display:block
-}
+} */
