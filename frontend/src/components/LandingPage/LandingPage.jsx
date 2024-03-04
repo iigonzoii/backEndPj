@@ -23,6 +23,7 @@ function LandingPage() {
         <div className="container">
             {spots && spots.map((spot, index) => (
                 <div
+                title={`${spot.name}`}
                     onClick={() => navigate(`/spots/${spot.id}`)}
                     className="spot-card-container" key={index}>
                     <img className="pointer" src={spot.previewImage} />
