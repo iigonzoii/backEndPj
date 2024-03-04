@@ -14,6 +14,10 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  // todo check the lengths of the inputs
+    //* use some type of if logic?
+    // * add them all to an object or array and then check them?
+
   // const expression = 'idk'
   // switch(expression){
   // case'idk':
@@ -120,7 +124,7 @@ function SignupFormModal() {
         {errors.confirmPassword && (
           <p>{errors.confirmPassword}</p>
         )}
-        <button disabled={(confirmPassword.length < 1 || firstName.length > 1 || lastName.length < 1 ||email.length < 1) || (username.length < 4 || password.length < 6)} type="submit">Sign Up</button>
+        <button disabled={!(email && username && username.length > 3 && lastName && password && password.length > 5 && confirmPassword)} type="submit">Sign Up</button>
       </form>
     </>
   );
