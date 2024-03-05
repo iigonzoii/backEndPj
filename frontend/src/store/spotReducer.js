@@ -39,7 +39,7 @@ export const fetchSpot = (spotId) => async (dispatch) => {
 
 
 //*---------------REDUCERS-------------------
-const initialState = {};
+const initialState = {spotDetai:{}};
 
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {

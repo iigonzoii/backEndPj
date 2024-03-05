@@ -32,7 +32,7 @@ export const loadReview = (review) => {
 export const fetchReviews = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
     const review = await response.json()
-    //* review is an object and we key into the array to make our reducer cleaner 
+    //* review is an object and we key into the array to make our reducer cleaner
     dispatch(loadReviews(review.Reviews))
 }
 
@@ -46,7 +46,7 @@ const reviewReducer = (state = initialState, action) => {
             //* empty object for our future state
             let newState = {}
             //* go through our array and for each object create a key referencing the specific id for each object and set the value to the contents of said object///normalize data
-            action.review.forEach(review => {
+            action.reviews.forEach(review => {
                 newState[review.id] = review
             })
             //* return an object that now has all the reviews
