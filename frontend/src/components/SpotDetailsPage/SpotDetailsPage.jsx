@@ -15,53 +15,60 @@ function SpotDetailsPage() {
     let review = useSelector(state => state.review)
     review = Object.values(review)
     console.log("review", review)
+    console.log("spot", spot)
+    let checkRating = () => {
+        if (isNaN(spot.avgStarRating) ) {
+            return "New"
+        } else {
+            return spot.avgStarRating
+        }
+    }
     useEffect(() => {
         dispatch(fetchReviews(+spotId))
-        .then(() => dispatch(fetchSpot(+spotId)))
-        .then(() => setIsLoaded(true));
+            .then(() => dispatch(fetchSpot(+spotId)))
+            .then(() => setIsLoaded(true));
     }, [dispatch, spotId]);
-
     return (
         <div className="spot-detail-container">
-            { isLoaded && <><div>
+            {isLoaded && <><div>
                 {<p>{spot && spot.name}</p>}
                 {<p>{`${spot && spot.city}, ${spot && spot.state}, ${spot && spot.country}`}</p>}
             </div>
+                <div className="img-container">
+                    <img className="large-img" src={spot.SpotImages[0].url}>
+                    </img>
+                    <div className="small-img">
+                        {spot && spot.SpotImages.slice(1).map((img, index) => (
+                            <div key={index}>
+                                <img src={img.url} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="host-description">
+                    {<p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>}
+                    {<p>{spot && spot.description}</p>}
+                </div>
+                <aside className="reservation-box">
+                    <span className="">{`$${spot && spot.price} a night `}</span>
+                    <span><i className="fa-solid fa-star"></i>{`${spot && checkRating()} `}</span>
+                    <span >{`${spot && spot.numReviews} Reviews`}</span>
 
-            <div className="img-container">
-                <img className="large-img" src={spot.SpotImages[0].url}>
-                </img>
-                <div className="small-img">
-                    {spot && spot.SpotImages.slice(1).map((img, index) => (
+                    <div><button className="pointer" onClick={reserve}>Reserve</button></div>
+                </aside>
+                <div>
+                    <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
+                    <p className="">{`${spot && spot.numReviews} reviews`}</p>
+                </div>
+                <div>
+                    {review && review.map((review, index) => (
                         <div key={index}>
-                            <img src={img.url} />
+                            <p>{review.User.firstName}</p>
+                            <p>{review.createdAt.split("-")[1]} {review.createdAt.split("-")[0]}</p>
+                            <p>{review.review}</p>
                         </div>
                     ))}
                 </div>
-            </div>
-            <div className="host-description">
-                {<p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>}
-                {<p>{spot && spot.description}</p>}
-            </div>
-            <aside className="reservation-box">
-                <span className="">{`$${spot && spot.price} a night `}</span>
-                <span className="starRating "><i className="fa-solid fa-star"></i>{`${spot && spot.avgStarRating} `}</span>
-                <span >{`${spot && spot.numReviews} reviews`}</span>
-                <div><button className="pointer" onClick={reserve}>Reserve</button></div>
-            </aside>
-            <div>
-                <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot && spot.avgStarRating}`}</p>
-                <p className="">{`${spot && spot.numReviews} reviews`}</p>
-            </div>
-            <div>
-                {review && review.map((review, index) => (
-                    <div key={index}>
-                        <p>{review.User.firstName}</p>
-                        <p>{review.createdAt.split("-")[1]} {review.createdAt.split("-")[0]}</p>
-                        <p>{review.review}</p>
-                    </div>
-                ))}
-            </div>
             </>}
         </div>
     )

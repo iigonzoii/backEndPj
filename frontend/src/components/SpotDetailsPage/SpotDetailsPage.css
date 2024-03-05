@@ -27,7 +27,6 @@
     column-gap: 2px;
 }
 .small-img img{
-
     flex-grow: 1;
     object-fit: cover;
 }
@@ -35,4 +34,13 @@
 .reservation-box{
     width: fit-content;
     border: 3px solid black;
+}
+.reservation-box > div{
+    display: flex;
+    justify-content: space-around;
+}
+.reservation-box > div > button{
+    width: 80%;
+    background-color: #FF5A5F;
+    color: white;
 }

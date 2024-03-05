@@ -18,12 +18,11 @@ function LandingPage() {
         dispatch(fetchSpots());
     }, [dispatch]);
     let checkAvg = (rating) => {
-        if(rating < 1){
-            rating = "new"
+        if(isNaN(rating)){
+            return "New"
         } else {
             return rating
         }
-        return rating
     }
 
     return (
