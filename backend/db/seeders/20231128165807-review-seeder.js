@@ -23,7 +23,6 @@ module.exports = {
       {
         userId: 3,
         spotId: 3,
-        stars: 3
       },
       {
         userId: 1,
