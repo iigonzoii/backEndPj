@@ -1,7 +1,10 @@
 .hidden {
     display: none;
 }
-
+.logo{
+    text-decoration: none;
+    color:#FF5A5F;
+}
 nav{
     display: flex;
     border-bottom: solid grey;
@@ -15,5 +18,3 @@ nav{
 .profile-dropdown > li{
     list-style-type: none;
 }
-
-
