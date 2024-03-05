@@ -44,8 +44,8 @@ function SpotDetailsPage() {
                 {<p>{spot && spot.description}</p>}
             </div>
             <aside className="reservation-box">
-                <span className="">{`$${spot && spot.price} a night`}</span>
-                <span className="starRating "><i className="fa-solid fa-star"></i>{`${spot && spot.avgStarRating}`}</span>
+                <span className="">{`$${spot && spot.price} a night `}</span>
+                <span className="starRating "><i className="fa-solid fa-star"></i>{`${spot && spot.avgStarRating} `}</span>
                 <span >{`${spot && spot.numReviews} reviews`}</span>
                 <div><button className="pointer" onClick={reserve}>Reserve</button></div>
             </aside>

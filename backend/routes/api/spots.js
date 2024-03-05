@@ -415,6 +415,7 @@ router.get('/:spotId', async (req, res, next) => {
     }
     data.numReviews = data.Reviews.length;
     data.avgStarRating = allStars / data.Reviews.length;
+    data.avgStarRating = data.avgStarRating.toFixed(1)
 
     delete data.Reviews
     res.json(data)

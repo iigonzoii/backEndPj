@@ -40,15 +40,21 @@ module.exports = {
       },
       {
         imageableId: 2,
-        imageableType: "Review",
-        url: "https://firebasestorage.googleapis.com/v0/b/airbandb-backend-mod4-pj.appspot.com/o/mostCurrentSchema.png?alt=media&token=e449391a-2c4a-48dc-82e9-bfa5de03f047",
+        imageableType: "Spot",
+        url: "https://firebasestorage.googleapis.com/v0/b/airbandb-backend-mod4-pj.appspot.com/o/isabela4.jpg?alt=media&token=638da8c5-f367-495b-96c8-609024c56134",
         preview: true
       },
       {
-        imageableId: 3,
+        imageableId: 2,
         imageableType: "Review",
-        url: "url",
+        url: "https://firebasestorage.googleapis.com/v0/b/airbandb-backend-mod4-pj.appspot.com/o/isabela4.jpg?alt=media&token=638da8c5-f367-495b-96c8-609024c56134",
         preview: false
+      },
+      {
+        imageableId: 3,
+        imageableType: "Spot",
+        url: "https://firebasestorage.googleapis.com/v0/b/airbandb-backend-mod4-pj.appspot.com/o/sanjuan21.jpg?alt=media&token=1085720c-9705-487d-b32c-171796402ab8",
+        preview: true
       }
     ])
   },
