@@ -199,6 +199,7 @@ router.get('/', queryValidatorOptional, async (req, res, next) => {
         });
         // creating keyvalue pair to show avg rating in our return obj
         data.avgRating = allStars / data.Reviews.length
+        data.avgRating = data.avgRating.toFixed(1)
 
         data.SpotImages.forEach(image => {
             if (image.preview) data.previewImage = image.url
@@ -356,7 +357,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         });
         // creating keyvalue pair to show avg rating in our return obj
         data.avgRating = allStars / data.Reviews.length
-
+        data.avgRating = data.avgRating.toFixed(1)
 
 
         data.SpotImages.forEach(image => {
@@ -366,7 +367,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
         if (!data.previewImage) {
             data.previewImage = 'no image url'
         }
-
         // after manipulating data above we are deleting the visual arrays that were houseing that data to match res body in docs
         delete data.Reviews
         delete data.SpotImages
