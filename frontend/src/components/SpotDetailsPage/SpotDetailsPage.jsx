@@ -69,6 +69,7 @@ function SpotDetailsPage() {
                     <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
                     <p>{spot && checkIfOne()}</p>
                 </div>
+                
                 <div>
                     {review && review.map((review, index) => (
                         <div key={index}>
