@@ -33,9 +33,9 @@ function SpotDetailsPage() {
                 </img>
                 <div className="small-img">
                     {spot && spot.SpotImages.slice(1).map((img, index) => (
-                        <div key={index}>
-                            <img src={img.url} />
-                        </div>
+                        
+                            <img key={index} src={img.url} />
+                        
                     ))}
                 </div>
             </div>
