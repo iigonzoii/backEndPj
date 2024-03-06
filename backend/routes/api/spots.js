@@ -387,11 +387,14 @@ router.get('/:spotId', async (req, res, next) => {
             {
                 model: Image,
                 as: 'SpotImages',
-                // where: {imageableType: 'Spot'},
                 attributes: ['id', 'url', 'preview']
             },
             {
-                model: Review
+                model: Review,
+                order: [['createdAt', 'DESC' ]]
+
+                //* [Task, 'createdAt', 'DESC'],
+                // Will order an associated model's createdAt using the model name as the association's name.
             },
             {
                 model: User,

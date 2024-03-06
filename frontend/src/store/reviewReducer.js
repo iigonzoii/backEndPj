@@ -30,9 +30,12 @@ export const loadReview = (review) => {
 // };
 
 export const fetchReviews = (spotId) => async (dispatch) => {
+    // //* review is an object and we key into the array to make our reducer cleaner
+    // dispatch(loadReviews(review.Reviews))
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
-    const review = await response.json()
-    console.log("REVIEWWW",review)
+    let review = await response.json()
+    console.log("REVIEWTHUNK",review)
+    review["Reviews"].reverse()
     //* review is an object and we key into the array to make our reducer cleaner
     dispatch(loadReviews(review.Reviews))
 }
