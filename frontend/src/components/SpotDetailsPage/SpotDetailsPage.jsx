@@ -13,8 +13,8 @@ function SpotDetailsPage() {
     let reserve = () => alert("Feature coming soon")
     let [isLoaded, setIsLoaded] = useState(false)
     let review = useSelector(state => state.review)
+    review = Object.values(review).reverse()
     console.log("review", review)
-    review = Object.values(review)
     console.log("spot", spot)
     let checkRating = () => {
         if (isNaN(spot.avgStarRating)) {
