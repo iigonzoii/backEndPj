@@ -23,6 +23,13 @@ function SpotDetailsPage() {
             return spot.avgStarRating
         }
     }
+    let checkIfOne = () =>{
+        if (spot.numReviews === 1){
+            return 1 + " Review"
+        } else {
+            return spot.numReviews + " Reviews"
+        }
+    }
     useEffect(() => {
         dispatch(fetchReviews(+spotId))
             .then(() => dispatch(fetchSpot(+spotId)))
@@ -47,16 +54,20 @@ function SpotDetailsPage() {
                     {<p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>}
                     {<p>{spot && spot.description}</p>}
                 </div>
-                <aside className="reservation-box">
-                    <span className="">{`$${spot && spot.price} a night `}</span>
-                    <span><i className="fa-solid fa-star"></i>{`${spot && checkRating()} `}</span>
-                    <span >{`${spot && spot.numReviews} Reviews`}</span>
 
+                <aside className="reservation-box">
+                    <span>{`$${spot && spot.price} a night `}
+                        <i className="fa-solid fa-star"></i>{spot && checkRating()}
+                        <span
+                            hidden={(spot?.numReviews === 0)}> &#183; {spot && spot.numReviews} {spot?.numReviews > 1 ? ' Reviews' : ' Review'}
+                        </span>
+                    </span>
                     <div><button className="pointer" onClick={reserve}>Reserve</button></div>
                 </aside>
+
                 <div>
                     <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
-                    <p className="">{`${spot && spot.numReviews} reviews`}</p>
+                    <p>{spot && checkIfOne()}</p>
                 </div>
                 <div>
                     {review && review.map((review, index) => (
