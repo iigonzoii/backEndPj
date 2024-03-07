@@ -4,12 +4,16 @@ import { useParams } from "react-router-dom"
 import { fetchSpot } from "../../store/spotReducer"
 import { fetchReviews } from "../../store/reviewReducer"
 import './SpotDetailsPage.css'
+// import * as sessionActions from '../../store/session';
+
 
 
 function SpotDetailsPage() {
     const { spotId } = useParams()
     const dispatch = useDispatch();
     let spot = useSelector(state => state.spot.spotDetail);
+    const session = useSelector(state => state.session);
+    console.log("SPOTTTTT",spot)
     let reserve = () => alert("Feature coming soon")
     let [isLoaded, setIsLoaded] = useState(false)
     let review = useSelector(state => state.review)
@@ -71,9 +75,9 @@ function SpotDetailsPage() {
                         <p className="stars-reviews"><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
                         <p>{spot && checkIfOne()}</p>
                     </div>
-{}
-                    <div className="review-data">
 
+                    <span hidden={review.length !== 0 && (session.user && spot.Owner.id === session.user.id)}>Be the first to post a review!</span>
+                    <div className="review-data">
                         {review && review.map((review, index) => (
                             <div key={index}>
                                 <p>{review.User.firstName}</p>
@@ -82,6 +86,7 @@ function SpotDetailsPage() {
                             </div>
                         ))}
                     </div>
+
                 </div>
             </>}
         </div>
