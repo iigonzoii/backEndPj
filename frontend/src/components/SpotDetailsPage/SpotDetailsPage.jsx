@@ -14,8 +14,7 @@ function SpotDetailsPage() {
     let [isLoaded, setIsLoaded] = useState(false)
     let review = useSelector(state => state.review)
     review = Object.values(review).reverse()
-    console.log("review", review)
-    console.log("spot", spot)
+    let month = ["January","February","March","April","May","June","July","October","November","December"]
     let checkRating = () => {
         if (isNaN(spot.avgStarRating)) {
             return "New"
@@ -72,12 +71,13 @@ function SpotDetailsPage() {
                         <p className="stars-reviews"><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
                         <p>{spot && checkIfOne()}</p>
                     </div>
-
+{}
                     <div className="review-data">
+
                         {review && review.map((review, index) => (
                             <div key={index}>
                                 <p>{review.User.firstName}</p>
-                                <p>{review.createdAt.split("-")[1]} {review.createdAt.split("-")[0]}</p>
+                                <p>{month[new Date(review.createdAt).getMonth()]} {review.createdAt.split("-")[0]}</p>
                                 <p>{review.review}</p>
                             </div>
                         ))}
