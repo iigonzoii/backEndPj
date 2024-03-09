@@ -4,8 +4,6 @@ import { useParams } from "react-router-dom"
 import { fetchSpot } from "../../store/spotReducer"
 import { fetchReviews } from "../../store/reviewReducer"
 import './SpotDetailsPage.css'
-// import * as sessionActions from '../../store/session';
-
 
 
 function SpotDetailsPage() {
