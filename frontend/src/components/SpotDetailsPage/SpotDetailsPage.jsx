@@ -76,7 +76,7 @@ function SpotDetailsPage() {
                         <p>{spot && checkIfOne()}</p>
                     </div>
 
-                    <span hidden={review.length !== 0 && (session.user && spot.Owner.id === session.user.id)}>Be the first to post a review!</span>
+                    <span hidden={review.length !== 0 || (session.user && spot.Owner.id === session.user.id)}>Be the first to post a review!</span>
                     <div className="review-data">
                         {review && review.map((review, index) => (
                             <div key={index}>
