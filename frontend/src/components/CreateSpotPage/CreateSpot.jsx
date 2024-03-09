@@ -1,6 +1,5 @@
 import { useState, } from "react";
 import { useNavigate } from "react-router-dom";
-// import { csrfFetch } from "../../store/csrf";
 import { useDispatch } from "react-redux"
 import "./CreateSpotPage.css"
 import { createSpot, newImage } from "../../store/spotReducer";
@@ -10,7 +9,6 @@ function CreateSpotPage() {
     const [country, setCountry] = useState("")
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("")
-    // const [latitude, setLatitude] = useState("yes")
     const [state, setState] = useState("")
     const [description, setDescription] = useState("")
     const [spotName, setSpotName] = useState("")
@@ -131,19 +129,19 @@ function CreateSpotPage() {
                 <label className="full-label">
                     <p>Describe your place to guests </p>
                     <p>mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood</p>
-                <textarea
-                className="full-label"
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
-                    placeholder="Please write at least 30 characters">
-                </textarea>
+                    <textarea
+                        className="full-label"
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                        placeholder="Please write at least 30 characters">
+                    </textarea>
                 </label>
                 <div className="red">{errors.description}</div>
-               <div className="full-label">
-                 <h2>
-                    Create a title for your spot
-                </h2>
-                <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
+                <div className="full-label">
+                    <h2>
+                        Create a title for your spot
+                    </h2>
+                    <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
                 </div>
                 <div className="red">{errors.spotName}</div>
                 <input className="full-label"
@@ -153,25 +151,25 @@ function CreateSpotPage() {
                     onChange={e => setSpotName(e.target.value)}
                 />
                 <div className="full-label"><h2>Set a base price for your Spot</h2>
-                <p> Competitve pricing can help your listing stand out and rank higher in search results</p>
+                    <p> Competitve pricing can help your listing stand out and rank higher in search results</p>
                 </div>
                 <div className="red">{errors.price}</div>
 
                 <div className="full-label dollar">
                     $<input
-                    placeholder="Price per night(USD)"
-                    type="number"
-                    value={price}
-                    onChange={e => setPrice(e.target.value)}
-                />
+                        placeholder="Price per night(USD)"
+                        type="number"
+                        value={price}
+                        onChange={e => setPrice(e.target.value)}
+                    />
                 </div>
 
-               <div className="full-label"> <h2>Liven up your spot with photos</h2>
-                <p>Submit a link to at least one photo to publish your spot</p>
+                <div className="full-label"> <h2>Liven up your spot with photos</h2>
+                    <p>Submit a link to at least one photo to publish your spot</p>
                 </div>
                 <div className="red">{errors.previewImg}</div>
                 <input
-                className="full-label"
+                    className="full-label"
                     placeholder="Preview Image URL"
                     type="text"
                     value={previewImg}
@@ -179,7 +177,7 @@ function CreateSpotPage() {
                 />
                 <div className="red">{errors.img1}</div>
                 <input
-                className="full-label"
+                    className="full-label"
                     placeholder="Image URL"
                     type="text"
                     value={img1}
@@ -187,7 +185,7 @@ function CreateSpotPage() {
                 />
                 <div className="red">{errors.img2}</div>
                 <input
-                className="full-label"
+                    className="full-label"
                     placeholder="Image URL"
                     type="text"
                     value={img2}
@@ -195,7 +193,7 @@ function CreateSpotPage() {
                 />
                 <div className="red">{errors.img3}</div>
                 <input
-                className="full-label"
+                    className="full-label"
                     placeholder="Image URL"
                     type="text"
                     value={img3}
@@ -203,7 +201,7 @@ function CreateSpotPage() {
                 />
                 <div className="red">{errors.img4}</div>
                 <input
-                className="full-label"
+                    className="full-label"
                     placeholder="Image URL"
                     type="text"
                     value={img4}
