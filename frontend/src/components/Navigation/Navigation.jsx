@@ -15,7 +15,7 @@ function Navigation({ isLoaded }) {
       </div>
       {isLoaded && sessionUser && (
         <div>
-          <btn className="pointer" onClick={() => {navigate("/spots/new")}}>Create a New Spot</btn>
+          <button className="pointer" onClick={() => {navigate("/spots/new")}}>Create a New Spot</button>
         </div>
       )}
       {isLoaded && (

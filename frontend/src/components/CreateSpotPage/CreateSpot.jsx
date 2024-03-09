@@ -16,12 +16,12 @@ function CreateSpotPage() {
     const navigate = useNavigate()
 
     let handleSubmit = async (e) => {
-      e.preventDefault()
+        e.preventDefault()
         const formData = new FormData(e.target);
         const formValues = Object.fromEntries(formData.entries());
         console.log(formValues)
         const response = await csrfFetch(`/api/spots/`, {
-            method:"POST"
+            method: "POST"
         })
         const newSpot = await response.json()
         console.log(newSpot)
@@ -33,19 +33,21 @@ function CreateSpotPage() {
             onSubmit={handleSubmit}
             className="fruit-form"
         >
-            <h2>Create a new Spot</h2>
+            <h1>Create a new Spot</h1>
             <p>Where&apos;s your place located</p>
             <p>Guests will only get your exact address once they booked a reservation</p>
             <label>
                 Country <span>{errors.name}</span>
                 <input
+                    placeholder="Country"
                     type="text"
                     name="country"
                 />
             </label>
             <label>
-                Adress
+                Street Address
                 <input
+                    placeholder="Address"
                     type="text"
                     name="address"
                 />
@@ -53,6 +55,7 @@ function CreateSpotPage() {
             <label>
                 City
                 <input
+                    placeholder="City"
                     type="text"
                     name="city"
                 />
@@ -61,6 +64,7 @@ function CreateSpotPage() {
                 State
             </label>
             <input
+                placeholder="State"
                 type="text"
                 name="state"
             />
@@ -68,45 +72,48 @@ function CreateSpotPage() {
                 <p>Describe your place to guests </p>
                 <p>mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood</p>
             </label>
-            <textarea placeholder="Description"></textarea>
-            <label>
+            <textarea placeholder="Please write at least 30 characters"></textarea>
+            <h2>
                 Create a title for your spot
-            </label>
+            </h2>
+            <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
             <input
+                placeholder="Name of your spot"
                 type="text"
                 name="name"
             />
-            <label>
-                Set a base price for your Spot
-                <p> Competitve pricing can help your listing stand out and rank higher in search results</p>
-                $<input
+            <h2>Set a base price for your Spot</h2>
+            <p> Competitve pricing can help your listing stand out and rank higher in search results</p>
+            $<input
                 placeholder="Price per night(USD)"
                 type="number"
                 name="price"
             />
-            </label>
 
-            <label>
-                Liven up your spot with photos
-                <p>Submit a link to at least one photo to publish your spot</p>
-            </label>
+            <h2>Liven up your spot with photos</h2>
+            <p>Submit a link to at least one photo to publish your spot</p>
             <input
+                placeholder="Preview Image URL"
                 type="text"
                 name="preview"
             />
             <input
+                placeholder="Image URL"
                 type="text"
                 name="img_1"
             />
             <input
+                placeholder="Image URL"
                 type="text"
                 name="img_2"
             />
             <input
+                placeholder="Image URL"
                 type="text"
                 name="img_3"
             />
             <input
+                placeholder="Image URL"
                 type="text"
                 name="img_4"
             />
