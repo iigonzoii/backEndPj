@@ -17,7 +17,13 @@ function LandingPage() {
         // * on load we dispatch fetchSpots thunk from our store/spots
         dispatch(fetchSpots());
     }, [dispatch]);
-
+    let checkAvg = (rating) => {
+        if(isNaN(rating)){
+            return "New"
+        } else {
+            return rating
+        }
+    }
 
     return (
         <div className="container">
@@ -27,14 +33,11 @@ function LandingPage() {
                     onClick={() => navigate(`/spots/${spot.id}`)}
                     className="spot-card-container" key={index}>
                     <img className="pointer" src={spot.previewImage} />
-
                     <div className="spot-data-container">
-
                         <div className="city-review-data">
                             <p className="cityState">{`${spot.city},${spot.state}`}</p>
-                            <p className="starRating "><i className="fa-solid fa-star"></i>{`${spot.avgRating}`}</p>
+                            <p className="starRating"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p>
                         </div>
-
                         <p className="price">{`$${spot.price} a night`}</p>
                     </div>
 

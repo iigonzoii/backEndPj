@@ -199,6 +199,7 @@ router.get('/', queryValidatorOptional, async (req, res, next) => {
         });
         // creating keyvalue pair to show avg rating in our return obj
         data.avgRating = allStars / data.Reviews.length
+        data.avgRating = data.avgRating.toFixed(1)
 
         data.SpotImages.forEach(image => {
             if (image.preview) data.previewImage = image.url
@@ -356,7 +357,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         });
         // creating keyvalue pair to show avg rating in our return obj
         data.avgRating = allStars / data.Reviews.length
-
+        data.avgRating = data.avgRating.toFixed(1)
 
 
         data.SpotImages.forEach(image => {
@@ -366,7 +367,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
         if (!data.previewImage) {
             data.previewImage = 'no image url'
         }
-
         // after manipulating data above we are deleting the visual arrays that were houseing that data to match res body in docs
         delete data.Reviews
         delete data.SpotImages
@@ -387,11 +387,14 @@ router.get('/:spotId', async (req, res, next) => {
             {
                 model: Image,
                 as: 'SpotImages',
-                // where: {imageableType: 'Spot'},
                 attributes: ['id', 'url', 'preview']
             },
             {
-                model: Review
+                model: Review,
+                order: [['createdAt', 'DESC' ]]
+
+                //* [Task, 'createdAt', 'DESC'],
+                // Will order an associated model's createdAt using the model name as the association's name.
             },
             {
                 model: User,
@@ -415,6 +418,7 @@ router.get('/:spotId', async (req, res, next) => {
     }
     data.numReviews = data.Reviews.length;
     data.avgStarRating = allStars / data.Reviews.length;
+    data.avgStarRating = data.avgStarRating.toFixed(1)
 
     delete data.Reviews
     res.json(data)
