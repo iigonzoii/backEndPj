@@ -31,7 +31,7 @@ function CreateSpotPage() {
         if (city.length === 0) formErrors.city = "City is required"
         if (state.length === 0) formErrors.state = "State is required"
         if (country.length === 0) formErrors.country = "Country is required"
-        if (description.length < 30) formErrors.description = "Description needs a minimum of 30 characters"
+        if (description.length < 30) formErrors.description = "Description needs 30 or more characters"
         if (spotName.length === 0) formErrors.spotName = "Name is required"
         if (price < 1) formErrors.price = "Price per day must be a positive number"
         if (previewImg.length === 0) formErrors.previewImg = "Preview image is required"
@@ -208,9 +208,7 @@ function CreateSpotPage() {
                     onChange={e => setImg4(e.target.value)}
                 />
                 <button
-                    // className="createSpot"
                     type="submit"
-                // disabled={errors.length}
                 >
                     Create Spot
                 </button>

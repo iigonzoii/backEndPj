@@ -11,12 +11,16 @@ function SpotDetailsPage() {
     const dispatch = useDispatch();
     let spot = useSelector(state => state.spot.spotDetail);
     const session = useSelector(state => state.session);
-    console.log("SPOTTTTT",spot)
+    console.log("SPOTTTTT", spot)
     let reserve = () => alert("Feature coming soon")
     let [isLoaded, setIsLoaded] = useState(false)
     let review = useSelector(state => state.review)
     review = Object.values(review).reverse()
-    let month = ["January","February","March","April","May","June","July","October","November","December"]
+    const userHasReview = review.find(currReview => currReview.userId === session.user.id)
+    let userReview = {}
+    console.log("REVIEW", review)
+    console.log("userReviews", userReview)
+    let month = ["January", "February", "March", "April", "May", "June", "July", "October", "November", "December"]
     let checkRating = () => {
         if (isNaN(spot.avgStarRating)) {
             return "New"
@@ -69,10 +73,20 @@ function SpotDetailsPage() {
 
 
                 <div className="reviews-container">
+
                     <div>
                         <p className="stars-reviews"><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
                         <p>{spot && checkIfOne()}</p>
                     </div>
+
+                    <div>
+
+                        <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview}>
+                            <button>reviews</button>
+                        </span>
+                        
+                    </div>
+
 
                     <span hidden={review.length !== 0 || (session.user && spot.Owner.id === session.user.id)}>Be the first to post a review!</span>
                     <div className="review-data">
@@ -84,8 +98,8 @@ function SpotDetailsPage() {
                             </div>
                         ))}
                     </div>
-
                 </div>
+
             </>}
         </div>
     )
