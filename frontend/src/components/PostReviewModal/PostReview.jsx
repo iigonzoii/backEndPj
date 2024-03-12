@@ -17,9 +17,11 @@ const PostReviewModal = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Text Here" />
-                <button>Post Your Review</button>
+            <form className='post-review' onSubmit={handleSubmit}>
+                <h3>How was your stay?</h3>
+                <textarea rows="7" cols="30" placeholder='Leave your review here...'></textarea>
+                <div>stars go here</div>
+                <button>Submit Your Review</button>
             </form>
         </div>
     )
