@@ -58,6 +58,7 @@ export const fetchSpot = (spotId) => async (dispatch) => {
 }
 
 
+
 //*---------------REDUCERS-------------------
 const initialState = { spotDetai: {} };
 
