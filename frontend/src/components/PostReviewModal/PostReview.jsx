@@ -1,34 +1,46 @@
-// Import the useModal context hook
 import { useModal } from '../../context/Modal';
-import { FaStar} from 'react-icons/fa6'
+import { FaStar } from 'react-icons/fa6'
 import "./postReview.css"
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createReview } from '../../store/reviewReducer';
-
 const PostReviewModal = () => {
-    // Get the closeModal function from the context
     const { closeModal } = useModal();
     let starSelection = [1, 2, 3, 4, 5]
+    // *use for stars
     const [currSelection, setCurrSelection] = useState(0)
     const [hoverRating, setHoverRating] = useState(0)
     const [review, setReview] = useState('')
-    console.log("currrrr",currSelection)
-    // Function that runs when form is submitted
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Instead of a console log this would most likely be a thunk dispatch
-        dispatch(createReview(review, spotId))
-        console.log("Submitted!");
-        // This will cause the modal to close after the console log has occurred
-        closeModal();
-    }
+    const [firstName, setFirstName] = useState("")
+    const [errors, setErrors] = useState({})
     const dispatch = useDispatch()
     let { spotId } = useParams()
+    const user = useSelector(state => state.session.user)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (user) setFirstName(user.firstName)
+        // ! might need to change the key names in this obj
+        let newReview = {
+            review,
+            currSelection,
+            firstName: firstName
+        }
+        //* return value of thunk (response) will be our new review
+        await dispatch(createReview(newReview, spotId))
+            .catch(async (response) => {
+                let data = await response.json();
+                if (data && data.errors) setErrors(data.errors)
+            })
+        closeModal();
+        console.log("Submitted!");
+    }
+
     return (
         <div>
             <form className='post-review' onSubmit={handleSubmit}>
+                {errors && <span>{errors}</span>}
                 <h3>How was your stay?</h3>
                 <textarea value={review}
                     onChange={e => setReview(e.target.value)}
@@ -44,12 +56,13 @@ const PostReviewModal = () => {
                             onMouseLeave={() => setHoverRating(0)}
                             onClick={() => setCurrSelection(selection)}
                         >
-                                {currSelection >= selection || hoverRating >= selection ? <FaStar /> : <i className="fa-regular fa-star"></i>}
+                            {currSelection >= selection || hoverRating >= selection ? <FaStar /> : <i className="fa-regular fa-star"></i>}
 
                         </div>
                     })}
+                    <span> Stars</span>
                 </div>
-                <button>Submit Your Review</button>
+                <button disabled={(review.length < 10 || hoverRating !== 0)}>Submit Your Review</button>
             </form>
         </div>
     )

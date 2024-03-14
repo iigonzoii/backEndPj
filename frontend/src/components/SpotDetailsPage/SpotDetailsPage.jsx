@@ -4,11 +4,9 @@ import { useParams } from "react-router-dom"
 import { fetchSpot } from "../../store/spotReducer"
 import { fetchReviews } from "../../store/reviewReducer"
 import './SpotDetailsPage.css'
-// import PostReviewModal from "../PostReviewModal/PostReview"
-import OpenModalButton from "../OpenModalButton/index.js"
 import PostReviewModal from "../PostReviewModal/PostReview"
-
-
+import OpenModalButton from "../OpenModalButton/index.js"
+// import PostReviewModal from "../PostReviewModal/PostReview"
 
 function SpotDetailsPage() {
     const { spotId } = useParams()
@@ -88,7 +86,7 @@ function SpotDetailsPage() {
                         <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview}>
                     <OpenModalButton
                     buttonText = "Post Your Review"
-                    modalComponent={<PostReviewModal/>}
+                    modalComponent={<PostReviewModal />}
                     />
                         </span>
 
