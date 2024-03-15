@@ -468,7 +468,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview,  async (req, res, n
         })
     }
     if (await Review.findOne({
-        where: { userId: userId }
+        where: { userId: userId, spotId:spotId }
     })) {
         return res.status(500).json({
             message: "User already has a review for this spot"
@@ -481,7 +481,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview,  async (req, res, n
         userId,
         spotId: +spotId
     })
-
+    createdReview.dataValues.User = req.user
     return res.status(201).json(createdReview)
 });
 

@@ -2,37 +2,30 @@ import { useModal } from '../../context/Modal';
 import { FaStar } from 'react-icons/fa6'
 import "./postReview.css"
 import { useState } from 'react'
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createReview } from '../../store/reviewReducer';
-const PostReviewModal = () => {
+import { fetchSpot } from '../../store/spotReducer';
+const PostReviewModal = ({spotId}) => {
     const { closeModal } = useModal();
     let starSelection = [1, 2, 3, 4, 5]
-    // *use for stars
     const [currSelection, setCurrSelection] = useState(0)
     const [hoverRating, setHoverRating] = useState(0)
     const [review, setReview] = useState('')
-    const [firstName, setFirstName] = useState("")
     const [errors, setErrors] = useState({})
     const dispatch = useDispatch()
-    let { spotId } = useParams()
-    const user = useSelector(state => state.session.user)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (user) setFirstName(user.firstName)
-        // ! might need to change the key names in this obj
         let newReview = {
             review,
-            currSelection,
-            firstName: firstName
+            stars:currSelection
         }
-        //* return value of thunk (response) will be our new review
         await dispatch(createReview(newReview, spotId))
             .catch(async (response) => {
                 let data = await response.json();
                 if (data && data.errors) setErrors(data.errors)
             })
+        await dispatch(fetchSpot(spotId))
         closeModal();
         console.log("Submitted!");
     }
@@ -40,7 +33,7 @@ const PostReviewModal = () => {
     return (
         <div>
             <form className='post-review' onSubmit={handleSubmit}>
-                {errors && <span>{errors}</span>}
+                {errors && <span>{errors.review}</span>}
                 <h3>How was your stay?</h3>
                 <textarea value={review}
                     onChange={e => setReview(e.target.value)}
@@ -62,7 +55,7 @@ const PostReviewModal = () => {
                     })}
                     <span> Stars</span>
                 </div>
-                <button disabled={(review.length < 10 || hoverRating !== 0)}>Submit Your Review</button>
+                <button disabled={(review.length < 10 || currSelection === 0)}>Submit Your Review</button>
             </form>
         </div>
     )

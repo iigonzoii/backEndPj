@@ -86,7 +86,7 @@ function SpotDetailsPage() {
                         <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview}>
                     <OpenModalButton
                     buttonText = "Post Your Review"
-                    modalComponent={<PostReviewModal />}
+                    modalComponent={<PostReviewModal spotId={spot.id}/>}
                     />
                         </span>
 

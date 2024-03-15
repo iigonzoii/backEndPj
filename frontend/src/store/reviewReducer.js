@@ -22,12 +22,7 @@ export const loadReview = (review) => {
 
 //* thunks
 
-// export const fetchReviews = () => async (dispatch) => {
-//     const response = await csrfFetch('/api/reviews');
-//     const reviews = await response.json();
-//     console.log("reviews",reviews)
-//     dispatch(loadReviews(reviews));
-// };
+
 export const createReview = (review, spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST",
@@ -47,7 +42,6 @@ export const fetchReviews = (spotId) => async (dispatch) => {
     dispatch(loadReviews(review.Reviews))
 }
 
-//* reducers
 
 const initialState = {};
 
@@ -62,6 +56,9 @@ const reviewReducer = (state = initialState, action) => {
             })
             //* return an object that now has all the reviews
             return newState
+        }
+        case LOAD_REVIEW: {
+            return {...state, [action.review.id]: action.review}
         }
         default:
             return state;
