@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { createReview } from '../../store/reviewReducer';
 import { fetchSpot } from '../../store/spotReducer';
-const PostReviewModal = ({spotId}) => {
+const PostReviewModal = ({ spotId }) => {
     const { closeModal } = useModal();
     let starSelection = [1, 2, 3, 4, 5]
     const [currSelection, setCurrSelection] = useState(0)
@@ -18,7 +18,7 @@ const PostReviewModal = ({spotId}) => {
         e.preventDefault();
         let newReview = {
             review,
-            stars:currSelection
+            stars: currSelection
         }
         await dispatch(createReview(newReview, spotId))
             .catch(async (response) => {
@@ -55,7 +55,9 @@ const PostReviewModal = ({spotId}) => {
                     })}
                     <span> Stars</span>
                 </div>
-                <button disabled={(review.length < 10 || currSelection === 0)}>Submit Your Review</button>
+
+                <button disabled={(review.length < 10 || currSelection === 0)}
+                >Submit Your Review</button>
             </form>
         </div>
     )

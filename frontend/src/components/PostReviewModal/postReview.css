@@ -4,10 +4,8 @@
     flex-direction: row;
 }
 
-
 .rating-input .filled {
     color: black;
-
   }
 
   .rating-input .empty {
