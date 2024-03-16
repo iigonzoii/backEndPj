@@ -1,5 +1,5 @@
 import "./manageSpots.css"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchCurrUserSpots } from "../../store/spotReducer"
 // import { fetchSpots } from "../../store/spotReducer"
@@ -53,11 +53,12 @@ function ManageSpots() {
                             <p className="price">{`$${spot.price} a night`}</p>
                         </div>
                         <span>
-                            <button>update</button>
+                            <Link to={`/spots/${spot.id}/update`}><button>update</button></Link>
                             <button>delete</button>
                         </span>
                     </div>
                 ))}
+
 
             </div>
         </>
