@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf"
 
 const LOAD_SPOTS = "spot/loadSpots"
 const LOAD_SPOT = "spot/loadSpot"
+const CURR_SPOTS = "spot/currentSpots"
 
 //*--------ACTION CREATORS-------------
 export const loadSpots = (spots) => {
@@ -20,6 +21,12 @@ export const loadSpot = (spot) => {
 }
 
 //* -------------THACS-------------
+export const fetchCurrUserSpots = () => async (dispatch) => {
+    const response = await csrfFetch("/api/spots/current")
+    const spots = await response.json()
+    console.log("fetchCurrSpots", spots)
+    dispatch(loadSpots(spots.Spots))
+}
 export const fetchSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots');
     const spots = await response.json();
@@ -59,12 +66,14 @@ export const fetchSpot = (spotId) => async (dispatch) => {
 
 
 
+
 //*---------------REDUCERS-------------------
 const initialState = { spotDetai: {} };
 
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS: {
+            console.log("ACTIONNNN",action)
             let newState = {}
             action.spots.forEach(spot => {
                 newState[spot.id] = spot
