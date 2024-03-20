@@ -12,20 +12,19 @@ import "./UpdateSpot.css"
 // todo create form with values of our useState variable that was created previously
 //* copy and paste create form then edit it
 // todo set new values to the form with our updated body
-
+    //* use createForm logic, copy and paste
 // todo navigate to that spots id page on submit
+    //* same as create, navigate in handlesubmit
 
 function UpdateSpot() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { spotId } = useParams()
-    let spot = useSelector(state => state.spot.spotDetail);
+    let spot = useSelector(state => state.spot);
     console.log("SPOTTTTT", spot)
-    useEffect(() => {
-        dispatch(fetchSpot(spotId))
-    }, [dispatch])
+
     const [errors, setErrors] = useState({})
-    const [country, setCountry] = useState(spot.country)
+    const [country, setCountry] = useState(spot.spotDetail.country)
     const [address, setAddress] = useState(spot.address)
     const [city, setCity] = useState(spot.city)
     const [state, setState] = useState(spot.state)
@@ -33,52 +32,56 @@ function UpdateSpot() {
     const [description, setDescription] = useState(spot.description)
     const [spotName, setSpotName] = useState(spot.spotName)
     const [price, setPrice] = useState(spot.price)
-    const [previewImg, setPreviewImg] = useState(spot.previewImg)
-    const [img1, setImg1] = useState(spot.img1)
-    const [img2, setImg2] = useState(spot.img2)
-    const [img3, setImg3] = useState(spot.img3)
-    const [img4, setImg4] = useState(spot.img4)
-    // let handleSubmit = async (e) => {
-    //     let formErrors = {}
-    //     e.preventDefault()
-    //     const formData = new FormData(e.target);
-    //     const formValues = Object.fromEntries(formData.entries());
-    //     console.log("FORMVALUES",formValues)
-    //     if (address.length === 0) formErrors.address = 'Street address is required'
-    //     if (city.length === 0) formErrors.city = "City is required"
-    //     if (state.length === 0) formErrors.state = "State is required"
-    //     if (country.length === 0) formErrors.country = "Country is required"
-    //     if (description.length < 30) formErrors.description = "Description needs 30 or more characters"
-    //     if (spotName.length === 0) formErrors.spotName = "Name is required"
-    //     if (price < 1) formErrors.price = "Price per day must be a positive number"
-    //     if (Object.values(formErrors).length > 0) {
-    //         setErrors(formErrors)
-    //         return
-    //     } else {
-    //         const payload = {
-    //             country,
-    //             address,
-    //             city,
-    //             state,
-    //             description,
-    //             name: spotName,
-    //             price,
-    //             previewImg,
-    //             img1,
-    //             img2,
-    //             img3,
-    //             img4
-    //         }
-    //         let newSpot = await dispatch(updateSpot(payload))
-    //         navigate(`/spots/${updatedSpot.id}`)
-    //     }
-    // }
+    // const [previewImg, setPreviewImg] = useState(spot.previewImg)
+    // const [img1, setImg1] = useState(spot.img1)
+    // const [img2, setImg2] = useState(spot.img2)
+    // const [img3, setImg3] = useState(spot.img3)
+    // const [img4, setImg4] = useState(spot.img4)
+    useEffect(() => {
+        dispatch(fetchSpot(spotId))
+    }, [dispatch, spotId])
+
+    let handleSubmit = async (e) => {
+        let formErrors = {}
+        e.preventDefault()
+        const formData = new FormData(e.target);
+        const formValues = Object.fromEntries(formData.entries());
+        console.log("FORMVALUES",formValues)
+        if (address.length === 0) formErrors.address = 'Street address is required'
+        if (city.length === 0) formErrors.city = "City is required"
+        if (state.length === 0) formErrors.state = "State is required"
+        if (country.length === 0) formErrors.country = "Country is required"
+        if (description.length < 30) formErrors.description = "Description needs 30 or more characters"
+        if (spotName.length === 0) formErrors.spotName = "Name is required"
+        if (price < 1) formErrors.price = "Price per day must be a positive number"
+        if (Object.values(formErrors).length > 0) {
+            setErrors(formErrors)
+            return
+        } else {
+            const payload = {
+                country,
+                address,
+                city,
+                state,
+                description,
+                name: spotName,
+                price,
+                // previewImg,
+                // img1,
+                // img2,
+                // img3,
+                // img4
+            }
+            let updatedSpot = await dispatch(updateSpot(payload))
+            navigate(`/spots/${updatedSpot.id}`)
+        }
+    }
 
     return (
         <>
             <div className="page">
             <form
-                // onSubmit={handleSubmit}
+                onSubmit={handleSubmit}
                 className="create-spot"
             >
                 <h1>Update your Spot</h1>

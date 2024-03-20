@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf"
 
 const LOAD_SPOTS = "spot/loadSpots"
 const LOAD_SPOT = "spot/loadSpot"
+//!might not need update
 const UPDATE_SPOT = "spot/updateSpot"
 
 //*--------ACTION CREATORS-------------
@@ -19,6 +20,7 @@ export const loadSpot = (spot) => {
         spot
     }
 }
+//! i think i can use the loadSpot action in my update spot thunk and not even need update ac
 export const update = (updatedSpot) => {
     return {
         type: UPDATE_SPOT,
@@ -77,7 +79,8 @@ export const updateSpot = (spotId, spot) => async dispatch => {
     })
     if (response.ok) {
         const updatedSpot = await response.json()
-        dispatch(update(updatedSpot))
+        //? line 83 might be conflicting with line 72, maybe I do need update action creator instead of just using loadSpot
+        dispatch(loadSpot(updatedSpot))
         return response
     }
     return response
