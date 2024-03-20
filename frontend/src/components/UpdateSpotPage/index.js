@@ -1,4 +1,4 @@
-import UpdateSpot from "./UpdateSpot";
+import UpdateSpotPage from "./UpdateSpotPage";
 
 
-export default UpdateSpot
+export default UpdateSpotPage

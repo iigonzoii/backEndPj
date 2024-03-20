@@ -32,13 +32,13 @@ export const update = (updatedSpot) => {
 export const fetchCurrUserSpots = () => async (dispatch) => {
     const response = await csrfFetch("/api/spots/current")
     const spots = await response.json()
-    console.log("fetchCurrSpots", spots)
+    // console.log("fetchCurrSpots", spots)
     dispatch(loadSpots(spots.Spots))
 }
 export const fetchSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots');
     const spots = await response.json();
-    console.log("SPOTSSSS", spots)
+    // console.log("FETCHSPOTSSSS", spots)
     // * dispatches our loadSpots action creator passing in our database info from our server
     dispatch(loadSpots(spots.data));
 };
@@ -67,9 +67,9 @@ export const fetchSpot = (spotId) => async (dispatch) => {
     //* fetching our individual spot using the spotId in our url
     const response = await csrfFetch(`/api/spots/${spotId}`)
     const spot = await response.json()
-    // console.log("SPOTSTHUNK", spot)
     //* dispatch our loadSpot action creator taking in our spot from the fetch
     dispatch(loadSpot(spot))
+    return spot
 }
 
 export const updateSpot = (spotId, spot) => async dispatch => {
@@ -90,7 +90,7 @@ export const updateSpot = (spotId, spot) => async dispatch => {
 
 
 //*---------------REDUCERS-------------------
-const initialState = { spotDetai: {} };
+const initialState = { spotDetail: {} };
 
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {

@@ -16,15 +16,19 @@ import "./UpdateSpot.css"
 // todo navigate to that spots id page on submit
     //* same as create, navigate in handlesubmit
 
-function UpdateSpot() {
+function UpdateSpotPage() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { spotId } = useParams()
-    let spot = useSelector(state => state.spot);
+    let spot = useSelector(state => state.spot.spotDetail)
+    useEffect(() => {
+        dispatch(fetchSpot(+spotId))
+        .then(() => setIsLoaded(true))
+    }, [dispatch], spotId)
     console.log("SPOTTTTT", spot)
-
+    let [isLoaded, setIsLoaded] = useState(false)
     const [errors, setErrors] = useState({})
-    const [country, setCountry] = useState(spot.spotDetail.country)
+    const [country, setCountry] = useState(spot.country)
     const [address, setAddress] = useState(spot.address)
     const [city, setCity] = useState(spot.city)
     const [state, setState] = useState(spot.state)
@@ -37,9 +41,7 @@ function UpdateSpot() {
     // const [img2, setImg2] = useState(spot.img2)
     // const [img3, setImg3] = useState(spot.img3)
     // const [img4, setImg4] = useState(spot.img4)
-    useEffect(() => {
-        dispatch(fetchSpot(spotId))
-    }, [dispatch])
+
 
     let handleSubmit = async (e) => {
         let formErrors = {}
@@ -79,6 +81,7 @@ function UpdateSpot() {
 
     return (
         <>
+        {isLoaded &&
             <div className="page">
             <form
                 onSubmit={handleSubmit}
@@ -163,10 +166,6 @@ function UpdateSpot() {
                         onChange={e => setPrice(e.target.value)}
                     />
                 </div>
-
-                <div className="full-label"> <h2>Liven up your spot with photos</h2>
-                    <p>Submit a link to at least one photo to publish your spot</p>
-                </div>
                 <button
                     type="submit"
                 >
@@ -174,8 +173,9 @@ function UpdateSpot() {
                 </button>
             </form>
         </div>
+        }
         </>
     )
 }
 
-export default UpdateSpot
+export default UpdateSpotPage
