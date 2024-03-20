@@ -65,7 +65,7 @@ export const fetchSpot = (spotId) => async (dispatch) => {
     //* fetching our individual spot using the spotId in our url
     const response = await csrfFetch(`/api/spots/${spotId}`)
     const spot = await response.json()
-    console.log("SPOTSTHUNK", spot)
+    // console.log("SPOTSTHUNK", spot)
     //* dispatch our loadSpot action creator taking in our spot from the fetch
     dispatch(loadSpot(spot))
 }

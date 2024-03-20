@@ -12,7 +12,7 @@ function ManageSpots() {
     let user = useSelector(state => state.session.user)
     let spots = useSelector(state => state.spot);
     spots = Object.values(spots)
-    console.log("CURRSPOTTTTS", spots)
+    // console.log("CURRSPOTTTTS", spots)
     // console.log(spots)
     useEffect(() => {
         dispatch(fetchCurrUserSpots());
