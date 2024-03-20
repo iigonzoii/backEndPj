@@ -39,7 +39,7 @@ function UpdateSpot() {
     // const [img4, setImg4] = useState(spot.img4)
     useEffect(() => {
         dispatch(fetchSpot(spotId))
-    }, [dispatch, spotId])
+    }, [dispatch])
 
     let handleSubmit = async (e) => {
         let formErrors = {}
@@ -72,7 +72,7 @@ function UpdateSpot() {
                 // img3,
                 // img4
             }
-            let updatedSpot = await dispatch(updateSpot(payload))
+            let updatedSpot = await dispatch(updateSpot(spotId, payload))
             navigate(`/spots/${updatedSpot.id}`)
         }
     }
