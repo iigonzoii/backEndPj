@@ -4,7 +4,7 @@ import { csrfFetch } from "./csrf"
 
 const LOAD_SPOTS = "spot/loadSpots"
 const LOAD_SPOT = "spot/loadSpot"
-const CURR_SPOTS = "spot/currentSpots"
+const UPDATE_SPOT = "spot/updateSpot"
 
 //*--------ACTION CREATORS-------------
 export const loadSpots = (spots) => {
@@ -17,6 +17,12 @@ export const loadSpot = (spot) => {
     return {
         type: LOAD_SPOT,
         spot
+    }
+}
+export const update = (updatedSpot) => {
+    return {
+        type: UPDATE_SPOT,
+        updatedSpot
     }
 }
 
@@ -62,6 +68,19 @@ export const fetchSpot = (spotId) => async (dispatch) => {
     console.log("SPOTSTHUNK", spot)
     //* dispatch our loadSpot action creator taking in our spot from the fetch
     dispatch(loadSpot(spot))
+}
+
+export const updateSpot = (spotId, spot) => async dispatch => {
+    const response = await csrfFetch(`api/spots${spotId}`, {
+        method: 'Put',
+        body: JSON.stringify(spot)
+    })
+    if (response.ok) {
+        const updatedSpot = await response.json()
+        dispatch(update(updatedSpot))
+        return response
+    }
+    return response
 }
 
 
