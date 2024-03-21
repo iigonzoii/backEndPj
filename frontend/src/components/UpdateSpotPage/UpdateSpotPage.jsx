@@ -11,6 +11,7 @@ import "./UpdateSpot.css"
 
 // todo create form with values of our useState variable that was created previously
 //* copy and paste create form then edit it
+
 // todo set new values to the form with our updated body
     //* use createForm logic, copy and paste
 // todo navigate to that spots id page on submit
@@ -29,11 +30,11 @@ function UpdateSpotPage() {
             setCity(spot.city)
             setState(spot.state)
             setDescription(spot.description)
-            setSpotName(spot.spotName)
+            setSpotName(spot.name)
             setPrice(spot.price)
         })
         .then(() => setIsLoaded(true))
-    }, [dispatch], spotId)
+    }, [dispatch],spotId)
     const [isLoaded, setIsLoaded] = useState(false)
     // console.log("SPOTTTTT", spot)
     const [errors, setErrors] = useState({})

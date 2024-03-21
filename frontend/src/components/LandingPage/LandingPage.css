@@ -24,6 +24,7 @@ img {
 .spot-data-container{
     display: flex;
     flex-direction: column;
+    color: black;
 }
 
 .city-review-data{

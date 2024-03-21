@@ -43,7 +43,7 @@ function ManageSpots() {
                         <div
                             title={`${spot.name}`}
                             className="spot-card-container" key={index}>
-                            <img className="pointer" src={spot.previewImage} />
+                            <img className="" src={spot.previewImage} />
                             <div className="spot-data-container">
                                 <div className="city-review-data ">
                                     <p className="cityState ">{`${spot.city},${spot.state}`}</p>
