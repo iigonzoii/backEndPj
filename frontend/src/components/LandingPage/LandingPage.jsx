@@ -35,7 +35,7 @@ function LandingPage() {
                     <img className="pointer" src={spot.previewImage} />
                     <div className="spot-data-container">
                         <div className="city-review-data">
-                            <p className="cityState">{`${spot.city},${spot.state}`}</p>
+                            <p className="cityState">{`${spot.city}, ${spot.state}`}</p>
                             <p className="starRating"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p>
                         </div>
                         <p className="price">{`$${spot.price} a night`}</p>

@@ -6,22 +6,10 @@ import { updateSpot } from "../../store/spotReducer";
 import { fetchSpot } from "../../store/spotReducer";
 import "./UpdateSpot.css"
 
-// todo get the currentSpot data so we can store into useState for the form values
-//     * grab that spot through our state somehow or do a fetch for currspot
-
-// todo create form with values of our useState variable that was created previously
-//* copy and paste create form then edit it
-
-// todo set new values to the form with our updated body
-    //* use createForm logic, copy and paste
-// todo navigate to that spots id page on submit
-    //* same as create, navigate in handlesubmit
-
 function UpdateSpotPage() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { spotId } = useParams()
-    // let spot = useSelector(state => state.spot.spotDetail)
     useEffect(() => {
         dispatch(fetchSpot(+spotId))
         .then(spot => {
@@ -35,8 +23,8 @@ function UpdateSpotPage() {
         })
         .then(() => setIsLoaded(true))
     }, [dispatch],spotId)
+
     const [isLoaded, setIsLoaded] = useState(false)
-    // console.log("SPOTTTTT", spot)
     const [errors, setErrors] = useState({})
     const [country, setCountry] = useState("")
     const [address, setAddress] = useState("")
@@ -44,15 +32,11 @@ function UpdateSpotPage() {
     const [state, setState] = useState("")
     const [description, setDescription] = useState("")
     const [spotName, setSpotName] = useState("")
-    // console.log(spotName)
     const [price, setPrice] = useState("")
 
     let handleSubmit = async (e) => {
         let formErrors = {}
         e.preventDefault()
-        const formData = new FormData(e.target);
-        const formValues = Object.fromEntries(formData.entries());
-        console.log("FORMVALUES",formValues)
         if (address.length === 0) formErrors.address = 'Street address is required'
         if (city.length === 0) formErrors.city = "City is required"
         if (state.length === 0) formErrors.state = "State is required"
@@ -71,14 +55,8 @@ function UpdateSpotPage() {
                 state,
                 description,
                 name: spotName,
-                price,
-                // previewImg,
-                // img1,
-                // img2,
-                // img3,
-                // img4
+                price
             }
-            console.log("submitted update")
             let updatedSpot = await dispatch(updateSpot(+spotId, payload))
             navigate(`/spots/${updatedSpot.id}`)
         }

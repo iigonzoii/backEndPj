@@ -4,7 +4,6 @@ import { csrfFetch } from "./csrf"
 
 const LOAD_SPOTS = "spot/loadSpots"
 const LOAD_SPOT = "spot/loadSpot"
-//!might not need update
 const UPDATE_SPOT = "spot/updateSpot"
 
 //*--------ACTION CREATORS-------------
@@ -20,7 +19,7 @@ export const loadSpot = (spot) => {
         spot
     }
 }
-//! i think i can use the loadSpot action in my update spot thunk and not even need update ac
+
 export const update = (updatedSpot) => {
     return {
         type: UPDATE_SPOT,
@@ -32,14 +31,11 @@ export const update = (updatedSpot) => {
 export const fetchCurrUserSpots = () => async (dispatch) => {
     const response = await csrfFetch("/api/spots/current")
     const spots = await response.json()
-    // console.log("fetchCurrSpots", spots)
     dispatch(loadSpots(spots.Spots))
 }
 export const fetchSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots');
     const spots = await response.json();
-    // console.log("FETCHSPOTSSSS", spots)
-    // * dispatches our loadSpots action creator passing in our database info from our server
     dispatch(loadSpots(spots.data));
 };
 
@@ -61,27 +57,22 @@ export const createSpot = (spot) => async (dispatch) => {
     dispatch(loadSpot(newSpot))
     return newSpot
 }
-
-//* Takes in a spotId as the payload from our component
 export const fetchSpot = (spotId) => async (dispatch) => {
-    //* fetching our individual spot using the spotId in our url
     const response = await csrfFetch(`/api/spots/${spotId}`)
     const spot = await response.json()
-    //* dispatch our loadSpot action creator taking in our spot from the fetch
     dispatch(loadSpot(spot))
     return spot
 }
 
 export const updateSpot = (spotId, spot) => async dispatch => {
-    const response = await csrfFetch(`api/spots/${spotId}`, {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: 'Put',
         body: JSON.stringify(spot)
     })
     if (response.ok) {
         const updatedSpot = await response.json()
-        //? line 83 might be conflicting with line 72, maybe I do need update action creator instead of just using loadSpot
         dispatch(update(updatedSpot))
-        return response
+        return updatedSpot
     }
     return response
 }
@@ -95,7 +86,7 @@ const initialState = { spotDetail: {} };
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS: {
-            console.log("ACTIONNNN",action)
+            // console.log("ACTIONNNN",action)
             let newState = {}
             action.spots.forEach(spot => {
                 newState[spot.id] = spot
