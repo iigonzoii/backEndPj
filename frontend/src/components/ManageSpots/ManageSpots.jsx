@@ -5,6 +5,7 @@ import { fetchCurrUserSpots } from "../../store/spotReducer"
 // import { fetchSpots } from "../../store/spotReducer"
 import { useEffect } from "react"
 import "../LandingPage/LandingPage.css"
+import "./manageSpots.css"
 
 function ManageSpots() {
     let navigate = useNavigate()
@@ -38,23 +39,24 @@ function ManageSpots() {
                 className="container"
             >
                 {spots && spots.map((spot, index) => (
-                    <div
-                        title={`${spot.name}`}
-                        onClick={() => navigate(`/spots/${spot.id}`)}
-                        className="spot-card-container" key={index}>
-                        <img className="pointer" src={spot.previewImage} />
-                        <div className="spot-data-container">
-                            <div className="city-review-data">
-                                <p className="cityState">{`${spot.city},${spot.state}`}</p>
-                                <p className="starRating"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p>
+                    <Link className="no-line"key={index} to={`/spots/${spot.id}`}>
+                        <div
+                            title={`${spot.name}`}
+                            className="spot-card-container" key={index}>
+                            <img className="pointer" src={spot.previewImage} />
+                            <div className="spot-data-container">
+                                <div className="city-review-data ">
+                                    <p className="cityState ">{`${spot.city},${spot.state}`}</p>
+                                    <p className="starRating"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p>
+                                </div>
+                                <p className="price">{`$${spot.price} a night`}</p>
                             </div>
-                            <p className="price">{`$${spot.price} a night`}</p>
+                            <span>
+                                <Link to={`/spots/${spot.id}/update`}><button>update</button></Link>
+                                <button>delete</button>
+                            </span>
                         </div>
-                        <span>
-                            <Link to={`/spots/${spot.id}/update`}><button>update</button></Link>
-                            <button>delete</button>
-                        </span>
-                    </div>
+                    </Link>
                 ))}
 
 

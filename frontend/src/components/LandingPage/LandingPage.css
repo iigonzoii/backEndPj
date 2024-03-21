@@ -1,7 +1,9 @@
 body {
     background-color: #FFFFFF;
 }
-
+.no-line{
+    text-decoration: none;
+}
 img {
     height: 250px;
     width: 250px;
@@ -32,16 +34,3 @@ img {
 .pointer {
     cursor: pointer
 }
-
-/* .tooltip{
-    display: none;
-    position: absolute;
-    top:100%;
-    left:0;
-    padding: 3px;
-    border: 1px solid black;
-}
-
-.element:hover .tooltip{
-    display:block
-} */

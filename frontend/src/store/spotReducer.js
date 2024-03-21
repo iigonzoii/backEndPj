@@ -80,7 +80,7 @@ export const updateSpot = (spotId, spot) => async dispatch => {
     if (response.ok) {
         const updatedSpot = await response.json()
         //? line 83 might be conflicting with line 72, maybe I do need update action creator instead of just using loadSpot
-        dispatch(loadSpot(updatedSpot))
+        dispatch(update(updatedSpot))
         return response
     }
     return response
@@ -103,7 +103,9 @@ const spotReducer = (state = initialState, action) => {
             return newState
         }
         case LOAD_SPOT:
-            return { ...state, spotDetail: action.spot };
+            return { ...state, spotDetail: action.spot};
+        case UPDATE_SPOT:
+            return {...state, spotDetail: action.spot}
         default:
             return state;
     }
