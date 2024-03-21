@@ -25,9 +25,9 @@ function UpdateSpotPage() {
     useEffect(() => {
         dispatch(fetchSpot(+spotId))
         .then(() => setIsLoaded(true))
-    }, [dispatch], spotId)
+    }, [dispatch],spot, spotId)
     const [isLoaded, setIsLoaded] = useState(false)
-    console.log("SPOTTTTT", spot)
+    // console.log("SPOTTTTT", spot)
     const [errors, setErrors] = useState({})
     const [country, setCountry] = useState(spot.country)
     const [address, setAddress] = useState(spot.address)
@@ -36,12 +36,6 @@ function UpdateSpotPage() {
     const [description, setDescription] = useState(spot.description)
     const [spotName, setSpotName] = useState(spot.spotName)
     const [price, setPrice] = useState(spot.price)
-    // const [previewImg, setPreviewImg] = useState(spot.previewImg)
-    // const [img1, setImg1] = useState(spot.img1)
-    // const [img2, setImg2] = useState(spot.img2)
-    // const [img3, setImg3] = useState(spot.img3)
-    // const [img4, setImg4] = useState(spot.img4)
-
 
     let handleSubmit = async (e) => {
         let formErrors = {}

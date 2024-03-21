@@ -37,11 +37,6 @@ const router = createBrowserRouter([
         element: <LandingPage />
       },
       {
-        // *fix this
-        path: '/spots/:spotId/update',
-        element: <UpdateSpotPage />
-      },
-      {
         path: '/spots/:spotId',
         element: <SpotDetailsPage />
       },
@@ -53,7 +48,10 @@ const router = createBrowserRouter([
         path: '/spots/current',
         element: <ManageSpots />
       },
-
+      {
+        path: '/spots/:spotId/update',
+        element: <UpdateSpotPage />
+      },
     ]
   }
 ]);
