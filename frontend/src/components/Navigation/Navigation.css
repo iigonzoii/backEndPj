@@ -1,3 +1,20 @@
 .hidden {
     display: none;
 }
+.logo{
+    text-decoration: none;
+    color:#FF5A5F;
+}
+nav{
+    display: flex;
+    border-bottom: solid grey;
+    justify-content: space-between;
+}
+
+.pointer{
+    cursor:pointer;
+}
+
+.profile-dropdown > li{
+    list-style-type: none;
+}

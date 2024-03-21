@@ -1,0 +1,37 @@
+body {
+    background-color: #FFFFFF;
+}
+.no-line{
+    text-decoration: none;
+}
+img {
+    height: 250px;
+    width: 250px;
+    object-fit:cover;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    column-gap: 20px;
+}
+.spot-card-container{
+    display: flex;
+    flex-direction: column ;
+}
+
+.spot-data-container{
+    display: flex;
+    flex-direction: column;
+    color: black;
+}
+
+.city-review-data{
+    display: flex;
+    justify-content: space-between;
+}
+
+.pointer {
+    cursor: pointer
+}

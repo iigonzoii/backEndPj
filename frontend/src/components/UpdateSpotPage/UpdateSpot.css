@@ -1,0 +1,44 @@
+.page{
+    display: flex;
+    justify-content: center;
+}
+.create-spot{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 50%;
+}
+.red{
+    color: red;
+}
+.full-label.dollar{
+display: flex;
+}
+/* .create-spot {
+width: 50%;
+} */
+
+/* city and state div display flex */
+.city-state{
+    display: flex;
+    justify-content: space-between;
+    /* width: 100%; */
+}
+.city-state label{
+    display: flex;
+    flex-direction: column;
+}
+.full-label{
+    width: 100%;
+}
+.full-label input{
+    width: 100%;
+}
+.create-spot > button {
+    width: 80%;
+    box-shadow: 2px 5px 5px black;
+    margin: auto;
+    background-color: #ff5a5f;
+    color: white;
+}
