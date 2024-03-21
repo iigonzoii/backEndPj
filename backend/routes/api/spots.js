@@ -23,10 +23,12 @@ const validateSpot = [
         .exists({ checkFalsy: true })
         .withMessage('Country is required.'),
     check('lat')
+        .optional()
         .exists({ checkFalsy: true })
         .isFloat({ min: -90, max: 90 })
         .withMessage('Latitude must be within -90 and 90.'),
     check('lng')
+    .optional()
         .exists({ checkFalsy: true })
         .isFloat({ min: -180, max: 180 })
         .withMessage('Longitude must be within -180 and 180.'),
@@ -199,6 +201,7 @@ router.get('/', queryValidatorOptional, async (req, res, next) => {
         });
         // creating keyvalue pair to show avg rating in our return obj
         data.avgRating = allStars / data.Reviews.length
+        data.avgRating = data.avgRating.toFixed(1)
 
         data.SpotImages.forEach(image => {
             if (image.preview) data.previewImage = image.url
@@ -211,7 +214,7 @@ router.get('/', queryValidatorOptional, async (req, res, next) => {
         delete data.Reviews
         delete data.SpotImages
     });
-    return res.json({ Spots: data, page, size })
+    return res.json({  data, page, size })
 });
 // check error response when not logged in for create
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
@@ -356,7 +359,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         });
         // creating keyvalue pair to show avg rating in our return obj
         data.avgRating = allStars / data.Reviews.length
-
+        data.avgRating = data.avgRating.toFixed(1)
 
 
         data.SpotImages.forEach(image => {
@@ -366,7 +369,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
         if (!data.previewImage) {
             data.previewImage = 'no image url'
         }
-
         // after manipulating data above we are deleting the visual arrays that were houseing that data to match res body in docs
         delete data.Reviews
         delete data.SpotImages
@@ -387,11 +389,14 @@ router.get('/:spotId', async (req, res, next) => {
             {
                 model: Image,
                 as: 'SpotImages',
-                // where: {imageableType: 'Spot'},
                 attributes: ['id', 'url', 'preview']
             },
             {
-                model: Review
+                model: Review,
+                order: [['createdAt', 'DESC' ]]
+
+                //* [Task, 'createdAt', 'DESC'],
+                // Will order an associated model's createdAt using the model name as the association's name.
             },
             {
                 model: User,
@@ -415,6 +420,7 @@ router.get('/:spotId', async (req, res, next) => {
     }
     data.numReviews = data.Reviews.length;
     data.avgStarRating = allStars / data.Reviews.length;
+    data.avgStarRating = data.avgStarRating.toFixed(1)
 
     delete data.Reviews
     res.json(data)
@@ -462,7 +468,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview,  async (req, res, n
         })
     }
     if (await Review.findOne({
-        where: { userId: userId }
+        where: { userId: userId, spotId:spotId }
     })) {
         return res.status(500).json({
             message: "User already has a review for this spot"
@@ -475,7 +481,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview,  async (req, res, n
         userId,
         spotId: +spotId
     })
-
+    createdReview.dataValues.User = req.user
     return res.status(201).json(createdReview)
 });
 
