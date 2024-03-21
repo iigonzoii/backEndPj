@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useParams } from 'react-router-dom'
 import { updateSpot } from "../../store/spotReducer";
 import { fetchSpot } from "../../store/spotReducer";
@@ -20,22 +20,31 @@ function UpdateSpotPage() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { spotId } = useParams()
-    let spot = useSelector(state => state.spot.spotDetail)
-    // console.log("spotidspotid", +spotId)
+    // let spot = useSelector(state => state.spot.spotDetail)
     useEffect(() => {
         dispatch(fetchSpot(+spotId))
+        .then(spot => {
+            setCountry(spot.country)
+            setAddress(spot.address)
+            setCity(spot.city)
+            setState(spot.state)
+            setDescription(spot.description)
+            setSpotName(spot.spotName)
+            setPrice(spot.price)
+        })
         .then(() => setIsLoaded(true))
     }, [dispatch], spotId)
     const [isLoaded, setIsLoaded] = useState(false)
-    console.log("SPOTTTTT", spot)
+    // console.log("SPOTTTTT", spot)
     const [errors, setErrors] = useState({})
-    const [country, setCountry] = useState(spot?.country)
-    const [address, setAddress] = useState(spot?.address)
-    const [city, setCity] = useState(spot?.city)
-    const [state, setState] = useState(spot?.state)
-    const [description, setDescription] = useState(spot?.description)
-    const [spotName, setSpotName] = useState(spot?.spotName)
-    const [price, setPrice] = useState(spot?.price)
+    const [country, setCountry] = useState("")
+    const [address, setAddress] = useState("")
+    const [city, setCity] = useState("")
+    const [state, setState] = useState("")
+    const [description, setDescription] = useState("")
+    const [spotName, setSpotName] = useState("")
+    // console.log(spotName)
+    const [price, setPrice] = useState("")
 
     let handleSubmit = async (e) => {
         let formErrors = {}
@@ -68,7 +77,8 @@ function UpdateSpotPage() {
                 // img3,
                 // img4
             }
-            let updatedSpot = await dispatch(updateSpot(spotId, payload))
+            console.log("submitted update")
+            let updatedSpot = await dispatch(updateSpot(+spotId, payload))
             navigate(`/spots/${updatedSpot.id}`)
         }
     }
