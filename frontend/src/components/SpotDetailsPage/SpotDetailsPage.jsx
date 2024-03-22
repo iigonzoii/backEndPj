@@ -10,6 +10,7 @@ import OpenModalButton from "../OpenModalButton/index.js"
 
 function SpotDetailsPage() {
     const { spotId } = useParams()
+    console.log("spotIDDDDDD", spotId)
     const dispatch = useDispatch();
     let spot = useSelector(state => state.spot.spotDetail);
     const session = useSelector(state => state.session);
