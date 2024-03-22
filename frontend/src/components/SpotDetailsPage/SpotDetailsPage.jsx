@@ -18,10 +18,12 @@ function SpotDetailsPage() {
     let [isLoaded, setIsLoaded] = useState(false)
     let review = useSelector(state => state.review)
     review = Object.values(review).reverse()
+    //! do something about userHasReview. if not logged in then it brakes because user.id is null
     const userHasReview = review.find(currReview => currReview.userId === session.user.id)
-    let userReview = {}
-    // console.log("REVIEW", review)
-    console.log("userReviews", userReview)
+    console.log("SeSSION",session)
+
+    // let userReview = {}
+    // console.log("userReviews", userReview)
     let month = ["January", "February", "March", "April", "May", "June", "July", "October", "November", "December"]
     let checkRating = () => {
         if (isNaN(spot.avgStarRating)) {

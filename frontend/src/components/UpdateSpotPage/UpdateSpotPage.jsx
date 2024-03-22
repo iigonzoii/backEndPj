@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom'
 import { updateSpot } from "../../store/spotReducer";
 import { fetchSpot } from "../../store/spotReducer";
 import "./UpdateSpot.css"
-import OpenModalButton from "../OpenModalButton";
-import DeleteSpot from "../DeleteSpot/DeleteSpot";
+// import OpenModalButton from "../OpenModalButton";
+// import DeleteSpot from "../DeleteSpot/DeleteSpot";
 
 function UpdateSpotPage() {
     const navigate = useNavigate()
