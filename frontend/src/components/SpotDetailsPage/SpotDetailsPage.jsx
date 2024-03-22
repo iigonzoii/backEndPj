@@ -20,7 +20,7 @@ function SpotDetailsPage() {
     review = Object.values(review).reverse()
     const userHasReview = review.find(currReview => currReview.userId === session.user.id)
     let userReview = {}
-    console.log("REVIEW", review)
+    // console.log("REVIEW", review)
     console.log("userReviews", userReview)
     let month = ["January", "February", "March", "April", "May", "June", "July", "October", "November", "December"]
     let checkRating = () => {
@@ -60,7 +60,6 @@ function SpotDetailsPage() {
                 <div className="host-description">
                     {<p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>}
                     {<p>{spot && spot.description}</p>}
-
                     <aside className="reservation-box">
                         <span>{`$${spot && spot.price} a night `}
                             <i className="fa-solid fa-star"></i>{spot && checkRating()}
@@ -70,29 +69,20 @@ function SpotDetailsPage() {
                         </span>
                         <div><button className="pointer" onClick={reserve}>Reserve</button></div>
                     </aside>
-
                 </div>
-
-
                 <div className="reviews-container">
-
                     <div>
                         <p className="stars-reviews"><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
                         <p>{spot && checkIfOne()}</p>
                     </div>
-
                     <div>
-
                         <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview}>
                     <OpenModalButton
                     buttonText = "Post Your Review"
                     modalComponent={<PostReviewModal spotId={spot.id}/>}
                     />
                         </span>
-
                     </div>
-
-
                     <span hidden={review.length !== 0 || (session.user && spot.Owner.id === session.user.id)}>Be the first to post a review!</span>
                     <div className="review-data">
                         {review && review.map((review, index) => (
@@ -104,7 +94,6 @@ function SpotDetailsPage() {
                         ))}
                     </div>
                 </div>
-
             </>}
         </div>
     )
