@@ -1,4 +1,30 @@
+.delete-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+  height: 200px;
+  height: max-content;
+  border: solid black 2px;
+  border-radius: 10px;
+}
 
+.deletebtn{
+  /* background-color: red; */
+  margin: 5px;
+  background-color: #FF5A5F;
+  color: white;
+  width: 80%;
+  box-shadow: 2px 5px 5px black;
+  /* margin:auto */
+}
+.dontDeleteBtn{
+  background-color: darkgray;
+  margin-bottom: 5px;
+  color: white;
+  width: 80%;
+  box-shadow: 2px 5px 5px black;
+}
 .post-review {
   display: flex;
   flex-direction: column;

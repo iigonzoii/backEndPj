@@ -1,28 +1,25 @@
-// import OpenModalButton from "../OpenModalButton"
-// import {  useDispatch } from "react-redux"
+import {  useDispatch } from "react-redux"
 import { useModal } from "../../context/Modal"
-//todo a Title: "Confirm Delete"
-    // h1
-//todo a Message: "Are you sure you want to remove this spot?
-    //  h3
-//todo a Red button: ""
-    // button
-        // onclick or on submit will handle data manipulation
-        // will need a thunk to delete, and probably a case in my reducer
-//todo a Dark grey button: ""
-    // button
-        //  button will close modal on click
-function DeleteSpot(){
-    const {closeModal} = useModal
+import { deleteSpot } from "../../store/spotReducer"
+import { useState } from "react"
+
+function DeleteSpot({ spotId}) {
+    const { closeModal } = useModal
+    const deleteClick = (e) => {
+        e.preventDefault()
+
+        // dispatch our delete spot takingin the spot id
+        // check for errors
+    }
     return (
         <>
-<form>
-        <h1>Confirm Delete</h1>
-        <h3>Are you sure you want to remove this spot?</h3>
-        <button className="deletebtn">Yes (Delete Spot)</button>
-        <button className="dontDeleteBtn">No (Keep Spot)</button>
-
-</form>
+            <form className="delete-form">
+                <div><h3>Confirm Delete</h3>
+                    <h5>Are you sure you want to remove this spot from the listings?</h5>
+                    <div><button className="deletebtn">Yes (Delete Spot)</button></div>
+                    <button onClick={closeModal} className="dontDeleteBtn">No (Keep Spot)</button>
+                </div>
+            </form>
         </>
     )
 }
