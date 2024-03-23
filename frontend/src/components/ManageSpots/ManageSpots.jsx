@@ -6,6 +6,8 @@ import { fetchCurrUserSpots } from "../../store/spotReducer"
 import { useEffect } from "react"
 import "../LandingPage/LandingPage.css"
 import "./manageSpots.css"
+import OpenModalButton from "../OpenModalButton"
+import DeleteSpot from "../DeleteSpot/DeleteSpot"
 
 function ManageSpots() {
     let navigate = useNavigate()
@@ -39,7 +41,7 @@ function ManageSpots() {
                 className="container"
             >
                 {spots && spots.map((spot, index) => (
-                    <Link className="no-line"key={index} to={`/spots/${spot.id}`}>
+                    <Link className="no-line" key={index} to={`/spots/${spot.id}`}>
                         <div
                             title={`${spot.name}`}
                             className="spot-card-container" key={index}>
@@ -53,7 +55,11 @@ function ManageSpots() {
                             </div>
                             <span>
                                 <Link to={`/spots/${spot.id}/update`}><button>update</button></Link>
-                                <button>delete</button>
+                                <OpenModalButton
+                                    buttonText="Delete"
+                                    modalComponent={<DeleteSpot spotId={spot.id} />}
+                                />
+                                {/* <button>delete</button> */}
                             </span>
                         </div>
                     </Link>
