@@ -59,7 +59,6 @@ function ManageSpots() {
                                     buttonText="Delete"
                                     modalComponent={<DeleteSpot spotId={spot.id} />}
                                 />
-                                {/* <button>delete</button> */}
                             </span>
                         </div>
                     </Link>

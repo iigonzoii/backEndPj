@@ -74,6 +74,8 @@ function SpotDetailsPage() {
                         <p className="stars-reviews"><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
                         <p>{spot && checkIfOne()}</p>
                     </div>
+
+                        {/* this is the error line the screenshot was reffering to in my SpotDetailsPage */}
                     <div>
                         <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview}>
                     <OpenModalButton
