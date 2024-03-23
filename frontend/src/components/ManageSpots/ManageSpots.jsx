@@ -41,10 +41,10 @@ function ManageSpots() {
                 className="container"
             >
                 {spots && spots.map((spot, index) => (
-                    <Link className="no-line" key={index} to={`/spots/${spot.id}`}>
-                        <div
-                            title={`${spot.name}`}
-                            className="spot-card-container" key={index}>
+                    <div
+                    title={`${spot.name}`}
+                        className="spot-card-container" key={index}>
+                        <div onClick={() => navigate(`/spots/${spot.id}`)}>
                             <img className="" src={spot.previewImage} />
                             <div className="spot-data-container">
                                 <div className="city-review-data ">
@@ -53,18 +53,16 @@ function ManageSpots() {
                                 </div>
                                 <p className="price">{`$${spot.price} a night`}</p>
                             </div>
-                            <span>
-                                <Link to={`/spots/${spot.id}/update`}><button>update</button></Link>
-                                <OpenModalButton
-                                    buttonText="Delete"
-                                    modalComponent={<DeleteSpot spotId={spot.id} />}
-                                />
-                            </span>
                         </div>
-                    </Link>
+                        <span>
+                            <Link to={`/spots/${spot.id}/update`}><button>update</button></Link>
+                            <OpenModalButton
+                                buttonText="Delete"
+                                modalComponent={<DeleteSpot spotId={spot.id} />}
+                            />
+                        </span>
+                    </div>
                 ))}
-
-
             </div>
         </>
     )

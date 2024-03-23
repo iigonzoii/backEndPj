@@ -4,7 +4,7 @@ import { deleteSpot } from "../../store/spotReducer"
 import { useState } from "react"
 
 function DeleteSpot({ spotId }) {
-    const { closeModal } = useModal
+    const { closeModal } = useModal()
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
 
