@@ -47,8 +47,8 @@ export const fetchSpots = () => async (dispatch) => {
     dispatch(loadSpots(spots.data));
 };
 
-export const newImage = payload => async dispatch => {
-    const response = csrfFetch(`/api/spots/${payload.id}/images`, {
+export const newImage = payload => async () => {
+    await csrfFetch(`/api/spots/${payload.id}/images`, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" }

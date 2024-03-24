@@ -42,6 +42,14 @@ export const fetchReviews = (spotId) => async (dispatch) => {
     dispatch(loadReviews(review.Reviews))
 }
 
+export const deleteReview = (reviewId) => async dispatch => {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: "DELETE"
+    })
+    dispatch(fetchReviews())
+    return response
+    // dispatch thunks to repopulate the updated reviews if this doesnt work
+}
 
 const initialState = {};
 

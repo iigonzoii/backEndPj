@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom"
 import { fetchSpot } from "../../store/spotReducer"
 import { fetchReviews } from "../../store/reviewReducer"
 import './SpotDetailsPage.css'
-import PostReviewModal from "../PostReviewModal/PostReview"
 import OpenModalButton from "../OpenModalButton/index.js"
-// import PostReviewModal from "../PostReviewModal/PostReview"
+import DeleteReview from "../DeleteReviewModal/DeleteReview.jsx"
+import PostReviewModal from "../PostReviewModal/PostReview"
 
 function SpotDetailsPage() {
     const { spotId } = useParams()
@@ -17,10 +17,11 @@ function SpotDetailsPage() {
     let reserve = () => alert("Feature coming soon")
     let [isLoaded, setIsLoaded] = useState(false)
     let review = useSelector(state => state.review)
+    console.log("REVIEWWWW", review)
     review = Object.values(review).reverse()
     let userHasReview
     if (session.user !== null) userHasReview = review.find(currReview => currReview.userId === session.user.id)
-    console.log("SeSSION",session)
+    console.log("SeSSION", session)
     let month = ["January", "February", "March", "April", "May", "June", "July", "October", "November", "December"]
     let checkRating = () => {
         if (isNaN(spot.avgStarRating)) {
@@ -75,13 +76,12 @@ function SpotDetailsPage() {
                         <p>{spot && checkIfOne()}</p>
                     </div>
 
-                        {/* this is the error line the screenshot was reffering to in my SpotDetailsPage */}
                     <div>
                         <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview}>
-                    <OpenModalButton
-                    buttonText = "Post Your Review"
-                    modalComponent={<PostReviewModal spotId={spot.id}/>}
-                    />
+                            <OpenModalButton
+                                buttonText="Post Your Review"
+                                modalComponent={<PostReviewModal reviewId={review.id} />}
+                            />
                         </span>
                     </div>
                     <span hidden={review.length !== 0 || (session.user && spot.Owner.id === session.user.id)}>Be the first to post a review!</span>
@@ -91,8 +91,16 @@ function SpotDetailsPage() {
                                 <p>{review.User.firstName}</p>
                                 <p>{month[new Date(review.createdAt).getMonth()]} {review.createdAt.split("-")[0]}</p>
                                 <p>{review.review}</p>
+                                <div>
+                                    <OpenModalButton
+                                        buttonText="Delete"
+                                        modalComponent={<DeleteReview reviewId={review.id} />}
+                                    />
+                                </div>
                             </div>
+
                         ))}
+
                     </div>
                 </div>
             </>}
