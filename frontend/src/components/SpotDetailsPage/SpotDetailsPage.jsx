@@ -17,8 +17,8 @@ function SpotDetailsPage() {
     let reserve = () => alert("Feature coming soon")
     let [isLoaded, setIsLoaded] = useState(false)
     let review = useSelector(state => state.review)
-    console.log("REVIEWWWW", review)
     review = Object.values(review).reverse()
+    console.log("REVIEWWWW", review)
     let userHasReview
     if (session.user !== null) userHasReview = review.find(currReview => currReview.userId === session.user.id)
     console.log("SeSSION", session)
@@ -91,7 +91,7 @@ function SpotDetailsPage() {
                                 <p>{review.User.firstName}</p>
                                 <p>{month[new Date(review.createdAt).getMonth()]} {review.createdAt.split("-")[0]}</p>
                                 <p>{review.review}</p>
-                                <div>
+                                <div hidden={session.user.id !== review.User.id}>
                                     <OpenModalButton
                                         buttonText="Delete"
                                         modalComponent={<DeleteReview reviewId={review.id} />}
