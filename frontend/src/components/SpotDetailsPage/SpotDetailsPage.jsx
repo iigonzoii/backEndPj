@@ -8,6 +8,7 @@ import OpenModalButton from "../OpenModalButton/index.js"
 import DeleteReview from "../DeleteReviewModal/DeleteReview.jsx"
 import PostReviewModal from "../PostReviewModal/PostReview"
 
+
 function SpotDetailsPage() {
     const { spotId } = useParams()
     const dispatch = useDispatch();
@@ -80,7 +81,7 @@ function SpotDetailsPage() {
                         <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview}>
                             <OpenModalButton
                                 buttonText="Post Your Review"
-                                modalComponent={<PostReviewModal reviewId={review.id} />}
+                                modalComponent={<PostReviewModal spotId={spot.id} />}
                             />
                         </span>
                     </div>
