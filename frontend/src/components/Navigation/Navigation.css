@@ -10,6 +10,7 @@ nav{
     border-bottom: solid grey;
     justify-content: space-between;
     align-items: center;
+    margin: 20px;
 }
 
 .pointer{
@@ -22,12 +23,14 @@ nav{
 .buttons-container{
     /* display: flex; */
     margin-left: auto;
+    margin-bottom: 10px;
 }
 
 .create-spot{
 margin-right: 10px;
+
 }
 
 .pro-btn{
-
+margin-bottom: 10px;
 }
