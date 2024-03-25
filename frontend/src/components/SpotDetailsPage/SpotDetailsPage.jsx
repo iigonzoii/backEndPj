@@ -42,6 +42,7 @@ function SpotDetailsPage() {
         dispatch(fetchReviews(+spotId))
             .then(() => dispatch(fetchSpot(+spotId)))
             .then(() => setIsLoaded(true));
+            //! if i get build errors then take this stupid spotId out of here
     }, [dispatch, spotId]);
     return (
         <div className="spot-detail-container">
@@ -95,7 +96,9 @@ function SpotDetailsPage() {
                                 <div hidden={session.user.id !== review.User.id}>
                                     <OpenModalButton
                                         buttonText="Delete"
-                                        modalComponent={<DeleteReview reviewId={review.id} />}
+                                        modalComponent={<DeleteReview reviewId={review.id}
+                                        spotId={spot.id}
+                                        />}
                                     />
                                 </div>
                             </div>

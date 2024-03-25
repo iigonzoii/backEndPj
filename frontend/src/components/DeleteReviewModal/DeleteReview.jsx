@@ -2,16 +2,17 @@ import { useDispatch } from "react-redux"
 import { useModal } from "../../context/Modal"
 import { deleteReview } from "../../store/reviewReducer"
 import { useState } from "react"
+// import { useParams } from "react-router-dom"
 
-function DeleteReview({reviewId}){
+function DeleteReview({reviewId, spotId}){
+    // const {spotId} = useParams()
     const { closeModal } = useModal()
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
-    
     const deleteClick = (e) => {
         e.preventDefault()
         setErrors({})
-        dispatch(deleteReview(reviewId))
+        dispatch(deleteReview(reviewId, spotId))
             .then(closeModal)
             .catch(async (res) => {
                 let data = await res.json()
@@ -20,7 +21,7 @@ function DeleteReview({reviewId}){
     }
     return (
         <>
-         <form className="delete-form">
+        <form className="delete-form">
                 <div><h3>Confirm Delete</h3>
                     <h5>Are you sure you want to delete this review?</h5>
                     {errors.message && (
