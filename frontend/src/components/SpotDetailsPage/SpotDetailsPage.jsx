@@ -42,7 +42,7 @@ function SpotDetailsPage() {
         dispatch(fetchReviews(+spotId))
             .then(() => dispatch(fetchSpot(+spotId)))
             .then(() => setIsLoaded(true));
-            //! if i get build errors then take this stupid spotId out of here
+        //! if i get build errors then take this stupid spotId out of here
     }, [dispatch, spotId]);
     return (
         <div className="spot-detail-container">
@@ -59,12 +59,15 @@ function SpotDetailsPage() {
                         ))}
                     </div>
                 </div>
+
                 <div className="host-description">
                     {<p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>}
                     {<p>{spot && spot.description}</p>}
                     <aside className="reservation-box">
-                        <span>{`$${spot && spot.price} a night `}
-                            <i className="fa-solid fa-star"></i>{spot && checkRating()}
+
+                        <span className="reserve-item-1">  {`$${spot && spot.price} a night `}</span>
+                        {/* <div></div> */}
+                        <span className="reserve-items-2"> <i className="fa-solid fa-star"></i>{spot && checkRating()}
                             <span
                                 hidden={(spot?.numReviews === 0)}> &#183; {spot && spot.numReviews} {spot?.numReviews > 1 ? ' Reviews' : ' Review'}
                             </span>
@@ -72,6 +75,7 @@ function SpotDetailsPage() {
                         <div><button className="pointer" onClick={reserve}>Reserve</button></div>
                     </aside>
                 </div>
+
                 <div className="reviews-container">
                     <div>
                         <p className="stars-reviews"><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
@@ -97,7 +101,7 @@ function SpotDetailsPage() {
                                     <OpenModalButton
                                         buttonText="Delete"
                                         modalComponent={<DeleteReview reviewId={review.id}
-                                        spotId={spot.id}
+                                            spotId={spot.id}
                                         />}
                                     />
                                 </div>
