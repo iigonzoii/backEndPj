@@ -66,7 +66,6 @@ function SpotDetailsPage() {
                     <aside className="reservation-box">
 
                         <span className="reserve-item-1">  {`$${spot && spot.price} a night `}</span>
-                        {/* <div></div> */}
                         <span className="reserve-items-2"> <i className="fa-solid fa-star"></i>{spot && checkRating()}
                             <span
                                 hidden={(spot?.numReviews === 0)}> &#183; {spot && spot.numReviews} {spot?.numReviews > 1 ? ' Reviews' : ' Review'}
@@ -97,7 +96,7 @@ function SpotDetailsPage() {
                                 <p>{review.User.firstName}</p>
                                 <p>{month[new Date(review.createdAt).getMonth()]} {review.createdAt.split("-")[0]}</p>
                                 <p>{review.review}</p>
-                                <div hidden={session.user.id !== review.User.id}>
+                                <div hidden={session.user && session.user.id !== review.User.id}>
                                     <OpenModalButton
                                         buttonText="Delete"
                                         modalComponent={<DeleteReview reviewId={review.id}
