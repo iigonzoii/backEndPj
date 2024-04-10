@@ -1,40 +1,39 @@
 body {
-    background-color: #FFFFFF;
+  background-color: #ffffff;
 }
-.no-line{
-    text-decoration: none;
+.no-line {
+  text-decoration: none;
 }
 img {
-    height: 250px;
-    width: 250px;
-    object-fit:cover;
-
+  height: 250px;
+  width: 250px;
+  object-fit: cover;
 }
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100vw;
-    column-gap: 20px;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100vw;
+  column-gap: 20px;
+  justify-content: center;
 }
-.spot-card-container{
-    display: flex;
-    flex-direction: column ;
-    border: solid black 1px;
-}
-
-.spot-data-container{
-    display: flex;
-    flex-direction: column;
-    color: black;
+.spot-card-container {
+  display: flex;
+  flex-direction: column;
+  border: solid black 1px;
 }
 
-.city-review-data{
-    display: flex;
-    justify-content: space-between;
+.spot-data-container {
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
+
+.city-reviewData {
+  display: flex;
+  justify-content: space-between;
 }
 
 .pointer {
-    cursor: pointer
+  cursor: pointer;
 }

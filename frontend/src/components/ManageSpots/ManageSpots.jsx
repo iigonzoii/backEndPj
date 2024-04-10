@@ -39,12 +39,12 @@ function ManageSpots() {
             >
                 {spots && spots.map((spot, index) => (
                     <div
-                    title={`${spot.name}`}
+                        title={`${spot.name}`}
                         className="spot-card-container" key={index}>
                         <div onClick={() => navigate(`/spots/${spot.id}`)}>
                             <img className="" src={spot.previewImage} />
                             <div className="spot-data-container">
-                                <div className="city-review-data ">
+                                <div className="city-reviewData ">
                                     <p className="cityState ">{`${spot.city},${spot.state}`}</p>
                                     <p className="starRating"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p>
                                 </div>

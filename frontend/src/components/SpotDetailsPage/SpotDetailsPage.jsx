@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { fetchSpot } from "../../store/spotReducer"
 import { fetchReviews } from "../../store/reviewReducer"
-import './SpotDetailsPage.css'
+import css from './SpotDetailsPage.module.css'
 import OpenModalButton from "../OpenModalButton/index.js"
 import DeleteReview from "../DeleteReviewModal/DeleteReview.jsx"
 import PostReviewModal from "../PostReviewModal/PostReview"
@@ -45,39 +45,45 @@ function SpotDetailsPage() {
         //! if i get build errors then take this stupid spotId out of here
     }, [dispatch, spotId]);
     return (
-        <div className="spot-detail-container">
+        <div className={css.spotDetailContainer}>
             {isLoaded && <><div>
                 {<p>{spot && spot.name}</p>}
                 {<p>{`${spot && spot.city}, ${spot && spot.state}, ${spot && spot.country}`}</p>}
             </div>
-                <div className="img-container">
-                    <img className="large-img" src={spot.SpotImages[0].url}>
+                <div className={css.imgContainer}>
+                    <img className={css.largeImg} src={spot.SpotImages[0].url}>
                     </img>
-                    <div className="small-img">
+                    <div className={css.smallImg}>
                         {spot && spot.SpotImages.slice(1).map((img, index) => (
                             <img key={index} src={img.url} />
                         ))}
                     </div>
                 </div>
 
-                <div className="host-description">
-                    <p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>
-                    <p>{spot && spot.description}</p>
-                    <aside className="reservation-box">
+                <div className={css.hostDescription}>
+                    <div>
+                        <p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>
+                        <p>{spot && spot.description}</p>
+                    </div>
 
-                        <span className="reserve-item-1">  {`$${spot && spot.price} a night `}</span>
-                        <span className="reserve-items-2"> <i className="fa-solid fa-star"></i>{spot && checkRating()}
-                            <span
-                                hidden={(spot?.numReviews === 0)}> &#183; {spot && spot.numReviews} {spot?.numReviews > 1 ? ' Reviews' : ' Review'}
+                    <aside className={css.reservationBox}>
+                        <div className={css.infoBox}>
+                            <span className={css.reserveItem1}>  {`$${spot && spot.price} a night `}</span>
+                            <span className={css.reserveItems2}> <i className="fa-solid fa-star"></i>{spot && checkRating()}
+                                <span
+                                    hidden={(spot?.numReviews === 0)}> &#183; {spot && spot.numReviews} {spot?.numReviews > 1 ? ' Reviews' : ' Review'}
+                                </span>
                             </span>
-                        </span>
-                        <div><button className="pointer" onClick={reserve}>Reserve</button></div>
+                        </div>
+                        <button className={css.pointer} onClick={reserve}>Reserve</button>
                     </aside>
+
+
                 </div>
 
-                <div className="reviews-container">
+                <div className={css.reviewsContainer}>
                     <div>
-                        <span className="stars-reviews"><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}&#183; </span>
+                        <span className={css.starsReviews}><i className={"fa-solid fa-star"} ></i>{`${spot && checkRating()}`}&#183; </span>
                         <span>{spot && checkIfOne()}</span>
                     </div>
 
@@ -90,7 +96,7 @@ function SpotDetailsPage() {
                         </span>
                     </div>
                     <span hidden={review.length !== 0 || (session.user && spot.Owner.id === session.user.id)}>Be the first to post a review!</span>
-                    <div className="review-data">
+                    <div className={css.reviewData}>
                         {review && review.map((review, index) => (
                             <div key={index}>
                                 <p>{review.User.firstName}</p>
