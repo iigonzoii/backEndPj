@@ -61,8 +61,8 @@ function SpotDetailsPage() {
                 </div>
 
                 <div className="host-description">
-                    {<p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>}
-                    {<p>{spot && spot.description}</p>}
+                    <p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>
+                    <p>{spot && spot.description}</p>
                     <aside className="reservation-box">
 
                         <span className="reserve-item-1">  {`$${spot && spot.price} a night `}</span>
@@ -77,8 +77,8 @@ function SpotDetailsPage() {
 
                 <div className="reviews-container">
                     <div>
-                        <p className="stars-reviews"><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}</p>
-                        <p>{spot && checkIfOne()}</p>
+                        <span className="stars-reviews"><i className="fa-solid fa-star"></i>{`${spot && checkRating()}`}&#183; </span>
+                        <span>{spot && checkIfOne()}</span>
                     </div>
 
                     <div>

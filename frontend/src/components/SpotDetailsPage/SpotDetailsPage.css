@@ -1,6 +1,9 @@
 
-.host-description-container{
-
+.host-description{
+display: flex;
+border-bottom: solid black 5px;
+flex-wrap: wrap;
+flex-direction: column;
 }
 .stars-reviews{
 
@@ -22,14 +25,14 @@
     align-items: left;
     margin: auto;
     width: 100%;
-    max-width: 900px;
+    max-width: 1000px;
+    /* border: solid black 1px; */
 }
 
 .img-container{
     display: flex;
-    width: 908px;
+    width: 1000px;
     height: 450px;
-    border: black solid 5px;
     column-gap: 2px;
 }
 .large-img{
@@ -57,6 +60,7 @@
     border: 3px solid black;
     height: 160px;
     border-radius: 20px;
+    align-self:flex-end;
 }
 .reserve-items-2{
     display: flex;

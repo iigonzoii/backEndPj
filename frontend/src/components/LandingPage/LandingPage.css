@@ -8,6 +8,7 @@ img {
     height: 250px;
     width: 250px;
     object-fit:cover;
+
 }
 
 .container {
@@ -20,6 +21,7 @@ img {
 .spot-card-container{
     display: flex;
     flex-direction: column ;
+    border: solid black 1px;
 }
 
 .spot-data-container{
