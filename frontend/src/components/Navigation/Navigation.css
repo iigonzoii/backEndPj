@@ -4,6 +4,8 @@
 .logo{
     text-decoration: none;
     color:#FF5A5F;
+    font-size: 30px;
+
 }
 nav{
     display: flex;
@@ -11,6 +13,7 @@ nav{
     justify-content: space-between;
     align-items: center;
     margin: 20px;
+
 }
 
 .pointer{
@@ -22,6 +25,7 @@ nav{
 }
 .buttons-container{
     /* display: flex; */
+
     margin-left: auto;
     margin-bottom: 10px;
 }
@@ -33,4 +37,5 @@ margin-right: 10px;
 
 .pro-btn{
 margin-bottom: 10px;
+/* size: 20px; */
 }
