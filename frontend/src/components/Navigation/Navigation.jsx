@@ -20,7 +20,7 @@ function Navigation({ isLoaded }) {
         </div>
       )}
       {isLoaded && (
-        <div className='pro-btn'>
+        <div className='profile-button'>
           <ProfileButton user={sessionUser} />
         </div>
       )}
