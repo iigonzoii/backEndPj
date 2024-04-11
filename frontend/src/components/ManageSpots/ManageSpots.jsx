@@ -31,7 +31,7 @@ function ManageSpots() {
         <>
             <h1>Manage Spots</h1>
             <div hidden={isOwner()} >
-                <button className="pointer" onClick={() => { navigate("/spots/new") }}>Create a New Spot</button>
+                <button className="pointer create-on-manage" onClick={() => { navigate("/spots/new") }}>Create a New Spot</button>
             </div>
             <div
                 hidden={!isOwner()}
@@ -52,8 +52,9 @@ function ManageSpots() {
                             </div>
                         </div>
                         <span>
-                            <Link to={`/spots/${spot.id}/update`}><button>update</button></Link>
+                            <Link to={`/spots/${spot.id}/update`}><button className="update-button">update</button></Link>
                             <OpenModalButton
+                            className="manage-delete"
                                 buttonText="Delete"
                                 modalComponent={<DeleteSpot spotId={spot.id} />}
                             />

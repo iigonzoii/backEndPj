@@ -19,6 +19,7 @@
 }
 .full-label.dollar{
 display: flex;
+
 }
 
 .city-state{
@@ -31,9 +32,11 @@ display: flex;
 }
 .full-label{
     width: 100%;
+
 }
 .full-label input{
     width: 100%;
+    background-color: #E8F0FE;
 }
 
 .create-button{
@@ -46,4 +49,10 @@ display: flex;
     background-color: #ff5a5f;
     color: white;
     align-self: center;
+    font-size: 20px;
+}
+
+.description{
+    background-color: #E8F0FE;
+    width: 100%;
 }
