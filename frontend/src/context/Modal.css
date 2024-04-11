@@ -67,6 +67,8 @@ button:disabled{
   margin:auto;
   background-color: #FF5A5F;
   color: white;
+  height: 40px;
+  border: solid black 3px;
 }
 
 .login-form {
@@ -90,7 +92,9 @@ button:disabled{
   color: white;
   width: 80%;
   box-shadow: 2px 5px 5px black;
-  margin:auto
+  margin:auto;
+  height: 40px;
+  border: solid black 3px;
 }
 
 #modal {

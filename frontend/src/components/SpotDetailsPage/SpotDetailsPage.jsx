@@ -68,7 +68,7 @@ function SpotDetailsPage() {
 
                     <aside className={css.reservationBox}>
                         <div className={css.infoBox}>
-                            <span className={css.reserveItem1}>  {`$${spot && spot.price} a night `}</span>
+                            <span className={css.reserveItem1}> {`$${spot && spot.price}  night `}</span>
                             <span className={css.reserveItems2}> <i className="fa-solid fa-star"></i>{spot && checkRating()}
                                 <span
                                     hidden={(spot?.numReviews === 0)}> &#183; {spot && spot.numReviews} {spot?.numReviews > 1 ? ' Reviews' : ' Review'}
@@ -100,7 +100,7 @@ function SpotDetailsPage() {
                         {review && review.map((review, index) => (
                             <div key={index}>
                                 <p>{review.User.firstName}</p>
-                                <p>{month[new Date(review.createdAt).getMonth()]} {review.createdAt.split("-")[0]}</p>
+                                <p className={css.date}>{month[new Date(review.createdAt).getMonth()]} {review.createdAt.split("-")[0]}</p>
                                 <p>{review.review}</p>
                                 <div hidden={session.user && session.user.id !== review.User.id}>
                                     <OpenModalButton

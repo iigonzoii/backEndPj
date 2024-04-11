@@ -15,15 +15,10 @@
 .full-label.dollar{
 display: flex;
 }
-/* .create-spot {
-width: 50%;
-} */
 
-/* city and state div display flex */
 .city-state{
     display: flex;
     justify-content: space-between;
-    /* width: 100%; */
 }
 .city-state label{
     display: flex;
@@ -35,10 +30,14 @@ width: 50%;
 .full-label input{
     width: 100%;
 }
-.create-spot > button {
-    width: 80%;
+
+.create-button{
+    /* width: 80%;
     box-shadow: 2px 5px 5px black;
-    margin: auto;
+
     background-color: #ff5a5f;
-    color: white;
+    color: white; */
+    height: 40px;
+    border: solid black 3px;
+
 }

@@ -207,7 +207,7 @@ function CreateSpotPage() {
                     value={img4}
                     onChange={e => setImg4(e.target.value)}
                 />
-                <button
+                <button className="create-button"
                     type="submit"
                 >
                     Create Spot
