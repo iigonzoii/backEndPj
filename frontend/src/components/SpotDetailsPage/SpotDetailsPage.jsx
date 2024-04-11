@@ -88,9 +88,9 @@ function SpotDetailsPage() {
                     </div>
 
                     <div>
-                        <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview} className={css.postReviewButton}>
+                        <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview} >
                             <OpenModalButton
-
+                            cssm="post-your-review"
                                 buttonText="Post Your Review"
                                 modalComponent={<PostReviewModal spotId={spot.id} />}
                             />
@@ -105,6 +105,7 @@ function SpotDetailsPage() {
                                 <p>{review.review}</p>
                                 <div hidden={session.user && session.user.id !== review.User.id}>
                                     <OpenModalButton
+                                        cssm="manage-delete"
                                         buttonText="Delete"
                                         modalComponent={<DeleteReview reviewId={review.id}
                                             spotId={spot.id}

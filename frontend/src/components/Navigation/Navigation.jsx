@@ -7,7 +7,7 @@ function Navigation({ isLoaded }) {
   let navigate = useNavigate()
 
   return (
-   <nav>
+  <nav>
       <div >
         <NavLink to="/" className={"logo"}><i className="fa-solid fa-water pointer logo" ></i>Water B&B</NavLink>
       </div>

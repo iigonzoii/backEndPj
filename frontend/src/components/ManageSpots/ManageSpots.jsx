@@ -54,7 +54,7 @@ function ManageSpots() {
                         <span>
                             <Link to={`/spots/${spot.id}/update`}><button className="update-button">update</button></Link>
                             <OpenModalButton
-                            className="manage-delete"
+                                cssm="manage-delete"
                                 buttonText="Delete"
                                 modalComponent={<DeleteSpot spotId={spot.id} />}
                             />

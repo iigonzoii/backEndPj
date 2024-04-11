@@ -1,9 +1,21 @@
-/* .manage-delete{
+.manage-delete{
     height: 30px;
     width: 80px;
     font-size: 20px;
     color: white;
-    background-color: grey;
+    background-color: #666666;
     border: solid black 3px;
     box-shadow: 5px 5px 5px black;
-} */
+}
+.login-signup{
+
+}
+.post-your-review{
+    height: 30px;
+    font-size: 20px;
+    color: white;
+    background-color: #666666;
+    border: solid black 3px;
+    box-shadow: 5px 5px 5px black;
+}
+
