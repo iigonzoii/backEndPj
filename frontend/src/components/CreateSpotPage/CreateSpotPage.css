@@ -1,13 +1,18 @@
 .page{
     display: flex;
     justify-content: center;
+    font-size: larger;
+}
+.create{
+    text-align: left;
 }
 .create-spot{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    align-items: center;
+    /* align-items: center; */
     width: 50%;
+
 }
 .red{
     color: red;
@@ -32,12 +37,13 @@ display: flex;
 }
 
 .create-button{
-    /* width: 80%;
-    box-shadow: 2px 5px 5px black;
-
-    background-color: #ff5a5f;
-    color: white; */
     height: 40px;
     border: solid black 3px;
-
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 80%;
+    box-shadow: 2px 5px 5px black;
+    background-color: #ff5a5f;
+    color: white;
+    align-self: center;
 }
