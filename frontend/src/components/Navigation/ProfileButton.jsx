@@ -10,7 +10,7 @@ import { useNavigate, Link } from "react-router-dom"
 
 
 
-function ProfileButton({ user }) {
+function ProfileButton({ user, cssm }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -47,8 +47,8 @@ function ProfileButton({ user }) {
 
   return (
     <div>
-      <button className='pointer' onClick={toggleMenu}>
-        <i className='fa-solid fa-bars'></i>&nbsp; <i className="fas fa-user-circle" />
+      <button className={cssm} onClick={toggleMenu}>
+        <i className='fa-solid fa-bars '></i>&nbsp; <i className="fas fa-user-circle profileBtnEle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (

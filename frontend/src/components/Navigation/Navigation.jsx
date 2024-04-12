@@ -14,14 +14,18 @@ function Navigation({ isLoaded }) {
       {isLoaded && sessionUser && (
         <div className='buttons-container'>
           <p  className="pointer create-spot" style={{ display: 'inline' }} onClick={() => { navigate("/spots/new") }}>Create a New Spot</p>
-          <div hidden={sessionUser} className='pro-btn'>
-            <ProfileButton user={sessionUser} />
+          <div hidden={sessionUser}>
+            <ProfileButton user={sessionUser}
+            cssm='profile-button'
+            />
           </div>
         </div>
       )}
       {isLoaded && (
-        <div className='profile-button'>
-          <ProfileButton user={sessionUser} />
+        <div >
+          <ProfileButton user={sessionUser}
+            cssm='profile-button'
+          />
         </div>
       )}
     </nav>

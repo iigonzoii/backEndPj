@@ -33,13 +33,17 @@ function LandingPage() {
                     onClick={() => navigate(`/spots/${spot.id}`)}
                     className="spot-card-container" key={index}>
                     <img className="pointer" src={spot.previewImage} />
+
+
+
                     <div className="spot-data-container">
-                        <div className="city-reviewData">
+                        <div className="cityStateStar">
                             <p className="cityState">{`${spot.city}, ${spot.state}`}</p>
-                            <p className="starRating"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p>
-                        </div>
-                        <p className="price">{`$${spot.price} a night`}</p>
+                            <p className="starRating starrr"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p></div>
                     </div>
+                        <p className="price">{`$${spot.price} a night`}</p>
+
+
 
                 </div>
             ))}

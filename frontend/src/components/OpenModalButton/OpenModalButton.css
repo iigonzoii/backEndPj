@@ -40,5 +40,13 @@
 
 .profile-button{
     margin-bottom: 10px;
-    
+    background-color: #FFFFFF;
+    height: 50px;
+    width:100px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+.profileButtonEle{
+    background-color: red;
+    color:red;
 }

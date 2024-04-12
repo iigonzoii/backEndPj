@@ -29,11 +29,14 @@ img {
     color: black;
 }
 
-.city-review-data{
-    display: flex;
-    justify-content: space-between;
-}
-
 .pointer {
     cursor: pointer
 }
+.cityStateStar{
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+}
+/* .starrr{
+    justify-content: flex-start;
+} */
