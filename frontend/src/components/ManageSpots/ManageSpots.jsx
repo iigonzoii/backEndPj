@@ -29,7 +29,8 @@ function ManageSpots() {
     }
     return (
         <>
-            <h1>Manage Spots</h1>
+
+            <h1 className="manageH1">Manage Spots</h1>
             <div hidden={isOwner()} >
                 <button className="pointer create-on-manage" onClick={() => { navigate("/spots/new") }}>Create a New Spot</button>
             </div>

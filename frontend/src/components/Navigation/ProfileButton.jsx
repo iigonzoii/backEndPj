@@ -16,7 +16,7 @@ function ProfileButton({ user, cssm }) {
 
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -64,12 +64,14 @@ function ProfileButton({ user, cssm }) {
           <>
             <li>
               <OpenModalButton
+              cssm="logInn"
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
               />
             </li>
             <li>
               <OpenModalButton
+              cssm="signUpp"
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />

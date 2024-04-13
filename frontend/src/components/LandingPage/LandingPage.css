@@ -16,6 +16,7 @@ img {
     column-gap: 20px;
     justify-content: flex-start;
     margin:auto;
+    width: 1060px;
 }
 .spot-card-container{
     display: flex;
@@ -34,6 +35,7 @@ img {
 .pointer {
     cursor: pointer
 }
-.root-container{
-    display: flex;
+.manageH1{
+    margin-left: 150px;
+
 }
