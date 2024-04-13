@@ -7,20 +7,26 @@ function Navigation({ isLoaded }) {
   let navigate = useNavigate()
 
   return (
-
-    <nav>
-
+  <nav>
       <div >
         <NavLink to="/" className={"logo"}><i className="fa-solid fa-water pointer logo" ></i>Water B&B</NavLink>
       </div>
       {isLoaded && sessionUser && (
-        <div>
-          <button className="pointer" onClick={() => {navigate("/spots/new")}}>Create a New Spot</button>
+        <div className='buttons-container'>
+          <p  className="pointer create-spot" style={{ display: 'inline' }} onClick={() => { navigate("/spots/new") }}>Create a New Spot</p>
+          <div hidden={sessionUser}>
+            <ProfileButton user={sessionUser}
+            cssm='profile-button
+            '
+            />
+          </div>
         </div>
       )}
       {isLoaded && (
-        <div>
-          <ProfileButton user={sessionUser} />
+        <div >
+          <ProfileButton user={sessionUser}
+            cssm='profile-button'
+          />
         </div>
       )}
     </nav>

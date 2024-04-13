@@ -84,7 +84,7 @@ function CreateSpotPage() {
                 onSubmit={handleSubmit}
                 className="create-spot"
             >
-                <h1>Create a new Spot</h1>
+                <h1 className="create">Create a new Spot</h1>
                 <p>Where&apos;s your place located</p>
                 <p>Guests will only get your exact address once they booked a reservation</p>
                 <label className="full-label">
@@ -207,7 +207,7 @@ function CreateSpotPage() {
                     value={img4}
                     onChange={e => setImg4(e.target.value)}
                 />
-                <button
+                <button className="create-button"
                     type="submit"
                 >
                     Create Spot

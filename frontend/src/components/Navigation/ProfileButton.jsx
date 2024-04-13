@@ -8,9 +8,7 @@ import "./Navigation.css"
 import { useNavigate, Link } from "react-router-dom"
 
 
-
-
-function ProfileButton({ user }) {
+function ProfileButton({ user, cssm }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -18,7 +16,7 @@ function ProfileButton({ user }) {
 
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -47,8 +45,8 @@ function ProfileButton({ user }) {
 
   return (
     <div>
-      <button className='pointer' onClick={toggleMenu}>
-        <i className='fa-solid fa-bars'></i>&nbsp; <i className="fas fa-user-circle" />
+      <button className={cssm} onClick={toggleMenu}>
+        <i className='fa-solid fa-bars fa-2xl'></i>&nbsp; <i className="fas fa-user-circle fa-2xl" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -56,22 +54,24 @@ function ProfileButton({ user }) {
             <li>{`Hello ${user.firstName}`}</li>
             <li>{user.email}</li>
             <li>
-              <Link to="/spots/current"><button>Manage Spots</button></Link>
+              <Link to="/spots/current"><button className='manage-spots-button'>Manage Spots</button></Link>
             </li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button className='logOut pointer' onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (
           <>
             <li>
               <OpenModalButton
+              cssm="logInn"
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
               />
             </li>
             <li>
               <OpenModalButton
+              cssm="signUpp"
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />

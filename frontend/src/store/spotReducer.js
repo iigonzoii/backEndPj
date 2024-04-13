@@ -28,6 +28,14 @@ export const update = (updatedSpot) => {
 }
 
 //* -------------THACS-------------
+export const deleteSpot = spotId => async dispatch =>{
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "DELETE"
+    })
+    dispatch(fetchCurrUserSpots())
+    return response
+}
+
 export const fetchCurrUserSpots = () => async (dispatch) => {
     const response = await csrfFetch("/api/spots/current")
     const spots = await response.json()
@@ -76,6 +84,7 @@ export const updateSpot = (spotId, spot) => async dispatch => {
     }
     return response
 }
+
 
 
 

@@ -20,14 +20,14 @@ const PostReviewModal = ({ spotId }) => {
             review,
             stars: currSelection
         }
-        await dispatch(createReview(newReview, spotId))
+        await dispatch(createReview(newReview, +spotId))
             .catch(async (response) => {
                 let data = await response.json();
                 if (data && data.errors) setErrors(data.errors)
             })
-        await dispatch(fetchSpot(spotId))
+        await dispatch(fetchSpot(+spotId))
         closeModal();
-        console.log("Submitted!");
+        console.log("Submitted! and spotId", spotId);
     }
 
     return (

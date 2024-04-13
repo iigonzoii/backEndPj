@@ -4,11 +4,16 @@
 .logo{
     text-decoration: none;
     color:#FF5A5F;
+    font-size: 30px;
+
 }
 nav{
     display: flex;
     border-bottom: solid grey;
     justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+
 }
 
 .pointer{
@@ -17,4 +22,16 @@ nav{
 
 .profile-dropdown > li{
     list-style-type: none;
+}
+.buttons-container{
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+
+.create-spot{
+margin-right: 10px;
+}
+.profileBtnEle{
+    width: 200px;
+    height:200px
 }

@@ -1,0 +1,22 @@
+.update-button{
+    height: 30px;
+    width: 80px;
+    font-size: 20px;
+    color: white;
+    background-color: #666666;
+    border: solid black 3px;
+    box-shadow: 5px 5px 5px black;
+    margin-right: 8px;
+}
+.create-on-manage{
+    height: 30px;
+    border: solid black 3px;
+    box-shadow: 5px 5px 5px black;
+    background-color: #666666;
+    color: white;
+    align-self: center;
+    font-size: 20px;
+    font-family:'Courier New', Courier, monospace;
+}
+
+

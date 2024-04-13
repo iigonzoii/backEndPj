@@ -2,10 +2,11 @@ import "./manageSpots.css"
 import { useNavigate, Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchCurrUserSpots } from "../../store/spotReducer"
-// import { fetchSpots } from "../../store/spotReducer"
 import { useEffect } from "react"
 import "../LandingPage/LandingPage.css"
 import "./manageSpots.css"
+import OpenModalButton from "../OpenModalButton"
+import DeleteSpot from "../DeleteSpot/DeleteSpot"
 
 function ManageSpots() {
     let navigate = useNavigate()
@@ -26,40 +27,41 @@ function ManageSpots() {
             return rating
         }
     }
-
     return (
         <>
-            <h1>Manage Spots</h1>
-            <div hidden={isOwner()} >
-                <button className="pointer" onClick={() => { navigate("/spots/new") }}>Create a New Spot</button>
-            </div>
 
+            <h1 className="manageH1">Manage Spots</h1>
+            <div hidden={isOwner()} >
+                <button className="pointer create-on-manage" onClick={() => { navigate("/spots/new") }}>Create a New Spot</button>
+            </div>
             <div
                 hidden={!isOwner()}
                 className="container"
             >
                 {spots && spots.map((spot, index) => (
-                    <Link className="no-line"key={index} to={`/spots/${spot.id}`}>
-                        <div
-                            title={`${spot.name}`}
-                            className="spot-card-container" key={index}>
+                    <div
+                        title={`${spot.name}`}
+                        className="spot-card-container" key={index}>
+                        <div onClick={() => navigate(`/spots/${spot.id}`)}>
                             <img className="" src={spot.previewImage} />
                             <div className="spot-data-container">
-                                <div className="city-review-data ">
+                                <div className="city-reviewData ">
                                     <p className="cityState ">{`${spot.city},${spot.state}`}</p>
                                     <p className="starRating"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p>
                                 </div>
                                 <p className="price">{`$${spot.price} a night`}</p>
                             </div>
-                            <span>
-                                <Link to={`/spots/${spot.id}/update`}><button>update</button></Link>
-                                <button>delete</button>
-                            </span>
                         </div>
-                    </Link>
+                        <span>
+                            <Link to={`/spots/${spot.id}/update`}><button className="update-button">update</button></Link>
+                            <OpenModalButton
+                                cssm="manage-delete"
+                                buttonText="Delete"
+                                modalComponent={<DeleteSpot spotId={spot.id} />}
+                            />
+                        </span>
+                    </div>
                 ))}
-
-
             </div>
         </>
     )

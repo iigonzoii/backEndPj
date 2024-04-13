@@ -1,0 +1,104 @@
+.hostDescription {
+    display: flex;
+    border-bottom: solid black 5px;
+    justify-content: space-between;
+}
+
+.infoBox {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+
+.pointer {
+    cursor: pointer;
+}
+
+.spotDetailContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: left;
+    margin: auto;
+    width: 100%;
+    max-width: 1000px;
+    font-size: larger;
+    font-weight: 500;
+
+    /* border: solid black 1px; */
+}
+
+.imgContainer {
+    display: flex;
+    width: 1000px;
+    height: 450px;
+    column-gap: 2px;
+}
+
+.largeImg {
+    width: 50%;
+    height: 100%;
+}
+
+.smallImg {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2px;
+}
+
+.smallImg img {
+    height: calc(50% - 1px);
+    width: calc(50% - 1px);
+    /* flex-grow: 1; */
+    object-fit: cover;
+}
+
+.reservationBox {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid black;
+    width: 450px;
+    border: 3px solid black;
+    height: 160px;
+    border-radius: 20px;
+    align-self: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.reserveItems2 {
+    display: flex;
+
+    justify-content: flex-end;
+}
+
+.reserveItem1 {
+    justify-content: flex-start;
+    padding-left: 10px;
+}
+
+.reservationBox>button {
+    width: 80%;
+    background-color: #ff5a5f;
+    color: white;
+    height: 50px;
+    box-shadow: 2px 5px 5px black;
+    margin-bottom: 20px;
+}
+
+.date {
+    color: #b4a099;
+}
+.postReviewButton{
+    height: 30px;
+    color: white;
+    background-color: grey;
+    border: solid black 3px;
+    box-shadow: 2px 5px 5px black;
+}

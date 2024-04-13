@@ -1,0 +1,7 @@
+button:disabled{
+    background-color: gray;
+    color: white;
+    width: 80%;
+    box-shadow: 2px 5px 5px gray;
+    margin:auto
+  }

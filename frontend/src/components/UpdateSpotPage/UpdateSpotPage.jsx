@@ -112,25 +112,26 @@ function UpdateSpotPage() {
                         />
                     </label>
                 </div>
-                <label className="full-label">
+                <label>
                     <p>Describe your place to guests </p>
                     <p>mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood</p>
                     <textarea
-                        className="full-label"
+
+                        className="full-label description"
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder="Please write at least 30 characters">
                     </textarea>
                 </label>
                 <div className="red">{errors.description}</div>
-                <div className="full-label">
+                <div>
                     <h2>
                         Create a title for your spot
                     </h2>
                     <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
                 </div>
                 <div className="red">{errors.spotName}</div>
-                <input className="full-label"
+                <input className="description"
                     placeholder="Name of your spot"
                     type="text"
                     value={spotName}
@@ -150,6 +151,7 @@ function UpdateSpotPage() {
                     />
                 </div>
                 <button
+                className="create-button"
                     type="submit"
                 >
                     Create Spot
