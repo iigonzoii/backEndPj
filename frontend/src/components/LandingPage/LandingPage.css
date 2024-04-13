@@ -21,22 +21,19 @@ img {
 .spot-card-container{
     display: flex;
     flex-direction: column ;
+    justify-content: space-between;
+
 }
 
 .spot-data-container{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     color: black;
+    justify-content: space-between;
 }
 
 .pointer {
     cursor: pointer
 }
-.cityStateStar{
-    display: flex;
-    justify-content: space-between;
-    width: fit-content;
-}
-/* .starrr{
-    justify-content: flex-start;
-} */
+

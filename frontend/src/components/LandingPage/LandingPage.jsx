@@ -37,10 +37,8 @@ function LandingPage() {
 
 
                     <div className="spot-data-container">
-                        <div className="cityStateStar">
                             <p className="cityState">{`${spot.city}, ${spot.state}`}</p>
                             <p className="starRating starrr"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p></div>
-                    </div>
                         <p className="price">{`$${spot.price} a night`}</p>
 
 
