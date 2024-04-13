@@ -26,6 +26,7 @@ function LandingPage() {
     }
 
     return (
+        <div className="root-container">
         <div className="container">
             {spots && spots.map((spot, index) => (
                 <div
@@ -33,18 +34,13 @@ function LandingPage() {
                     onClick={() => navigate(`/spots/${spot.id}`)}
                     className="spot-card-container" key={index}>
                     <img className="pointer" src={spot.previewImage} />
-
-
-
                     <div className="spot-data-container">
                             <p className="cityState">{`${spot.city}, ${spot.state}`}</p>
                             <p className="starRating starrr"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p></div>
                         <p className="price">{`$${spot.price} a night`}</p>
-
-
-
                 </div>
             ))}
+        </div>
         </div>
     )
 }

@@ -8,21 +8,19 @@ img {
     height: 250px;
     width: 250px;
     object-fit:cover;
-    /* border: solid black 1px; */
 }
 
 .container {
     display: flex;
     flex-wrap: wrap;
-    width: 100vw;
     column-gap: 20px;
-    justify-content: center;
+    justify-content: flex-start;
+    margin:auto;
 }
 .spot-card-container{
     display: flex;
     flex-direction: column ;
     justify-content: space-between;
-
 }
 
 .spot-data-container{
@@ -36,4 +34,6 @@ img {
 .pointer {
     cursor: pointer
 }
-
+.root-container{
+    display: flex;
+}

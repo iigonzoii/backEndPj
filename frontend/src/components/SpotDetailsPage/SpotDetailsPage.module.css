@@ -1,7 +1,6 @@
 .hostDescription {
     display: flex;
     border-bottom: solid black 5px;
-    flex-wrap: wrap;
     justify-content: space-between;
 }
 
@@ -12,9 +11,6 @@
     margin-top: 50px;
 }
 
-/* .reviewsContainer {}
-
-.reviewData {} */
 
 .pointer {
     cursor: pointer;

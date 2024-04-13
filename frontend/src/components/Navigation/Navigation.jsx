@@ -16,7 +16,8 @@ function Navigation({ isLoaded }) {
           <p  className="pointer create-spot" style={{ display: 'inline' }} onClick={() => { navigate("/spots/new") }}>Create a New Spot</p>
           <div hidden={sessionUser}>
             <ProfileButton user={sessionUser}
-            cssm='profile-button'
+            cssm='profile-button
+            '
             />
           </div>
         </div>

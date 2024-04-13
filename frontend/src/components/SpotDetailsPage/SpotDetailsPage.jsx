@@ -78,15 +78,12 @@ function SpotDetailsPage() {
                         <button className={css.pointer} onClick={reserve}>Reserve</button>
                     </aside>
 
-
                 </div>
-
                 <div className={css.reviewsContainer}>
                     <div>
                         <span className={css.starsReviews}><i className={"fa-solid fa-star"} ></i>{`${spot && checkRating()}`}&#183; </span>
                         <span>{spot && checkIfOne()}</span>
                     </div>
-
                     <div>
                         <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview} >
                             <OpenModalButton
@@ -113,9 +110,7 @@ function SpotDetailsPage() {
                                     />
                                 </div>
                             </div>
-
                         ))}
-
                     </div>
                 </div>
             </>}

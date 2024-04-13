@@ -8,8 +8,6 @@ import "./Navigation.css"
 import { useNavigate, Link } from "react-router-dom"
 
 
-
-
 function ProfileButton({ user, cssm }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -18,7 +16,7 @@ function ProfileButton({ user, cssm }) {
 
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    e.stopPropagation(); 
     setShowMenu(!showMenu);
   };
 
@@ -48,7 +46,7 @@ function ProfileButton({ user, cssm }) {
   return (
     <div>
       <button className={cssm} onClick={toggleMenu}>
-        <i className='fa-solid fa-bars '></i>&nbsp; <i className="fas fa-user-circle profileBtnEle" />
+        <i className='fa-solid fa-bars fa-2xl'></i>&nbsp; <i className="fas fa-user-circle fa-2xl" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
