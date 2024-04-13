@@ -22,7 +22,7 @@ function UpdateSpotPage() {
             setPrice(spot.price)
         })
         .then(() => setIsLoaded(true))
-    }, [dispatch])
+    }, [dispatch, spotId])
 
     const [isLoaded, setIsLoaded] = useState(false)
     const [errors, setErrors] = useState({})
