@@ -2,11 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 250px;
-  height: 200px;
-  height: max-content;
+  width: 280px;
+  height: 300px;
+  /* height: max-content; */
   border: solid black 2px;
   border-radius: 10px;
+  font-size: 25px;
 }
 
 .deletebtn{
@@ -16,6 +17,8 @@
   color: white;
   width: 80%;
   box-shadow: 2px 5px 5px black;
+  height: 40px;
+  font-size: 20px;
   /* margin:auto */
 }
 .dontDeleteBtn{
@@ -24,6 +27,8 @@
   color: white;
   width: 80%;
   box-shadow: 2px 5px 5px black;
+  height: 40px;
+  font-size: 20px;
 }
 .post-review {
   display: flex;
