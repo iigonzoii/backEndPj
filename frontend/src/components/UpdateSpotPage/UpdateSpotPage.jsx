@@ -151,10 +151,10 @@ function UpdateSpotPage() {
                     />
                 </div>
                 <button
-                className="create-button"
+                className="create-button pointer"
                     type="submit"
                 >
-                    Create Spot
+                    Update Spot
                 </button>
             </form>
         </div>

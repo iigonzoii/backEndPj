@@ -6,6 +6,7 @@
     background-color: #666666;
     border: solid black 3px;
     box-shadow: 5px 5px 5px black;
+    cursor: pointer;
 }
 .logOut{
     margin-top: 10px ;
