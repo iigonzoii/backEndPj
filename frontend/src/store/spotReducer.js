@@ -81,8 +81,10 @@ export const updateSpot = (spotId, spot) => async dispatch => {
         const updatedSpot = await response.json()
         dispatch(update(updatedSpot))
         return updatedSpot
+    } else {
+        const errors = await response.json()
+        return errors
     }
-    return response
 }
 
 
