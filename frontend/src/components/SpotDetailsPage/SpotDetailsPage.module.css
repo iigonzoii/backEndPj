@@ -102,4 +102,5 @@
     background-color: grey;
     border: solid black 3px;
     box-shadow: 2px 5px 5px black;
+    cursor: pointer;
 }

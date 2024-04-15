@@ -25,6 +25,7 @@
     background-color: #666666;
     border: solid black 3px;
     box-shadow: 5px 5px 5px black;
+    cursor: pointer;
 }
 .manage-spots-button{
     text-decoration: none;
