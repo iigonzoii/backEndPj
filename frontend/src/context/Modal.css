@@ -17,6 +17,7 @@
   box-shadow: 2px 5px 5px black;
   height: 40px;
   font-size: 20px;
+  cursor: pointer;
 }
 .dontDeleteBtn{
   background-color: darkgray;
@@ -26,6 +27,7 @@
   box-shadow: 2px 5px 5px black;
   height: 40px;
   font-size: 20px;
+  cursor: pointer;
 }
 .post-review {
   display: flex;
