@@ -62,7 +62,7 @@ function SpotDetailsPage() {
                 </div>
 
                 <div className={css.hostDescription}>
-                    <div>
+                    <div className={css.hostDiv}>
                         <p>{`Hosted by ${spot && spot.Owner.firstName} ${spot && spot.Owner.lastName}`}</p>
                         <p>{spot && spot.description}</p>
                     </div>

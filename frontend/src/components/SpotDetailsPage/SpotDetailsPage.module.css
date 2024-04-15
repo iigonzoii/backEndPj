@@ -2,6 +2,10 @@
     display: flex;
     border-bottom: solid black 5px;
     justify-content: space-between;
+
+}
+.hostDiv{
+    width: 550px;
 }
 
 .infoBox {
