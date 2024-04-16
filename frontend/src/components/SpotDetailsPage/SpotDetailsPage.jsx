@@ -101,7 +101,7 @@ function SpotDetailsPage() {
                                 <p>{review.User.firstName}</p>
                                 <p className={css.date}>{month[new Date(review.createdAt).getMonth()]} {review.createdAt.split("-")[0]}</p>
                                 <p>{review.review}</p>
-                                <div hidden={session.user && session.user.id !== review.User.id}>
+                                <div hidden={session.user && session.user.id !== review.User.id || session.user === null}>
                                     <OpenModalButton
                                         cssm="manage-delete"
                                         buttonText="Delete"
