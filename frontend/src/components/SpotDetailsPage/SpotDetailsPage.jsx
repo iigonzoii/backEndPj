@@ -82,8 +82,11 @@ function SpotDetailsPage() {
                 </div>
                 <div className={css.reviewsContainer}>
                     <div>
-                        <span className={css.starsReviews}><i className={"fa-solid fa-star"} ></i>{`${spot && checkRating()}`}&#183; </span>
-                        <span>{spot && checkIfOne()}</span>
+                        <span hidden={checkRating() !== 'New'} className={css.starsReviews}><i className={"fa-solid fa-star"} ></i>{`${spot && checkRating()}`}  </span>
+
+                        <span hidden={checkRating() === 'New'} className={css.starsReviews}><i className={"fa-solid fa-star"} ></i>{`${spot && checkRating()}`} &#183; </span>
+
+                        <span hidden={checkRating() === 'New'}>{spot && checkIfOne()}</span>
                     </div>
                     <div>
                         <span hidden={!session.user || spot.Owner.id === session.user.id || userHasReview} >
@@ -94,7 +97,7 @@ function SpotDetailsPage() {
                             />
                         </span>
                     </div>
-                    <span hidden={review.length !== 0 || (session.user && spot.Owner.id === session.user.id)}>Be the first to post a review!</span>
+                    <span hidden={review.length !== 0 || (session.user && spot.Owner.id === session.user.id || session.user === null)}>Be the first to post a review!</span>
                     <div className={css.reviewData}>
                         {review && review.map((review, index) => (
                             <div key={index}>
