@@ -27,6 +27,7 @@ React components exist for each corresponding action in the app.
 *Reviews*
 
 With the proper authorization, Users can post reviews and delete reviews. If a user owns a spot they can't post a review. A user can only delete reviews they themselves posted. If you are not logged in then You can't post or delete reviews.
+
 ![Delete Review](https://firebasestorage.googleapis.com/v0/b/airbandb-backend-mod4-pj.appspot.com/o/deleteReview.png?alt=media&token=550125f0-68ef-4ea9-9fd4-3afa3d1a4259)
 
 ![Post Review](https://firebasestorage.googleapis.com/v0/b/airbandb-backend-mod4-pj.appspot.com/o/postreview.png?alt=media&token=2b69dc71-00eb-4155-994c-b5a709b27cb2)
@@ -35,3 +36,5 @@ With the proper authorization, Users can post reviews and delete reviews. If a u
 *Spots*
 
 Logged in users can Create new spots and update spots they own. The update component houses a Delete modal as well as a link that will direct the user to a form that is prepopulated with the current spots information.
+
+![createSpot](https://firebasestorage.googleapis.com/v0/b/airbandb-backend-mod4-pj.appspot.com/o/createSpot.png?alt=media&token=fb7b87b3-7c43-440b-a6e6-4694e4f9c68f)
