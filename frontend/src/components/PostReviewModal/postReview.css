@@ -11,3 +11,7 @@
   .rating-input .empty {
     color: black;
   }
+.submitYourReview{
+  height: 35px;
+  font-size: 18px;
+}

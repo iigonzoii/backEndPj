@@ -56,7 +56,7 @@ const PostReviewModal = ({ spotId }) => {
                     <span> Stars</span>
                 </div>
 
-                <button disabled={(review.length < 10 || currSelection === 0)}
+                <button className = 'submitYourReview'disabled={(review.length < 10 || currSelection === 0)}
                 >Submit Your Review</button>
             </form>
         </div>

@@ -72,7 +72,7 @@ function SpotDetailsPage() {
                             <span className={css.reserveItem1}> {`$${spot && spot.price}  night `}</span>
                             <span className={css.reserveItems2}> <i className="fa-solid fa-star"></i>{spot && checkRating()}
                                 <span
-                                    hidden={(spot?.numReviews === 0)}> &#183; {spot && spot.numReviews} {spot?.numReviews > 1 ? ' Reviews' : ' Review'}
+                                    hidden={(spot?.numReviews === 0)}>&#183; {spot && spot.numReviews} {spot?.numReviews > 1 ? ' Reviews' : ' Review'}
                                 </span>
                             </span>
                         </div>
