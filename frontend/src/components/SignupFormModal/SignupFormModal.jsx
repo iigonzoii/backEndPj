@@ -16,15 +16,11 @@ function SignupFormModal() {
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
-    //* I need to populate this formErrors obj with the res from my else block
     let formErrors = {}
     e.preventDefault();
-    //* check errors and add to formErrors here
-    //* errors are coming from else block, how do I get them
-    if (Object.values(formErrors).length > 0) {
-      setErrors(formErrors);
-      return
-    } else {
+    if (password !== confirmPassword){
+      formErrors.confirmPassword = 'Password and confirm Password must match'
+    }
       return dispatch(
         sessionActions.signup({
           email,
@@ -37,21 +33,26 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
+          console.log("DATA",data)
           if (data?.errors) {
-            setErrors(data.errors);
+            for (const i in data.errors) {
+              formErrors[i] = data.errors[i]
+            }
+            setErrors(formErrors);
           }
         });
-    }
   }
-
 
   return (
     <>
       <h1>Sign Up</h1>
+
+      {/* if errors.length greater than one list all the errors */}
       {errors.email && <p className='red'>{errors.email}</p>}
       {errors.firstName && <p className='red'>{errors.firstName}</p>}
       {errors.lastName && <p className='red'>{errors.lastName}</p>}
       {errors.password && <p className='red'>{errors.password}</p>}
+      {errors.username && <p>{errors.username}</p>}
       {errors.confirmPassword && (
         <p>{errors.confirmPassword}</p>
       )}
@@ -63,7 +64,6 @@ function SignupFormModal() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-
         <input
           placeholder='Username'
           type="text"
@@ -71,7 +71,6 @@ function SignupFormModal() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-        {errors.username && <p>{errors.username}</p>}
         <input
           placeholder='First Name'
           type="text"
@@ -79,7 +78,6 @@ function SignupFormModal() {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
-
         <input
           placeholder='Last Name'
           type="text"
@@ -87,7 +85,6 @@ function SignupFormModal() {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
-
         <input
           placeholder='Password'
           type="password"
@@ -95,7 +92,6 @@ function SignupFormModal() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-
         <input
           placeholder='Confirm Password'
           type="password"
@@ -103,7 +99,6 @@ function SignupFormModal() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-
         <button disabled={!(email && username && username.length > 3 && lastName && password && password.length > 5 && confirmPassword)} type="submit">Sign Up</button>
       </form>
     </>
