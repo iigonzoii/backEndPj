@@ -16,9 +16,15 @@ function SignupFormModal() {
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
+    //* I need to populate this formErrors obj with the res from my else block
+    let formErrors = {}
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
+    //* check errors and add to formErrors here
+    //* errors are coming from else block, how do I get them
+    if (Object.values(formErrors).length > 0) {
+      setErrors(formErrors);
+      return
+    } else {
       return dispatch(
         sessionActions.signup({
           email,
@@ -36,62 +42,60 @@ function SignupFormModal() {
           }
         });
     }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
-  };
+  }
+
 
   return (
     <>
       <h1>Sign Up</h1>
       <form className='signup-form' onSubmit={handleSubmit}>
-          <input
-            placeholder='Email'
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        <input
+          placeholder='Email'
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
         {errors.email && <p>{errors.email}</p>}
-          <input
-            placeholder='Username'
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+        <input
+          placeholder='Username'
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
         {errors.username && <p>{errors.username}</p>}
-          <input
-            placeholder='First Name'
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
+        <input
+          placeholder='First Name'
+          type="text"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+        />
         {errors.firstName && <p>{errors.firstName}</p>}
-          <input
-            placeholder='Last Name'
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
+        <input
+          placeholder='Last Name'
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+        />
         {errors.lastName && <p>{errors.lastName}</p>}
-          <input
-            placeholder='Password'
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <input
+          placeholder='Password'
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
         {errors.password && <p>{errors.password}</p>}
-          <input
-            placeholder='Confirm Password'
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
+        <input
+          placeholder='Confirm Password'
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
         {errors.confirmPassword && (
           <p>{errors.confirmPassword}</p>
         )}

@@ -3,6 +3,11 @@
     justify-content: center;
     font-size: larger;
 }
+.pageInput{
+    height: 25px;
+    font-size: 18px;
+    background-color: #E8F0FE;
+}
 .create{
     text-align: left;
 }
@@ -46,7 +51,16 @@ display: flex;
     font-size: 20px;
     cursor: pointer;
 }
-.description{
+
+.stateSpace{
+    float: right;
+    display: inline;
+}
+.textAreaSize{
+    height: 100px;
+    font-size: 18px;
     background-color: #E8F0FE;
-    width: 100%;
+}
+.bold{
+    font-weight: bold;
 }

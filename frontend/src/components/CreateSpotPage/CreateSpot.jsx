@@ -27,6 +27,8 @@ function CreateSpotPage() {
         const formData = new FormData(e.target);
         const formValues = Object.fromEntries(formData.entries());
         console.log(formValues)
+        //*creating manual errors to put into my formErrors object here
+        //*my Signup form is handling retrieval of error messages in the else block but I need them before I enter the if statement I think.
         if (address.length === 0) formErrors.address = 'Street address is required'
         if (city.length === 0) formErrors.city = "City is required"
         if (state.length === 0) formErrors.state = "State is required"
@@ -85,40 +87,47 @@ function CreateSpotPage() {
                 className="create-spot"
             >
                 <h1 className="create">Create a new Spot</h1>
-                <p>Where&apos;s your place located</p>
+                <h4>Where&apos;s your place located?</h4>
                 <p>Guests will only get your exact address once they booked a reservation</p>
                 <label className="full-label">
-                    Country <div className="red">{errors.country}</div>
+                    Country
                     <input
+                    className="pageInput"
                         placeholder="Country"
                         type="text"
                         value={country}
                         onChange={e => setCountry(e.target.value)}
                     />
                 </label>
+                <div className="red">{errors.country}</div>
                 <label className="full-label">
                     Street Address
-                    <div className="red">{errors.address}</div>
+
                     <input
+                    className="pageInput"
                         placeholder="Address"
                         type="text"
                         value={address}
                         onChange={e => setAddress(e.target.value)}
                     />
                 </label>
+                <div className="red">{errors.address}</div>
                 <div className="city-state full-label">
                     <label className="full-label">
-                        City<div className="red">{errors.city}</div>
+                        City
                         <input
+                        className="pageInput"
                             placeholder="City"
                             type="text"
                             value={city}
                             onChange={e => setCity(e.target.value)}
                         />
                     </label>
+
                     <label>
-                        State<div className="red">{errors.state}</div>
+                        State
                         <input
+                        className="pageInput"
                             placeholder="State"
                             type="text"
                             value={state}
@@ -126,11 +135,13 @@ function CreateSpotPage() {
                         />
                     </label>
                 </div>
+                <div className="red">{errors.city}<div className="red stateSpace">{errors.state}</div></div>
+
                 <label className="full-label">
-                    <p>Describe your place to guests </p>
-                    <p>mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood</p>
+                    <h4>Describe your place to guests </h4>
+                    <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood</p>
                     <textarea
-                        className="full-label"
+                        className="full-label textAreaSize"
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder="Please write at least 30 characters">
@@ -138,75 +149,75 @@ function CreateSpotPage() {
                 </label>
                 <div className="red">{errors.description}</div>
                 <div className="full-label">
-                    <h2>
+                    <h4>
                         Create a title for your spot
-                    </h2>
+                    </h4>
                     <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
                 </div>
-                <div className="red">{errors.spotName}</div>
-                <input className="full-label"
+                <input className="full-label pageInput"
                     placeholder="Name of your spot"
                     type="text"
                     value={spotName}
                     onChange={e => setSpotName(e.target.value)}
                 />
-                <div className="full-label"><h2>Set a base price for your Spot</h2>
+                <div className="red">{errors.spotName}</div>
+                <div className="full-label"><h4>Set a base price for your Spot</h4>
                     <p> Competitve pricing can help your listing stand out and rank higher in search results</p>
                 </div>
-                <div className="red">{errors.price}</div>
 
                 <div className="full-label dollar">
                     $<input
+                    className="pageInput"
                         placeholder="Price per night(USD)"
                         type="number"
                         value={price}
                         onChange={e => setPrice(e.target.value)}
                     />
                 </div>
-
-                <div className="full-label"> <h2>Liven up your spot with photos</h2>
+                <div className="red">{errors.price}</div>
+                <div className="full-label"> <h4>Liven up your spot with photos</h4>
                     <p>Submit a link to at least one photo to publish your spot</p>
                 </div>
-                <div className="red">{errors.previewImg}</div>
                 <input
-                    className="full-label"
+                    className="full-label pageInput"
                     placeholder="Preview Image URL"
                     type="text"
                     value={previewImg}
                     onChange={e => setPreviewImg(e.target.value)}
                 />
-                <div className="red">{errors.img1}</div>
+                <div className="red">{errors.previewImg}</div>
                 <input
-                    className="full-label"
+                    className="full-label pageInput"
                     placeholder="Image URL"
                     type="text"
                     value={img1}
                     onChange={e => setImg1(e.target.value)}
                 />
-                <div className="red">{errors.img2}</div>
+                <div className="red">{errors.img1}</div>
                 <input
-                    className="full-label"
+                    className="full-label pageInput"
                     placeholder="Image URL"
                     type="text"
                     value={img2}
                     onChange={e => setImg2(e.target.value)}
                 />
-                <div className="red">{errors.img3}</div>
+                <div className="red">{errors.img2}</div>
                 <input
-                    className="full-label"
+                    className="full-label pageInput"
                     placeholder="Image URL"
                     type="text"
                     value={img3}
                     onChange={e => setImg3(e.target.value)}
                 />
-                <div className="red">{errors.img4}</div>
+                <div className="red">{errors.img3}</div>
                 <input
-                    className="full-label"
+                    className="full-label pageInput"
                     placeholder="Image URL"
                     type="text"
                     value={img4}
                     onChange={e => setImg4(e.target.value)}
                 />
+                <div className="red">{errors.img4}</div>
                 <button className="create-button"
                     type="submit"
                 >
