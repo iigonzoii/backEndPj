@@ -29,7 +29,7 @@ function LoginFormModal() {
         const data = await res.json();
         console.log(data)
         if (data && data.message) {
-          setErrors({credential: data.message});
+          setErrors({ credential: data.message });
         }
       });
   };
@@ -37,28 +37,29 @@ function LoginFormModal() {
   return (
     <>
       <h1 >Log In</h1>
+      {errors.credential && (
+        <p className='errorSpace'>{errors.credential}</p>
+      )}
       <form className='login-form' onSubmit={handleSubmit}>
-          <input
+        <input
           placeholder='Username or Email'
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-          <input
+          type="text"
+          value={credential}
+          onChange={(e) => setCredential(e.target.value)}
+          required
+        />
+        <input
           placeholder='Password'
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        {errors.credential && (
-          <p>{errors.credential}</p>
-        )}
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
         <button disabled={credential.length < 4 || password.length < 6} type="submit">Log In</button>
-        <a href="#" className="demo-link"onClick={() => handleClick()}>
-                Demo User
-              </a>
+
+        <a href="#" className="demo-link" onClick={() => handleClick()}>
+          Demo User
+        </a>
       </form>
     </>
   );

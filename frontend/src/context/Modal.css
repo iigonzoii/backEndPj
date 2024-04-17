@@ -64,6 +64,8 @@ button:disabled{
   margin: 2px;
   width: 80%;
   background-color: #E8F0FE;
+  height: 25px;
+  font-size: 18px;
 }
 .signup-form > button{
   width: 80%;
@@ -73,6 +75,8 @@ button:disabled{
   color: white;
   height: 40px;
   border: solid black 3px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .login-form {
@@ -86,10 +90,13 @@ button:disabled{
   margin: 2px;
   width: 80%;
   background-color: #E8F0FE;
+  height: 25px;
+  font-size: 18px;
 }
 .demo-link{
   margin-bottom: 20px;
   color: #02525E;
+  font-size: 20px;
 }
 .login-form > button{
   background-color: #FF5A5F;
@@ -99,6 +106,8 @@ button:disabled{
   margin:auto;
   height: 40px;
   border: solid black 3px;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 #modal {

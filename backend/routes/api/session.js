@@ -35,7 +35,7 @@ router.post(
 
         if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
             return res.status(401).json({
-                message: 'Invalid credentials'
+                message: 'The provided credentials were invalid'
             })
         }
         const safeUser = {
@@ -65,7 +65,7 @@ router.delete(
 
 // Restore session user
 router.get(
-    '/', 
+    '/',
     (req, res) => {
         const { user } = req;
         if (user) {

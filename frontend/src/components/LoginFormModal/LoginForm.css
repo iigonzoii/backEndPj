@@ -5,3 +5,7 @@ button:disabled{
     box-shadow: 2px 5px 5px gray;
     margin:auto
   }
+
+  .errorSpace{
+    padding: 4px;
+  }
