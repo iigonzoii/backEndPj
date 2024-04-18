@@ -71,11 +71,12 @@ function UpdateSpotPage() {
                 className="create-spot"
             >
                 <h1>Update your Spot</h1>
-                <p>Where&apos;s your place located</p>
+                <h4>Where&apos;s your place located?</h4>
                 <p>Guests will only get your exact address once they booked a reservation</p>
                 <label className="full-label">
                     Country <div className="red">{errors.country}</div>
                     <input
+                    className="pageInput"
                         placeholder="Country"
                         type="text"
                         value={country}
@@ -86,6 +87,7 @@ function UpdateSpotPage() {
                     Street Address
                     <div className="red">{errors.address}</div>
                     <input
+                    className="pageInput"
                         placeholder="Address"
                         type="text"
                         value={address}
@@ -96,6 +98,7 @@ function UpdateSpotPage() {
                     <label className="full-label">
                         City<div className="red">{errors.city}</div>
                         <input
+                        className="pageInput"
                             placeholder="City"
                             type="text"
                             value={city}
@@ -105,6 +108,7 @@ function UpdateSpotPage() {
                     <label>
                         State<div className="red">{errors.state}</div>
                         <input
+                        className="pageInput"
                             placeholder="State"
                             type="text"
                             value={state}
@@ -113,11 +117,11 @@ function UpdateSpotPage() {
                     </label>
                 </div>
                 <label>
-                    <p>Describe your place to guests </p>
-                    <p>mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood</p>
+                    <h4>Describe your place to guests </h4>
+                    <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood</p>
                     <textarea
 
-                        className="full-label description"
+                        className="full-label textAreaSize"
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder="Please write at least 30 characters">
@@ -125,25 +129,26 @@ function UpdateSpotPage() {
                 </label>
                 <div className="red">{errors.description}</div>
                 <div>
-                    <h2>
+                    <h4>
                         Create a title for your spot
-                    </h2>
+                    </h4>
                     <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
                 </div>
                 <div className="red">{errors.spotName}</div>
-                <input className="description"
+                <input className="pageInput"
                     placeholder="Name of your spot"
                     type="text"
                     value={spotName}
                     onChange={e => setSpotName(e.target.value)}
                 />
-                <div className="full-label"><h2>Set a base price for your Spot</h2>
+                <div className="full-label"><h4>Set a base price for your Spot</h4>
                     <p> Competitve pricing can help your listing stand out and rank higher in search results</p>
                 </div>
                 <div className="red">{errors.price}</div>
 
                 <div className="full-label dollar">
                     $<input
+                    className="pageInput"
                         placeholder="Price per night(USD)"
                         type="number"
                         value={price}
