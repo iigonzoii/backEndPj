@@ -28,42 +28,42 @@ function ManageSpots() {
         }
     }
     return (
-        <>
-
-            <h1 className="manageH1">Manage Spots</h1>
-            <div hidden={isOwner()} >
-                <button className="pointer create-on-manage" onClick={() => { navigate("/spots/new") }}>Create a New Spot</button>
-            </div>
-            <div
-                hidden={!isOwner()}
-                className="container"
-            >
-                {spots && spots.map((spot, index) => (
-                    <div
-                        title={`${spot.name}`}
-                        className="spot-card-container " key={index}>
-                        <div onClick={() => navigate(`/spots/${spot.id}`)}>
-                            <img className="pointer" src={spot.previewImage} />
-                            <div className="spot-data-container">
-                                <div className="city-reviewData ">
-                                    <p className="cityState ">{`${spot.city},${spot.state}`}</p>
-                                    <p className="starRating"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p>
+        <div className="manage-container">
+                <h1>Manage Spots</h1>
+                <div hidden={isOwner()} >
+                    <button className="pointer create-on-manage" onClick={() => { navigate("/spots/new") }}>Create a New Spot</button>
+                </div>
+                <div
+                    hidden={!isOwner()}
+                    className="container"
+                    >
+                    {spots && spots.map((spot, index) => (
+                        <div
+                            title={`${spot.name}`}
+                            className="spot-card-container " key={index}>
+                            <div onClick={() => navigate(`/spots/${spot.id}`)}>
+                                <img className="pointer" src={spot.previewImage} />
+                                <div className="spot-data-container">
+                                    <div className="city-reviewData ">
+                                        <p className="cityState ">{`${spot.city},${spot.state}`}</p>
+                                    <p className="price">{`$${spot.price} night`}</p>
+                                    </div>
+                                        <p className="starRating"><i className="fa-solid fa-star"></i>{`${checkAvg(spot.avgRating)}`}</p>
                                 </div>
-                                <p className="price">{`$${spot.price} a night`}</p>
                             </div>
+                            <span>
+                                <Link to={`/spots/${spot.id}/update`}><button className="update-button">Update</button></Link>
+                                <OpenModalButton
+                                    cssm="manage-delete"
+                                    buttonText="Delete"
+                                    modalComponent={<DeleteSpot spotId={spot.id} />}
+                                />
+                            </span>
                         </div>
-                        <span>
-                            <Link to={`/spots/${spot.id}/update`}><button className="update-button">update</button></Link>
-                            <OpenModalButton
-                                cssm="manage-delete"
-                                buttonText="Delete"
-                                modalComponent={<DeleteSpot spotId={spot.id} />}
-                            />
-                        </span>
-                    </div>
-                ))}
+                    ))}
+
             </div>
-        </>
+        </div>
     )
 }
 
