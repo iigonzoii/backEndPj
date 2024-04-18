@@ -74,7 +74,7 @@ function UpdateSpotPage() {
                 <h4>Where&apos;s your place located?</h4>
                 <p>Guests will only get your exact address once they booked a reservation</p>
                 <label className="full-label">
-                    Country <div className="red">{errors.country}</div>
+                    Country
                     <input
                     className="pageInput"
                         placeholder="Country"
@@ -82,10 +82,11 @@ function UpdateSpotPage() {
                         value={country}
                         onChange={e => setCountry(e.target.value)}
                     />
+                    <div className="red">{errors.country}</div>
+
                 </label>
                 <label className="full-label">
                     Street Address
-                    <div className="red">{errors.address}</div>
                     <input
                     className="pageInput"
                         placeholder="Address"
@@ -94,9 +95,9 @@ function UpdateSpotPage() {
                         onChange={e => setAddress(e.target.value)}
                     />
                 </label>
+                    <div className="red">{errors.address}</div>
                 <div className="city-state full-label">
-                    <label className="full-label">
-                        City<div className="red">{errors.city}</div>
+                    <label className="full-label">City
                         <input
                         className="pageInput"
                             placeholder="City"
@@ -104,9 +105,9 @@ function UpdateSpotPage() {
                             value={city}
                             onChange={e => setCity(e.target.value)}
                         />
+                        <div className="red">{errors.city}</div>
                     </label>
-                    <label>
-                        State<div className="red">{errors.state}</div>
+                    <label>State
                         <input
                         className="pageInput"
                             placeholder="State"
@@ -114,6 +115,7 @@ function UpdateSpotPage() {
                             value={state}
                             onChange={e => setState(e.target.value)}
                         />
+                        <div className="red">{errors.state}</div>
                     </label>
                 </div>
                 <label>
@@ -134,17 +136,16 @@ function UpdateSpotPage() {
                     </h4>
                     <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
                 </div>
-                <div className="red">{errors.spotName}</div>
                 <input className="pageInput"
                     placeholder="Name of your spot"
                     type="text"
                     value={spotName}
                     onChange={e => setSpotName(e.target.value)}
                 />
+                <div className="red">{errors.spotName}</div>
                 <div className="full-label"><h4>Set a base price for your Spot</h4>
                     <p> Competitve pricing can help your listing stand out and rank higher in search results</p>
                 </div>
-                <div className="red">{errors.price}</div>
 
                 <div className="full-label dollar">
                     $<input
@@ -155,6 +156,7 @@ function UpdateSpotPage() {
                         onChange={e => setPrice(e.target.value)}
                     />
                 </div>
+                <div className="red">{errors.price}</div>
                 <button
                 className="create-button pointer"
                     type="submit"
